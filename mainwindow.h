@@ -3,14 +3,43 @@
 
 #include <QMainWindow>
 
+#include <QSqlDatabase>
+#include <QSql>
+#include <QSqlError>
+#include <QDir>
+#include <QFile>
+#include <QDebug>
+#include <QSqlQuery>
+#include <QSqlQueryModel>
+#include <QString>
+#include <QMessageBox>
+
+namespace Ui {
+class MainWindow;
+}
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+private:
+    // ###################### Private attributes ####################### //
+
+    // Database object
+    QSqlDatabase* m_db;
+    // UI object
+    Ui::MainWindow* m_ui;
+
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    // ######################## Public methods ######################### //
 
-signals:
-
+    // Constructor
+    explicit MainWindow(QWidget* parent = 0);
+    // Destructor
+    ~MainWindow();
+private slots:
+    void on_actionA_propos_triggered();
+    void on_actionQuitter_triggered();
 };
 
 #endif // MAINWINDOW_H
