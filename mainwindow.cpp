@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget* parent)
     m_db->setDatabaseName(dbPath);
 
 
-    // ######### Get data from database to fill the tableView ########## //
+    // ######### Get data from database to fill the constallation table ########## //
 
     // Open the database connection
     m_db->open();
@@ -36,13 +36,13 @@ MainWindow::MainWindow(QWidget* parent)
 
     // Set the query
     QSqlQuery query;
-    query.prepare("SELECT * FROM constellation WHERE 1");
+    query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellation` WHERE 1");
     query.exec();
 
     // === Debug code
     /*
     while(query.next()){
-        QString str = query.value(1).toString();
+        QString str = query.value(0).toString();
         qDebug() << qPrintable(str) ;
     }
     */
@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget* parent)
     QSqlQueryModel* model = new QSqlQueryModel;
     model->setQuery(query);
     // Display data on the main table view
-    m_ui->ConstellationTableView->setModel(model);
+    m_ui->ConstellationListView->setModel(model);
     // Close the database connsection
     m_db->close();
 }

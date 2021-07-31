@@ -12,7 +12,9 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QString>
+#include <QVector>
 #include <QMessageBox>
+#include <QListView>
 
 namespace Ui {
 class MainWindow;
@@ -25,10 +27,10 @@ class MainWindow : public QMainWindow
 private:
     // ###################### Private attributes ####################### //
 
-    // Database object
-    QSqlDatabase* m_db;
     // UI object
     Ui::MainWindow* m_ui;
+    // Database object
+    QSqlDatabase* m_db;
 
 public:
     // ######################## Public methods ######################### //
