@@ -513,7 +513,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QListView" name="ConstellationListView"/>
+         <widget class="QListWidget" name="ConstellationListWidget"/>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
@@ -570,7 +570,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QListView" name="TypeListView"/>
+         <widget class="QListWidget" name="TypeListWidget"/>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">

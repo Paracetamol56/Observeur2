@@ -23,6 +23,7 @@
 #include <QVector>
 #include <QMessageBox>
 #include <QListView>
+#include <QListWidgetItem>
 
 // Other windows
 #include <constelwindow.h>
@@ -44,6 +45,14 @@ private:
     // Database object
     QSqlDatabase* m_db;
 
+    // Filters
+    // Constellation filter
+    QVector<QString> m_constellationFilter = {};
+    // Periode filter
+    QVector<QString> m_periodeFilter = {};
+    // Type filter
+    QVector<QString> m_typeFilter = {};
+
 public:
     // ######################## Public methods ######################### //
 
@@ -57,6 +66,7 @@ private slots:
     void on_actionA_propos_triggered();
     void on_actionQuitter_triggered();
     void on_AllConsellationsButton_clicked();
+    void on_ConstellationListWidget_itemClicked(QListWidgetItem *item);
 };
 
 #endif // MAINWINDOW_H

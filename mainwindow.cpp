@@ -39,25 +39,32 @@ MainWindow::MainWindow(QWidget* parent)
     query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellation` WHERE 1");
     query.exec();
 
-    // Put the data into a model
-    QSqlQueryModel* ConstellationModel = new QSqlQueryModel;
-    ConstellationModel->setQuery(query);
-    // Display data on the main table view
-    m_ui->ConstellationListView->setModel(ConstellationModel);
+    // Add items one by one in a list widget
+    while(query.next())
+    {
+        QListWidgetItem* item = new QListWidgetItem;
+        QString str = query.value(0).toString();
+        item->setText(str);
+        item->setCheckState(Qt::Unchecked);
+        m_ui->ConstellationListWidget->addItem(item);
+    }
 
     // === Type query
     // Set the query
-    query.prepare("SELECT `category_name` AS `Type` FROM `category` WHERE 1");
+    query.prepare("SELECT `category_name` AS `Type` FROM `category` WHERE 1 ORDER BY `Type`");
     query.exec();
 
-    // Put the data into a model
-    QSqlQueryModel* TypeModel = new QSqlQueryModel;
-    TypeModel->setQuery(query);
-    // Display data on the main table view
-    m_ui->TypeListView->setModel(TypeModel);
+    // Add items one by one in a list widget
+    while(query.next())
+    {
+        QListWidgetItem* item = new QListWidgetItem;
+        QString str = query.value(0).toString();
+        item->setText(str);
+        item->setCheckState(Qt::Unchecked);
+        m_ui->TypeListWidget->addItem(item);
+    }
 
-
-    // Close the database connsection
+    // Close the database connection
     m_db->close();
 }
 
@@ -100,4 +107,35 @@ void MainWindow::on_actionA_propos_triggered()
 void MainWindow::on_AllConsellationsButton_clicked()
 {
 
+}
+
+///
+/// \brief MainWindow::on_ConstellationListWidget_itemClicked
+/// \param item
+///
+void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
+{
+    if (item->checkState() == Qt::Checked)
+    {
+        qDebug() << item->text() << "checked";
+        if (m_constellationFilter.count(item->text()) < 1)
+        {
+            m_constellationFilter.push_back(item->text());
+        }
+        QVectorIterator<QString> it(m_constellationFilter);
+        while (it.hasNext())
+        {
+            qDebug() << it.next();
+        }
+    }
+    else if (item->checkState() == Qt::Unchecked)
+    {
+        m_constellationFilter.removeOne(item->text());
+        qDebug() << item->text() << "unchecked";
+        QVectorIterator<QString> it(m_constellationFilter);
+        while (it.hasNext())
+        {
+            qDebug() << it.next();
+        }
+    }
 }
