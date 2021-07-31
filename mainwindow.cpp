@@ -31,27 +31,32 @@ MainWindow::MainWindow(QWidget* parent)
     // Open the database connection
     m_db->open();
 
-    // === Debug code
-    //qDebug() << m_db->lastError();
-
-    // Set the query
+    // Query container object
     QSqlQuery query;
+
+    // === Constellation query
+    // Set the query
     query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellation` WHERE 1");
     query.exec();
 
-    // === Debug code
-    /*
-    while(query.next()){
-        QString str = query.value(0).toString();
-        qDebug() << qPrintable(str) ;
-    }
-    */
+    // Put the data into a model
+    QSqlQueryModel* ConstellationModel = new QSqlQueryModel;
+    ConstellationModel->setQuery(query);
+    // Display data on the main table view
+    m_ui->ConstellationListView->setModel(ConstellationModel);
+
+    // === Type query
+    // Set the query
+    query.prepare("SELECT `category_name` AS `Type` FROM `category` WHERE 1");
+    query.exec();
 
     // Put the data into a model
-    QSqlQueryModel* model = new QSqlQueryModel;
-    model->setQuery(query);
+    QSqlQueryModel* TypeModel = new QSqlQueryModel;
+    TypeModel->setQuery(query);
     // Display data on the main table view
-    m_ui->ConstellationListView->setModel(model);
+    m_ui->TypeListView->setModel(TypeModel);
+
+
     // Close the database connsection
     m_db->close();
 }
@@ -68,7 +73,6 @@ MainWindow::~MainWindow()
 
 
 ///
-/// Quit is triggered
 /// \brief MainWindow::on_actionQuitter_triggered
 ///
 void MainWindow::on_actionQuitter_triggered()
@@ -78,7 +82,6 @@ void MainWindow::on_actionQuitter_triggered()
 
 
 ///
-/// About is triggered
 /// \brief MainWindow::on_actionA_propos_triggered
 ///
 void MainWindow::on_actionA_propos_triggered()
@@ -89,4 +92,12 @@ void MainWindow::on_actionA_propos_triggered()
     aboutMessageBox.setStandardButtons(QMessageBox::Ok);
     aboutMessageBox.setIcon(QMessageBox::Information);
     aboutMessageBox.exec();
+}
+
+///
+/// \brief MainWindow::on_AllConsellationsButton_clicked
+///
+void MainWindow::on_AllConsellationsButton_clicked()
+{
+
 }

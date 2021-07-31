@@ -1,23 +1,35 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+// Window
 #include <QMainWindow>
 
+// SQL Database
 #include <QSqlDatabase>
 #include <QSql>
 #include <QSqlError>
-#include <QDir>
-#include <QFile>
-#include <QDebug>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
+
+// Files access
+#include <QDir>
+#include <QFile>
+
+// Debug output
+#include <QDebug>
+
+// UI elements
 #include <QString>
 #include <QVector>
 #include <QMessageBox>
 #include <QListView>
 
-namespace Ui {
-class MainWindow;
+// Other windows
+#include <constelwindow.h>
+
+namespace Ui
+{
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow
@@ -39,9 +51,12 @@ public:
     explicit MainWindow(QWidget* parent = 0);
     // Destructor
     ~MainWindow();
+
+    // ######################### Private slots ######################### //
 private slots:
     void on_actionA_propos_triggered();
     void on_actionQuitter_triggered();
+    void on_AllConsellationsButton_clicked();
 };
 
 #endif // MAINWINDOW_H
