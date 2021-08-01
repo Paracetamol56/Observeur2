@@ -22,7 +22,8 @@ MainWindow::MainWindow(QWidget* parent)
     *m_db = QSqlDatabase::addDatabase("QSQLITE");
     // Set the database path and name
     QString dbPath = QDir::currentPath();
-    dbPath =  dbPath + QString("/data.db");
+    dbPath =  dbPath + QString("/data.sqlite");
+    qDebug() << dbPath;
     m_db->setDatabaseName(dbPath);
 
 
@@ -36,7 +37,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     // === Constellation query
     // Set the query
-    query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellation` WHERE 1");
+    query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellations` WHERE 1");
     query.exec();
 
     // Add items one by one in a list widget
@@ -44,14 +45,15 @@ MainWindow::MainWindow(QWidget* parent)
     {
         QListWidgetItem* item = new QListWidgetItem;
         QString str = query.value(0).toString();
+        m_constellationFilter.push_back(str);
         item->setText(str);
-        item->setCheckState(Qt::Unchecked);
+        item->setCheckState(Qt::Checked);
         m_ui->ConstellationListWidget->addItem(item);
     }
 
     // === Type query
     // Set the query
-    query.prepare("SELECT `category_name` AS `Type` FROM `category` WHERE 1 ORDER BY `Type`");
+    query.prepare("SELECT `category_name` AS `Type` FROM `categories` WHERE 1 ORDER BY `Type`");
     query.exec();
 
     // Add items one by one in a list widget
@@ -59,8 +61,9 @@ MainWindow::MainWindow(QWidget* parent)
     {
         QListWidgetItem* item = new QListWidgetItem;
         QString str = query.value(0).toString();
+        m_typeFilter.push_back(str);
         item->setText(str);
-        item->setCheckState(Qt::Unchecked);
+        item->setCheckState(Qt::Checked);
         m_ui->TypeListWidget->addItem(item);
     }
 
@@ -78,6 +81,36 @@ MainWindow::~MainWindow()
     delete m_ui;
 }
 
+
+///
+/// Object list updater
+/// \brief MainWindow::updateObject
+///
+void MainWindow::updateObject()
+{
+    // Open the database connection
+    m_db->open();
+
+    // Query container object
+    QSqlQuery query;
+
+    // === Constellation query
+    // Set the query
+    QString queryStr =
+            "SELECT `object_name` FROM `objects` WHERE 1";
+
+    query.prepare(queryStr);
+    query.exec();
+
+    // Add items one by one in a list widget
+    while(query.next())
+    {
+
+    }
+
+    // Close the database connection
+    m_db->close();
+}
 
 ///
 /// \brief MainWindow::on_actionQuitter_triggered
@@ -101,6 +134,7 @@ void MainWindow::on_actionA_propos_triggered()
     aboutMessageBox.exec();
 }
 
+
 ///
 /// \brief MainWindow::on_AllConsellationsButton_clicked
 ///
@@ -109,33 +143,75 @@ void MainWindow::on_AllConsellationsButton_clicked()
 
 }
 
+
 ///
 /// \brief MainWindow::on_ConstellationListWidget_itemClicked
 /// \param item
 ///
 void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
 {
+    // If the clicked item is checked
     if (item->checkState() == Qt::Checked)
     {
-        qDebug() << item->text() << "checked";
+        // Verify if the item isn't already in the vector
         if (m_constellationFilter.count(item->text()) < 1)
         {
+            // Add the item in the vector
             m_constellationFilter.push_back(item->text());
         }
-        QVectorIterator<QString> it(m_constellationFilter);
-        while (it.hasNext())
-        {
-            qDebug() << it.next();
-        }
     }
+    // Else
     else if (item->checkState() == Qt::Unchecked)
     {
+        // Remove the item from the vector
         m_constellationFilter.removeOne(item->text());
-        qDebug() << item->text() << "unchecked";
-        QVectorIterator<QString> it(m_constellationFilter);
-        while (it.hasNext())
-        {
-            qDebug() << it.next();
-        }
     }
+}
+
+
+///
+/// \brief MainWindow::on_SortButton_clicked
+///
+void MainWindow::on_SortButton_clicked()
+{
+
+}
+
+
+///
+/// \brief MainWindow::on_actionLight_triggered
+///
+void MainWindow::on_actionLight_triggered()
+{
+    QPalette lightPalette(palette());
+    lightPalette.setColor(QPalette::Base, Qt::lightGray);
+    setPalette(lightPalette);
+}
+
+
+///
+/// \brief MainWindow::on_actionDark_triggered
+///
+void MainWindow::on_actionDark_triggered()
+{
+    QPalette darkPalette(palette());
+    darkPalette.setColor(QPalette::Base, Qt::darkGray);
+    setPalette(darkPalette);
+}
+
+
+///
+/// \brief MainWindow::on_actionNight_vision_triggered
+///
+void MainWindow::on_actionNight_vision_triggered()
+{
+    QPalette nightVisionPalette(palette());
+    // Color palette
+    // 207, 12, 0, 255   |   #cf0c00
+    // 156, 10, 1, 255   |   #9c0a01
+    // 106, 7, 2, 255    |   #6a0702
+    // 55, 5, 2, 255     |   #370502
+    // 4, 2, 3, 255      |   #040203
+
+    setPalette(nightVisionPalette);
 }

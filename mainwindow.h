@@ -61,12 +61,19 @@ public:
     // Destructor
     ~MainWindow();
 
+    // Object list updater
+    void updateObject();
+
     // ######################### Private slots ######################### //
 private slots:
     void on_actionA_propos_triggered();
     void on_actionQuitter_triggered();
     void on_AllConsellationsButton_clicked();
     void on_ConstellationListWidget_itemClicked(QListWidgetItem *item);
+    void on_SortButton_clicked();
+    void on_actionLight_triggered();
+    void on_actionDark_triggered();
+    void on_actionNight_vision_triggered();
 };
 
 #endif // MAINWINDOW_H
