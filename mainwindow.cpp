@@ -215,3 +215,38 @@ void MainWindow::on_actionNight_vision_triggered()
 
     setPalette(nightVisionPalette);
 }
+
+
+///
+/// \brief MainWindow::on_AllConstellationCheckBox_clicked
+///
+void MainWindow::on_AllConstellationCheckBox_clicked()
+{
+    qDebug() << m_ui->AllConstellationCheckBox->checkState();
+    if (m_ui->AllConstellationCheckBox->checkState() == Qt::Checked)
+    {
+        // Clear old filter vector
+        m_constellationFilter.clear();
+
+        // Iterate through the list widget
+        for(int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
+        {
+            QListWidgetItem* item = m_ui->ConstellationListWidget->item(i);
+            item->setCheckState(Qt::Checked);
+            m_constellationFilter.push_back(item->text());
+        }
+    }
+    else if (m_ui->AllConstellationCheckBox->checkState() == Qt::Unchecked)
+    {
+        // Clear old filter vector
+        m_constellationFilter.clear();
+
+        // Iterate through the list widget
+        for(int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
+        {
+            QListWidgetItem* item = m_ui->ConstellationListWidget->item(i);
+            item->setCheckState(Qt::Unchecked);
+        }
+    }
+    qDebug() << m_constellationFilter;
+}
