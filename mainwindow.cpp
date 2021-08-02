@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget* parent)
     // Set the database path and name
     QString dbPath = QDir::currentPath();
     dbPath =  dbPath + QString("/data.sqlite");
-    qDebug() << dbPath;
+    // qDebug() << dbPath;
     m_db->setDatabaseName(dbPath);
 
 
@@ -140,7 +140,9 @@ void MainWindow::on_actionA_propos_triggered()
 ///
 void MainWindow::on_AllConsellationsButton_clicked()
 {
-
+    ConstellationDialog dialog(nullptr, m_db);
+    dialog.setModal(true);
+    dialog.exec();
 }
 
 
@@ -222,7 +224,7 @@ void MainWindow::on_actionNight_vision_triggered()
 ///
 void MainWindow::on_AllConstellationCheckBox_clicked()
 {
-    qDebug() << m_ui->AllConstellationCheckBox->checkState();
+    // If AllConstellationCheckBox is checked
     if (m_ui->AllConstellationCheckBox->checkState() == Qt::Checked)
     {
         // Clear old filter vector
@@ -231,11 +233,14 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
         // Iterate through the list widget
         for(int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
         {
+            // Set the item checked
             QListWidgetItem* item = m_ui->ConstellationListWidget->item(i);
             item->setCheckState(Qt::Checked);
+            // Add the item to the table
             m_constellationFilter.push_back(item->text());
         }
     }
+    // Else
     else if (m_ui->AllConstellationCheckBox->checkState() == Qt::Unchecked)
     {
         // Clear old filter vector
@@ -244,9 +249,48 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
         // Iterate through the list widget
         for(int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
         {
+            // Set the item unchecked
             QListWidgetItem* item = m_ui->ConstellationListWidget->item(i);
             item->setCheckState(Qt::Unchecked);
         }
     }
-    qDebug() << m_constellationFilter;
+}
+
+
+///
+/// \brief MainWindow::on_AllTypeCheckBox_clicked
+///
+void MainWindow::on_AllTypeCheckBox_clicked()
+{
+    qDebug() << m_ui->AllTypeCheckBox->checkState();
+    // If AllTypeCheckBox is checked
+    if (m_ui->AllTypeCheckBox->checkState() == Qt::Checked)
+    {
+        // Clear old filter vector
+        m_typeFilter.clear();
+
+        // Iterate through the list widget
+        for(int i = 0; i < m_ui->TypeListWidget->count(); ++i)
+        {
+            // Set the item checked
+            QListWidgetItem* item = m_ui->TypeListWidget->item(i);
+            item->setCheckState(Qt::Checked);
+            // Add the item to the table
+            m_typeFilter.push_back(item->text());
+        }
+    }
+    // Else
+    else if (m_ui->AllTypeCheckBox->checkState() == Qt::Unchecked)
+    {
+        // Clear old filter vector
+        m_typeFilter.clear();
+
+        // Iterate through the list widget
+        for(int i = 0; i < m_ui->TypeListWidget->count(); ++i)
+        {
+            // Set the item unchecked
+            QListWidgetItem* item = m_ui->TypeListWidget->item(i);
+            item->setCheckState(Qt::Unchecked);
+        }
+    }
 }

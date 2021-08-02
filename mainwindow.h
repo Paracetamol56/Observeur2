@@ -26,7 +26,7 @@
 #include <QListWidgetItem>
 
 // Other windows
-#include <constelwindow.h>
+#include <constellationdialog.h>
 
 namespace Ui
 {
@@ -74,9 +74,8 @@ private slots:
     void on_actionLight_triggered();
     void on_actionDark_triggered();
     void on_actionNight_vision_triggered();
-    void on_checkBox_stateChanged(int arg1);
-    void on_AllConstellationCheckBox_stateChanged(int arg1);
     void on_AllConstellationCheckBox_clicked();
+    void on_AllTypeCheckBox_clicked();
 };
 
 #endif // MAINWINDOW_H
