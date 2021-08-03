@@ -27,6 +27,7 @@
 
 // Other windows
 #include <constellationdialog.h>
+#include <typedialog.h>
 
 namespace Ui
 {
@@ -77,6 +78,7 @@ private slots:
     void on_AllConstellationCheckBox_clicked();
     void on_AllTypeCheckBox_clicked();
     void on_TypeListWidget_itemClicked(QListWidgetItem *item);
+    void on_AllTypesButton_clicked();
 };
 
 #endif // MAINWINDOW_H

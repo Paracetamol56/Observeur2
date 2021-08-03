@@ -10,6 +10,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
+#include <QSortFilterProxyModel>
 
 // Debug output
 #include <QDebug>
