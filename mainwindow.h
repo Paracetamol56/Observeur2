@@ -76,6 +76,7 @@ private slots:
     void on_actionNight_vision_triggered();
     void on_AllConstellationCheckBox_clicked();
     void on_AllTypeCheckBox_clicked();
+    void on_TypeListWidget_itemClicked(QListWidgetItem *item);
 };
 
 #endif // MAINWINDOW_H

@@ -20,15 +20,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     constellationdialog.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    typedialog.cpp
 
 HEADERS += \
     constellationdialog.h \
-    mainwindow.h
+    mainwindow.h \
+    typedialog.h
 
 FORMS += \
     constellationdialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    typedialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

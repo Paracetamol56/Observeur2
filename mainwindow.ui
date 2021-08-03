@@ -493,7 +493,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="Constellations">
        <attribute name="title">
@@ -518,6 +518,9 @@
            <string>Tout selectionner</string>
           </property>
           <property name="checked">
+           <bool>true</bool>
+          </property>
+          <property name="tristate">
            <bool>true</bool>
           </property>
          </widget>

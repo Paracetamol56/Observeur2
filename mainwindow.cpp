@@ -23,52 +23,66 @@ MainWindow::MainWindow(QWidget* parent)
     // Set the database path and name
     QString dbPath = QDir::currentPath();
     dbPath =  dbPath + QString("/data.sqlite");
-    // qDebug() << dbPath;
-    m_db->setDatabaseName(dbPath);
-
-
-    // ######### Get data from database to fill the constallation table ########## //
-
-    // Open the database connection
-    m_db->open();
-
-    // Query container object
-    QSqlQuery query;
-
-    // === Constellation query
-    // Set the query
-    query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellations` WHERE 1");
-    query.exec();
-
-    // Add items one by one in a list widget
-    while(query.next())
+    // Check if file exists
+    if (QFile::exists(dbPath))
     {
-        QListWidgetItem* item = new QListWidgetItem;
-        QString str = query.value(0).toString();
-        m_constellationFilter.push_back(str);
-        item->setText(str);
-        item->setCheckState(Qt::Checked);
-        m_ui->ConstellationListWidget->addItem(item);
+        // qDebug() << dbPath;
+        m_db->setDatabaseName(dbPath);
+
+
+        // ######### Get data from database to fill the constallation table ########## //
+
+        // Open the database connection
+        m_db->open();
+
+        // Query container object
+        QSqlQuery query;
+
+        // === Constellation query
+        // Set the query
+        query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellations` WHERE 1");
+        query.exec();
+
+        // Add items one by one in a list widget
+        while(query.next())
+        {
+            QListWidgetItem* item = new QListWidgetItem;
+            QString str = query.value(0).toString();
+            m_constellationFilter.push_back(str);
+            item->setText(str);
+            item->setCheckState(Qt::Checked);
+            m_ui->ConstellationListWidget->addItem(item);
+        }
+
+        // === Type query
+        // Set the query
+        query.prepare("SELECT `category_name` AS `Type` FROM `categories` WHERE 1 ORDER BY `Type`");
+        query.exec();
+
+        // Add items one by one in a list widget
+        while(query.next())
+        {
+            QListWidgetItem* item = new QListWidgetItem;
+            QString str = query.value(0).toString();
+            m_typeFilter.push_back(str);
+            item->setText(str);
+            item->setCheckState(Qt::Checked);
+            m_ui->TypeListWidget->addItem(item);
+        }
+
+        // Close the database connection
+        m_db->close();
     }
-
-    // === Type query
-    // Set the query
-    query.prepare("SELECT `category_name` AS `Type` FROM `categories` WHERE 1 ORDER BY `Type`");
-    query.exec();
-
-    // Add items one by one in a list widget
-    while(query.next())
+    else
     {
-        QListWidgetItem* item = new QListWidgetItem;
-        QString str = query.value(0).toString();
-        m_typeFilter.push_back(str);
-        item->setText(str);
-        item->setCheckState(Qt::Checked);
-        m_ui->TypeListWidget->addItem(item);
+        // Display a message box if the database file is not found
+        QMessageBox errorMessageBox;
+        errorMessageBox.setText("Erreur : Base de donnée manquante");
+        errorMessageBox.setInformativeText("Aucun fichier \"data.sqlite\" trouvé");
+        errorMessageBox.setStandardButtons(QMessageBox::Ok);
+        errorMessageBox.setIcon(QMessageBox::Critical);
+        errorMessageBox.exec();
     }
-
-    // Close the database connection
-    m_db->close();
 }
 
 
@@ -111,6 +125,16 @@ void MainWindow::updateObject()
     // Close the database connection
     m_db->close();
 }
+
+
+///
+/// \brief MainWindow::on_SortButton_clicked
+///
+void MainWindow::on_SortButton_clicked()
+{
+
+}
+
 
 ///
 /// \brief MainWindow::on_actionQuitter_triggered
@@ -160,6 +184,19 @@ void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
         {
             // Add the item in the vector
             m_constellationFilter.push_back(item->text());
+
+            // If all items are checked (filter count == list count)
+            if (m_constellationFilter.count() == m_ui->ConstellationListWidget->count())
+            {
+                // Checked the parent checkbox
+                m_ui->AllConstellationCheckBox->setCheckState(Qt::Checked);
+            }
+            // Else
+            else
+            {
+                // Partialy check the parent checkbox
+                m_ui->AllConstellationCheckBox->setCheckState(Qt::PartiallyChecked);
+            }
         }
     }
     // Else
@@ -167,55 +204,16 @@ void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
     {
         // Remove the item from the vector
         m_constellationFilter.removeOne(item->text());
+
+        if (m_constellationFilter.count() < 1)
+        {
+            m_ui->AllConstellationCheckBox->setCheckState(Qt::Unchecked);
+        }
+        else
+        {
+            m_ui->AllConstellationCheckBox->setCheckState(Qt::PartiallyChecked);
+        }
     }
-}
-
-
-///
-/// \brief MainWindow::on_SortButton_clicked
-///
-void MainWindow::on_SortButton_clicked()
-{
-
-}
-
-
-///
-/// \brief MainWindow::on_actionLight_triggered
-///
-void MainWindow::on_actionLight_triggered()
-{
-    QPalette lightPalette(palette());
-    lightPalette.setColor(QPalette::Base, Qt::lightGray);
-    setPalette(lightPalette);
-}
-
-
-///
-/// \brief MainWindow::on_actionDark_triggered
-///
-void MainWindow::on_actionDark_triggered()
-{
-    QPalette darkPalette(palette());
-    darkPalette.setColor(QPalette::Base, Qt::darkGray);
-    setPalette(darkPalette);
-}
-
-
-///
-/// \brief MainWindow::on_actionNight_vision_triggered
-///
-void MainWindow::on_actionNight_vision_triggered()
-{
-    QPalette nightVisionPalette(palette());
-    // Color palette
-    // 207, 12, 0, 255   |   #cf0c00
-    // 156, 10, 1, 255   |   #9c0a01
-    // 106, 7, 2, 255    |   #6a0702
-    // 55, 5, 2, 255     |   #370502
-    // 4, 2, 3, 255      |   #040203
-
-    setPalette(nightVisionPalette);
 }
 
 
@@ -258,12 +256,69 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
 
 
 ///
+/// \brief MainWindow::on_AllTypesButton_clicked
+///
+void MainWindow::on_AllTypesButton_clicked()
+{
+    TypeDialog dialog(nullptr, m_db);
+    dialog.setModal(true);
+    dialog.exec();
+}
+
+
+///
+/// \brief MainWindow::on_TypeListWidget_itemClicked
+/// \param item
+///
+void MainWindow::on_TypeListWidget_itemClicked(QListWidgetItem *item)
+{
+    // If the clicked item is checked
+    if (item->checkState() == Qt::Checked)
+    {
+        // Verify if the item isn't already in the vector
+        if (m_typeFilter.count(item->text()) < 1)
+        {
+            // Add the item in the vector
+            m_typeFilter.push_back(item->text());
+
+            // If all items are checked (filter count == list count)
+            if (m_typeFilter.count() == m_ui->TypeListWidget->count())
+            {
+                // Checked the parent checkbox
+                m_ui->AllTypeCheckBox->setCheckState(Qt::Checked);
+            }
+            // Else
+            else
+            {
+                // Partialy check the parent checkbox
+                m_ui->AllTypeCheckBox->setCheckState(Qt::PartiallyChecked);
+            }
+        }
+    }
+    // Else
+    else if (item->checkState() == Qt::Unchecked)
+    {
+        // Remove the item from the vector
+        m_typeFilter.removeOne(item->text());
+
+        if (m_typeFilter.count() < 1)
+        {
+            m_ui->AllTypeCheckBox->setCheckState(Qt::Unchecked);
+        }
+        else
+        {
+            m_ui->AllTypeCheckBox->setCheckState(Qt::PartiallyChecked);
+        }
+    }
+}
+
+
+///
 /// \brief MainWindow::on_AllTypeCheckBox_clicked
 ///
 void MainWindow::on_AllTypeCheckBox_clicked()
 {
-    qDebug() << m_ui->AllTypeCheckBox->checkState();
-    // If AllTypeCheckBox is checked
+    // If AllConstellationCheckBox is checked
     if (m_ui->AllTypeCheckBox->checkState() == Qt::Checked)
     {
         // Clear old filter vector
@@ -293,4 +348,43 @@ void MainWindow::on_AllTypeCheckBox_clicked()
             item->setCheckState(Qt::Unchecked);
         }
     }
+}
+
+
+///
+/// \brief MainWindow::on_actionLight_triggered
+///
+void MainWindow::on_actionLight_triggered()
+{
+    QPalette lightPalette(palette());
+    lightPalette.setColor(QPalette::Base, Qt::lightGray);
+    setPalette(lightPalette);
+}
+
+
+///
+/// \brief MainWindow::on_actionDark_triggered
+///
+void MainWindow::on_actionDark_triggered()
+{
+    QPalette darkPalette(palette());
+    darkPalette.setColor(QPalette::Base, Qt::darkGray);
+    setPalette(darkPalette);
+}
+
+
+///
+/// \brief MainWindow::on_actionNight_vision_triggered
+///
+void MainWindow::on_actionNight_vision_triggered()
+{
+    QPalette nightVisionPalette(palette());
+    // Color palette
+    // 207, 12, 0, 255   |   #cf0c00
+    // 156, 10, 1, 255   |   #9c0a01
+    // 106, 7, 2, 255    |   #6a0702
+    // 55, 5, 2, 255     |   #370502
+    // 4, 2, 3, 255      |   #040203
+
+    setPalette(nightVisionPalette);
 }
