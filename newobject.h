@@ -33,22 +33,23 @@ private:
     QSqlDatabase *m_db;
 
     // Input values
-    QString *m_name = nullptr;
-    int *m_messier = nullptr;
-    int *m_ngc = nullptr;
-    QString *m_otherName1 = nullptr;
-    QString *m_otherName2 = nullptr;
-    QString *m_category = nullptr;
-    QString *m_constellation = nullptr;
-    double *m_apparentMagnitude = nullptr;
-    QString *m_rightAscension = nullptr;
-    QString *m_declination = nullptr;
-    int *m_note = nullptr;
-    int *m_skyMap1 = nullptr;
-    int *m_skyMap2 = nullptr;
-    int *m_skyMap3 = nullptr;
-    double *m_distance = nullptr;
-    double *m_diameter = nullptr;
+    QString m_name = "";
+    int m_messier = 0;
+    int m_ngc = 0;
+    QString m_otherName1 = "";
+    QString m_otherName2 = "";
+    QString m_category = "";
+    QString m_constellation = "";
+    double m_apparentMagnitude = 0.00;
+    double m_secondApparentMagnitude = 0.00;
+    QString m_rightAscension = "";
+    QString m_declination = "";
+    int m_note = 0;
+    int m_skyMap1 = 0;
+    int m_skyMap2 = 0;
+    int m_skyMap3 = 0;
+    double m_distance = 0.00;
+    double m_diameter = 0.00;
 
 public:
     // ######################## Public methods ######################### //
@@ -58,8 +59,18 @@ public:
     // Destructor
     ~NewObject();
 
+    // Verifying function
+    bool CheckInput();
+    // Insert row function
+    void InsertRow();
+
 private slots:
-    void on_horizontalSlider_valueChanged(int value);
+
+    void on_NoteHorizontalSlider_valueChanged(int value);
+    void on_CancelPushButton_clicked();
+    void on_SavePushButton_clicked();
+    void on_OtherNameLineEdit_1_editingFinished();
+    void on_TypeComboBox_currentTextChanged(const QString &arg1);
 };
 
 #endif // NEWOBJECT_H

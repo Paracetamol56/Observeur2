@@ -137,6 +137,9 @@
           </item>
           <item row="8" column="1">
            <widget class="QDoubleSpinBox" name="ApparentMagnitudeDoubleSpinBox_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="minimum">
              <double>-30.000000000000000</double>
             </property>
@@ -186,7 +189,11 @@
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLineEdit" name="OtherNameLineEdit_2"/>
+           <widget class="QLineEdit" name="OtherNameLineEdit_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -205,7 +212,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <layout class="QHBoxLayout" name="RAHorizontalLayout">
+           <layout class="QHBoxLayout" name="RAHorizontalLayout" stretch="3,1,3,1,3,1">
             <item>
              <widget class="QSpinBox" name="RAHourSpinBox">
               <property name="maximum">
@@ -258,23 +265,26 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <layout class="QHBoxLayout" name="DecHorizontalLayout">
+           <layout class="QHBoxLayout" name="DecHorizontalLayout" stretch="3,1,3,1,3,1">
             <item>
-             <widget class="QSpinBox" name="DecHourSpinBox">
+             <widget class="QSpinBox" name="DecDegreeSpinBox">
+              <property name="minimum">
+               <number>-89</number>
+              </property>
               <property name="maximum">
-               <number>359</number>
+               <number>89</number>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="DecHourLabel">
+             <widget class="QLabel" name="DecDegreeLabel">
               <property name="text">
                <string>°</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="DecSecondSpinBox">
+             <widget class="QSpinBox" name="DecMinuteSpinBox">
               <property name="maximum">
                <number>59</number>
               </property>
@@ -397,15 +407,15 @@
           <item row="0" column="1">
            <widget class="QTextEdit" name="DescriptionTextEdit"/>
           </item>
-          <item row="2" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="NoteLabel">
             <property name="text">
              <string>Note</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <layout class="QHBoxLayout" name="NoteHorizontalLayout">
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="NoteHorizontalLayout" stretch="6,1">
             <item>
              <widget class="QSlider" name="NoteHorizontalSlider">
               <property name="maximum">
@@ -417,9 +427,9 @@
              </widget>
             </item>
             <item>
-             <widget class="QLCDNumber" name="NoteLcdNumber">
-              <property name="digitCount">
-               <number>2</number>
+             <widget class="QLabel" name="NoteDisplayLabel">
+              <property name="text">
+               <string>0/10</string>
               </property>
              </widget>
             </item>
