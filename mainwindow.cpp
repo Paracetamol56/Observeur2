@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget* parent)
     *m_db = QSqlDatabase::addDatabase("QSQLITE");
     // Set the database path and name
     QString dbPath = QDir::currentPath();
-    dbPath =  dbPath + QString("/data.sqlite");
+    dbPath =  dbPath + QString("/Database/data.sqlite");
     // Check if file exists
     if (QFile::exists(dbPath))
     {
@@ -216,7 +216,6 @@ void MainWindow::on_actionA_propos_triggered()
 void MainWindow::on_AllConsellationsButton_clicked()
 {
     ConstellationDialog dialog(nullptr, m_db);
-    dialog.setModal(true);
     dialog.exec();
 }
 
@@ -316,7 +315,6 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
 void MainWindow::on_AllTypesButton_clicked()
 {
     TypeDialog dialog(nullptr, m_db);
-    //dialog.setModal(true);
     dialog.exec();
 }
 

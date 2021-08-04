@@ -19,16 +19,19 @@ SOURCES += \
     constellationdialog.cpp \
     main.cpp \
     mainwindow.cpp \
+    newobject.cpp \
     typedialog.cpp
 
 HEADERS += \
     constellationdialog.h \
     mainwindow.h \
+    newobject.h \
     typedialog.h
 
 FORMS += \
     constellationdialog.ui \
     mainwindow.ui \
+    newobject.ui \
     typedialog.ui
 
 # Default rules for deployment.
