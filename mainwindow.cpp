@@ -72,6 +72,9 @@ MainWindow::MainWindow(QWidget* parent)
 
         // Close the database connection
         m_db->close();
+
+        // Display all the objects
+        updateObject();
     }
     else
     {
@@ -111,16 +114,50 @@ void MainWindow::updateObject()
     // === Constellation query
     // Set the query
     QString queryStr =
-            "SELECT `object_name` FROM `objects` WHERE 1";
+            "SELECT "
+            "objects.`object_name` AS `Nom`, "
+            "objects.`object_messier` AS `M`, "
+            "objects.`object_ngc` AS `NGC`, "
+            "categories.`category_name` AS `Category`, "
+            "constellations.`constellation_name` AS `Constellation`, "
+            "objects.`object_apparent_magnitude` AS `Magnitude apparente`, "
+            "objects.`object_appreciation` AS `Appreciation`, "
+            "objects.`object_note` AS `Note /10`, "
+            "skymap1.`skymap1_number` AS `Carte (N1)`, "
+            "skymap2.`skymap2_number` AS `Carte (N2)`, "
+            "skymap3.`skymap3_number` AS `Carte (N3)` "
+            "FROM objects "
+            "INNER JOIN categories "
+            "ON categories.`category_id` = objects.`object_category` "
+            "INNER JOIN constellations "
+            "ON constellations.`constellation_id` = objects.`object_constellation` "
+            "INNER JOIN skymap1 "
+            "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
+            "INNER JOIN skymap2 "
+            "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
+            "INNER JOIN skymap3 "
+            "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
+            "WHERE 1 "
+            "ORDER BY objects.`object_name` ASC;";
 
     query.prepare(queryStr);
     query.exec();
 
-    // Add items one by one in a list widget
-    while(query.next())
-    {
+    // Setup a query model to hold the data
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery(query);
 
-    }
+    // Convert to a QSortFilterProxyModel
+    QSortFilterProxyModel *sortModel = new QSortFilterProxyModel();
+    sortModel->setSourceModel(model);
+
+    // Put the model into the table view
+    m_ui->objectTableView->setModel(sortModel);
+
+    // Table style
+    m_ui->objectTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_ui->objectTableView->horizontalHeader()->setSectionResizeMode(6, QHeaderView::Stretch);
+    m_ui->objectTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     // Close the database connection
     m_db->close();
@@ -132,7 +169,7 @@ void MainWindow::updateObject()
 ///
 void MainWindow::on_SortButton_clicked()
 {
-
+    updateObject();
 }
 
 

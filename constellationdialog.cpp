@@ -72,8 +72,8 @@ void ConstellationDialog::tablePopulate(QSqlDatabase *db)
     m_ui->ConstellationTableView->setModel(sortModel);
 
     // Table style
-    m_ui->ConstellationTableView->resizeColumnsToContents();
-    m_ui->ConstellationTableView->resizeRowsToContents();
+    m_ui->ConstellationTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_ui->ConstellationTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     // Close the database connection
     db->close();

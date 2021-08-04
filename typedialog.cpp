@@ -68,7 +68,7 @@ void TypeDialog::tablePopulate(QSqlDatabase *db)
 
     // Table style
     m_ui->TypeTableView->resizeColumnToContents(0);
-    m_ui->TypeTableView->resizeRowsToContents();
+    m_ui->TypeTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     // Close the database connection
     db->close();
