@@ -85,6 +85,7 @@ MainWindow::MainWindow(QWidget* parent)
         errorMessageBox.setStandardButtons(QMessageBox::Ok);
         errorMessageBox.setIcon(QMessageBox::Critical);
         errorMessageBox.exec();
+        QApplication::quit();
     }
 }
 
