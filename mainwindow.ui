@@ -719,7 +719,14 @@
     </widget>
     <addaction name="menuTh_me"/>
    </widget>
+   <widget class="QMenu" name="menuEdition">
+    <property name="title">
+     <string>Edition</string>
+    </property>
+    <addaction name="actionNouvel_objet"/>
+   </widget>
    <addaction name="menuFichier"/>
+   <addaction name="menuEdition"/>
    <addaction name="menuAffichage"/>
    <addaction name="menuAide"/>
   </widget>
@@ -746,6 +753,11 @@
   <action name="actionNight_vision">
    <property name="text">
     <string>Night vision</string>
+   </property>
+  </action>
+  <action name="actionNouvel_objet">
+   <property name="text">
+    <string>Nouvel objet</string>
    </property>
   </action>
  </widget>

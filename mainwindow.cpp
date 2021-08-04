@@ -445,3 +445,9 @@ void MainWindow::on_actionNight_vision_triggered()
 
     setPalette(nightVisionPalette);
 }
+
+void MainWindow::on_actionNouvel_objet_triggered()
+{
+    NewObject *newObjectWindow = new NewObject(nullptr, m_db);
+    newObjectWindow->show();
+}

@@ -19,7 +19,8 @@
 
 
 
-namespace Ui {
+namespace Ui
+{
 class TypeDialog;
 }
 

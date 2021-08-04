@@ -1,14 +1,15 @@
 #include "newobject.h"
 #include "ui_newobject.h"
 
-NewObject::NewObject(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::NewObject)
+NewObject::NewObject(QWidget *parent, QSqlDatabase *db)
+    : QWidget(parent)
+    , m_ui(new Ui::NewObject)
+    , m_db(db)
 {
-    ui->setupUi(this);
+    m_ui->setupUi(this);
 }
 
 NewObject::~NewObject()
 {
-    delete ui;
+    delete m_ui;
 }
