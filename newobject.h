@@ -16,6 +16,9 @@
 #include <QDebug>
 
 // UI elements
+#include <QString>
+#include <QStringList>
+
 
 namespace Ui
 {

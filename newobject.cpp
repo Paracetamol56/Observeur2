@@ -272,3 +272,4 @@ void NewObject::on_SavePushButton_clicked()
 {
     qDebug() << CheckInput();
 }
+
