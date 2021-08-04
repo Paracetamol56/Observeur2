@@ -71,7 +71,6 @@ private slots:
     void on_actionQuitter_triggered();
     void on_AllConsellationsButton_clicked();
     void on_ConstellationListWidget_itemClicked(QListWidgetItem *item);
-    void on_SortButton_clicked();
     void on_actionLight_triggered();
     void on_actionDark_triggered();
     void on_actionNight_vision_triggered();

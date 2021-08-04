@@ -105,6 +105,17 @@ MainWindow::~MainWindow()
 ///
 void MainWindow::updateObject()
 {
+    // Format constellation filter
+    QString constellationFilterString = "";
+    QVectorIterator<QString> it(m_constellationFilter);
+    while (it.hasNext()) {
+        constellationFilterString += ("'" + it.next() + "', ");
+    }
+    int lastIndex = constellationFilterString.lastIndexOf(QChar(','));
+    constellationFilterString = constellationFilterString.left(lastIndex);
+    qDebug() << constellationFilterString;
+
+
     // Open the database connection
     m_db->open();
 
@@ -137,24 +148,11 @@ void MainWindow::updateObject()
                 "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
                 "INNER JOIN skymap3 "
                 "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
-                "WHERE constellations.`constellation_name` IN (:constellationFilter) "
+                "WHERE constellations.`constellation_name` IN ("+ constellationFilterString + ") "
                 "ORDER BY objects.`object_name` ASC;"
                 );
 
-    // Format constellation filter
-    {
-        QString constellationFilterString = "";
-        QVectorIterator<QString> it(m_constellationFilter);
-        while (it.hasNext()) {
-            constellationFilterString += ("'" + it.next() + "', ");
-        }
-        int lastIndex = constellationFilterString.lastIndexOf(QChar(','));
-        constellationFilterString = constellationFilterString.left(lastIndex);
-        qDebug() << constellationFilterString;
-    }
-    query.bindValue(":constellationFilter", "0");
     query.exec();
-    qDebug() << query.lastQuery();
 
     // Setup a query model to hold the data
     QSqlQueryModel *model = new QSqlQueryModel();
@@ -174,15 +172,6 @@ void MainWindow::updateObject()
 
     // Close the database connection
     m_db->close();
-}
-
-
-///
-/// \brief MainWindow::on_SortButton_clicked
-///
-void MainWindow::on_SortButton_clicked()
-{
-    updateObject();
 }
 
 
@@ -264,6 +253,8 @@ void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
             m_ui->AllConstellationCheckBox->setCheckState(Qt::PartiallyChecked);
         }
     }
+    // Update the object table
+    updateObject();
 }
 
 
@@ -302,6 +293,8 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
             item->setCheckState(Qt::Unchecked);
         }
     }
+    // Update the object table
+    updateObject();
 }
 
 
@@ -360,6 +353,8 @@ void MainWindow::on_TypeListWidget_itemClicked(QListWidgetItem *item)
             m_ui->AllTypeCheckBox->setCheckState(Qt::PartiallyChecked);
         }
     }
+    // Update the object table
+    updateObject();
 }
 
 
@@ -398,6 +393,8 @@ void MainWindow::on_AllTypeCheckBox_clicked()
             item->setCheckState(Qt::Unchecked);
         }
     }
+    // Update the object table
+    updateObject();
 }
 
 
