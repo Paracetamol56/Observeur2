@@ -107,14 +107,25 @@ void MainWindow::updateObject()
 {
     // Format constellation filter
     QString constellationFilterString = "";
-    QVectorIterator<QString> it(m_constellationFilter);
-    while (it.hasNext()) {
-        constellationFilterString += ("'" + it.next() + "', ");
+    {
+        QVectorIterator<QString> it(m_constellationFilter);
+        while (it.hasNext()) {
+            constellationFilterString += ("'" + it.next() + "', ");
+        }
+        int lastIndex = constellationFilterString.lastIndexOf(QChar(','));
+        constellationFilterString = constellationFilterString.left(lastIndex);
     }
-    int lastIndex = constellationFilterString.lastIndexOf(QChar(','));
-    constellationFilterString = constellationFilterString.left(lastIndex);
-    qDebug() << constellationFilterString;
 
+    // Format type filter
+    QString typeFilterString = "";
+    {
+        QVectorIterator<QString> it(m_typeFilter);
+        while (it.hasNext()) {
+            typeFilterString += ("'" + it.next() + "', ");
+        }
+        int lastIndex = typeFilterString.lastIndexOf(QChar(','));
+        typeFilterString = typeFilterString.left(lastIndex);
+    }
 
     // Open the database connection
     m_db->open();
@@ -149,6 +160,7 @@ void MainWindow::updateObject()
                 "INNER JOIN skymap3 "
                 "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
                 "WHERE constellations.`constellation_name` IN ("+ constellationFilterString + ") "
+                "AND categories.`category_name` IN (" + typeFilterString + ")"
                 "ORDER BY objects.`object_name` ASC;"
                 );
 
@@ -304,7 +316,7 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
 void MainWindow::on_AllTypesButton_clicked()
 {
     TypeDialog dialog(nullptr, m_db);
-    dialog.setModal(true);
+    //dialog.setModal(true);
     dialog.exec();
 }
 
