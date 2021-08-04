@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>811</width>
-    <height>481</height>
+    <height>509</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,11 +15,11 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="GroupColumns">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="Column1">
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="GeneralForm">
          <property name="title">
           <string>Général</string>
          </property>
@@ -35,9 +35,9 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit">
+           <widget class="QLineEdit" name="NameLineEdit">
             <property name="text">
-             <string>Nom commun</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -49,12 +49,15 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QSpinBox" name="spinBox">
+           <widget class="QSpinBox" name="MessierSpinBox">
             <property name="minimum">
              <number>0</number>
             </property>
             <property name="maximum">
              <number>110</number>
+            </property>
+            <property name="value">
+             <number>0</number>
             </property>
            </widget>
           </item>
@@ -66,9 +69,15 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QSpinBox" name="spinBox_2">
+           <widget class="QSpinBox" name="NgcSpinBox">
+            <property name="minimum">
+             <number>0</number>
+            </property>
             <property name="maximum">
              <number>7840</number>
+            </property>
+            <property name="value">
+             <number>0</number>
             </property>
            </widget>
           </item>
@@ -80,54 +89,37 @@
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="lineEdit_4"/>
+           <widget class="QLineEdit" name="OtherNameLineEdit_1"/>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="label_5">
             <property name="text">
              <string>Type</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QComboBox" name="comboBox"/>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="TypeComboBox"/>
           </item>
-          <item row="5" column="0">
+          <item row="6" column="0">
            <widget class="QLabel" name="label_6">
             <property name="text">
              <string>Constellation</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QComboBox" name="comboBox_2"/>
+          <item row="6" column="1">
+           <widget class="QComboBox" name="ConstellationComboBox_2"/>
           </item>
-          <item row="6" column="0">
+          <item row="7" column="0">
            <widget class="QLabel" name="label_7">
             <property name="text">
              <string>Magnitude apparente</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox">
-            <property name="minimum">
-             <double>-30.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>50.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Magnitude apparente secondaire</string>
-            </property>
-           </widget>
-          </item>
           <item row="7" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+           <widget class="QDoubleSpinBox" name="ApparentMagnitudeDoubleSpinBox_1">
             <property name="minimum">
              <double>-30.000000000000000</double>
             </property>
@@ -137,14 +129,31 @@
            </widget>
           </item>
           <item row="8" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Magnitude apparente secondaire</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QDoubleSpinBox" name="ApparentMagnitudeDoubleSpinBox_2">
+            <property name="minimum">
+             <double>-30.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>50.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
            <widget class="QLabel" name="label_9">
             <property name="text">
              <string>Distance</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+          <item row="9" column="1">
+           <widget class="QDoubleSpinBox" name="DistanceDoubleSpinBox">
             <property name="decimals">
              <number>0</number>
             </property>
@@ -156,15 +165,15 @@
             </property>
            </widget>
           </item>
-          <item row="9" column="0">
+          <item row="10" column="0">
            <widget class="QLabel" name="label_10">
             <property name="text">
              <string>Diamètre</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+          <item row="10" column="1">
+           <widget class="QDoubleSpinBox" name="DiametreDoubleSpinBox">
             <property name="decimals">
              <number>0</number>
             </property>
@@ -175,6 +184,9 @@
              <double>10.000000000000000</double>
             </property>
            </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="OtherNameLineEdit_2"/>
           </item>
          </layout>
         </widget>
