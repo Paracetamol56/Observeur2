@@ -13,3 +13,8 @@ NewObject::~NewObject()
 {
     delete m_ui;
 }
+
+void NewObject::on_horizontalSlider_valueChanged(int value)
+{
+
+}

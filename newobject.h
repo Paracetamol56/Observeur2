@@ -32,6 +32,24 @@ private:
     Ui::NewObject *m_ui;
     QSqlDatabase *m_db;
 
+    // Input values
+    QString *m_name = nullptr;
+    int *m_messier = nullptr;
+    int *m_ngc = nullptr;
+    QString *m_otherName1 = nullptr;
+    QString *m_otherName2 = nullptr;
+    QString *m_category = nullptr;
+    QString *m_constellation = nullptr;
+    double *m_apparentMagnitude = nullptr;
+    QString *m_rightAscension = nullptr;
+    QString *m_declination = nullptr;
+    int *m_note = nullptr;
+    int *m_skyMap1 = nullptr;
+    int *m_skyMap2 = nullptr;
+    int *m_skyMap3 = nullptr;
+    double *m_distance = nullptr;
+    double *m_diameter = nullptr;
+
 public:
     // ######################## Public methods ######################### //
 
@@ -39,6 +57,9 @@ public:
     explicit NewObject(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
     // Destructor
     ~NewObject();
+
+private slots:
+    void on_horizontalSlider_valueChanged(int value);
 };
 
 #endif // NEWOBJECT_H

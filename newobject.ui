@@ -19,7 +19,7 @@
      <item>
       <layout class="QVBoxLayout" name="Column1">
        <item>
-        <widget class="QGroupBox" name="GeneralForm">
+        <widget class="QGroupBox" name="GeneralGroupBox">
          <property name="title">
           <string>Général</string>
          </property>
@@ -28,7 +28,7 @@
          </property>
          <layout class="QFormLayout" name="formLayout">
           <item row="0" column="0">
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="NameLabel">
             <property name="text">
              <string>Nom commun</string>
             </property>
@@ -42,7 +42,7 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="MessierLabel">
             <property name="text">
              <string>Messier</string>
             </property>
@@ -62,7 +62,7 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="NgcLabel">
             <property name="text">
              <string>NGC</string>
             </property>
@@ -82,7 +82,7 @@
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QLabel" name="label_4">
+           <widget class="QLabel" name="OtherNameLabel">
             <property name="text">
              <string>Autre nom</string>
             </property>
@@ -92,7 +92,7 @@
            <widget class="QLineEdit" name="OtherNameLineEdit_1"/>
           </item>
           <item row="5" column="0">
-           <widget class="QLabel" name="label_5">
+           <widget class="QLabel" name="TypeLabel">
             <property name="text">
              <string>Type</string>
             </property>
@@ -102,17 +102,17 @@
            <widget class="QComboBox" name="TypeComboBox"/>
           </item>
           <item row="6" column="0">
-           <widget class="QLabel" name="label_6">
+           <widget class="QLabel" name="ConstellationLabel">
             <property name="text">
              <string>Constellation</string>
             </property>
            </widget>
           </item>
           <item row="6" column="1">
-           <widget class="QComboBox" name="ConstellationComboBox_2"/>
+           <widget class="QComboBox" name="ConstellationComboBox"/>
           </item>
           <item row="7" column="0">
-           <widget class="QLabel" name="label_7">
+           <widget class="QLabel" name="ApparentMagnitudeLabel">
             <property name="text">
              <string>Magnitude apparente</string>
             </property>
@@ -129,7 +129,7 @@
            </widget>
           </item>
           <item row="8" column="0">
-           <widget class="QLabel" name="label_8">
+           <widget class="QLabel" name="ApparentMagnitudeLabel_2">
             <property name="text">
              <string>Magnitude apparente secondaire</string>
             </property>
@@ -146,7 +146,7 @@
            </widget>
           </item>
           <item row="9" column="0">
-           <widget class="QLabel" name="label_9">
+           <widget class="QLabel" name="DistanceLabel">
             <property name="text">
              <string>Distance</string>
             </property>
@@ -166,7 +166,7 @@
            </widget>
           </item>
           <item row="10" column="0">
-           <widget class="QLabel" name="label_10">
+           <widget class="QLabel" name="DiameterLabel">
             <property name="text">
              <string>Diamètre</string>
             </property>
@@ -192,57 +192,57 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_3">
+        <widget class="QGroupBox" name="PositionGroupBox">
          <property name="title">
           <string>Position</string>
          </property>
          <layout class="QFormLayout" name="formLayout_3">
           <item row="0" column="0">
-           <widget class="QLabel" name="label_13">
+           <widget class="QLabel" name="RALabel">
             <property name="text">
              <string>Ascention droite</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <layout class="QHBoxLayout" name="RAHorizontalLayout">
             <item>
-             <widget class="QSpinBox" name="spinBox_3">
+             <widget class="QSpinBox" name="RAHourSpinBox">
               <property name="maximum">
                <number>23</number>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_14">
+             <widget class="QLabel" name="RAHourLabel">
               <property name="text">
                <string>h</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="spinBox_4">
+             <widget class="QSpinBox" name="RAMinuteSpinBox">
               <property name="maximum">
                <number>59</number>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_15">
+             <widget class="QLabel" name="RAMinuteLabel">
               <property name="text">
                <string>m</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+             <widget class="QDoubleSpinBox" name="RASecondDoubleSpinBox">
               <property name="maximum">
                <double>59.990000000000002</double>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_16">
+             <widget class="QLabel" name="RASecondLabel">
               <property name="text">
                <string>s</string>
               </property>
@@ -251,51 +251,51 @@
            </layout>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="label_17">
+           <widget class="QLabel" name="DecLabel">
             <property name="text">
              <string>Déclinaison</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <layout class="QHBoxLayout" name="DecHorizontalLayout">
             <item>
-             <widget class="QSpinBox" name="spinBox_5">
+             <widget class="QSpinBox" name="DecHourSpinBox">
               <property name="maximum">
                <number>359</number>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_18">
+             <widget class="QLabel" name="DecHourLabel">
               <property name="text">
                <string>°</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="spinBox_6">
+             <widget class="QSpinBox" name="DecSecondSpinBox">
               <property name="maximum">
                <number>59</number>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_19">
+             <widget class="QLabel" name="DecMinuteLabel">
               <property name="text">
                <string>'</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_6">
+             <widget class="QDoubleSpinBox" name="DecSecondDoubleSpinBox">
               <property name="maximum">
                <double>59.990000000000002</double>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_20">
+             <widget class="QLabel" name="DecSecondLabel">
               <property name="text">
                <string>&quot;</string>
               </property>
@@ -309,9 +309,9 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="Column2">
        <item>
-        <widget class="QGroupBox" name="groupBox_4">
+        <widget class="QGroupBox" name="MapGroupBox">
          <property name="title">
           <string>Cartes</string>
          </property>
@@ -319,28 +319,28 @@
           <item>
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="1">
-             <widget class="QLabel" name="label_22">
+             <widget class="QLabel" name="Map2Label">
               <property name="text">
                <string>Niveau 2</string>
               </property>
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QLabel" name="label_21">
+             <widget class="QLabel" name="Map1Label">
               <property name="text">
                <string>Niveau 1</string>
               </property>
              </widget>
             </item>
             <item row="0" column="2">
-             <widget class="QLabel" name="label_23">
+             <widget class="QLabel" name="Map3Label">
               <property name="text">
                <string>Niveau 3</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QSpinBox" name="spinBox_7">
+             <widget class="QSpinBox" name="Map1SpinBox">
               <property name="minimum">
                <number>1</number>
               </property>
@@ -350,7 +350,7 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QSpinBox" name="spinBox_8">
+             <widget class="QSpinBox" name="Map2SpinBox">
               <property name="minimum">
                <number>1</number>
               </property>
@@ -360,7 +360,7 @@
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QSpinBox" name="spinBox_9">
+             <widget class="QSpinBox" name="Map3SpinBox">
               <property name="minimum">
                <number>1</number>
               </property>
@@ -372,7 +372,7 @@
            </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="AutoComputePushButton">
             <property name="text">
              <string>Calculer automatiquement à partir de la position</string>
             </property>
@@ -382,37 +382,48 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_2">
+        <widget class="QGroupBox" name="AppreciationGroupBox">
          <property name="title">
           <string>Appréciation</string>
          </property>
          <layout class="QFormLayout" name="formLayout_2">
           <item row="0" column="0">
-           <widget class="QLabel" name="label_11">
+           <widget class="QLabel" name="DescriptionLabel">
             <property name="text">
              <string>Description</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QTextEdit" name="textEdit"/>
+           <widget class="QTextEdit" name="DescriptionTextEdit"/>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_12">
+          <item row="2" column="0">
+           <widget class="QLabel" name="NoteLabel">
             <property name="text">
              <string>Note</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QSlider" name="horizontalSlider">
-            <property name="maximum">
-             <number>10</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="NoteHorizontalLayout">
+            <item>
+             <widget class="QSlider" name="NoteHorizontalSlider">
+              <property name="maximum">
+               <number>10</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLCDNumber" name="NoteLcdNumber">
+              <property name="digitCount">
+               <number>2</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -422,7 +433,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="ButtonHorizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -437,14 +448,14 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="SavePushButton">
        <property name="text">
         <string>Enregistrer</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="CancelPushButton">
        <property name="text">
         <string>Annuler</string>
        </property>
