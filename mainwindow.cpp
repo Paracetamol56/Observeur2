@@ -113,35 +113,48 @@ void MainWindow::updateObject()
 
     // === Constellation query
     // Set the query
-    QString queryStr =
-            "SELECT "
-            "objects.`object_name` AS `Nom`, "
-            "objects.`object_messier` AS `M`, "
-            "objects.`object_ngc` AS `NGC`, "
-            "categories.`category_name` AS `Category`, "
-            "constellations.`constellation_name` AS `Constellation`, "
-            "objects.`object_apparent_magnitude` AS `Magnitude apparente`, "
-            "objects.`object_appreciation` AS `Appreciation`, "
-            "objects.`object_note` AS `Note /10`, "
-            "skymap1.`skymap1_number` AS `Carte (N1)`, "
-            "skymap2.`skymap2_number` AS `Carte (N2)`, "
-            "skymap3.`skymap3_number` AS `Carte (N3)` "
-            "FROM objects "
-            "INNER JOIN categories "
-            "ON categories.`category_id` = objects.`object_category` "
-            "INNER JOIN constellations "
-            "ON constellations.`constellation_id` = objects.`object_constellation` "
-            "INNER JOIN skymap1 "
-            "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
-            "INNER JOIN skymap2 "
-            "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
-            "INNER JOIN skymap3 "
-            "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
-            "WHERE 1 "
-            "ORDER BY objects.`object_name` ASC;";
+    query.prepare(
+                "SELECT "
+                "objects.`object_name` AS `Nom`, "
+                "objects.`object_messier` AS `M`, "
+                "objects.`object_ngc` AS `NGC`, "
+                "categories.`category_name` AS `Category`, "
+                "constellations.`constellation_name` AS `Constellation`, "
+                "objects.`object_apparent_magnitude` AS `Magnitude apparente`, "
+                "objects.`object_appreciation` AS `Appreciation`, "
+                "objects.`object_note` AS `Note /10`, "
+                "skymap1.`skymap1_number` AS `Carte (N1)`, "
+                "skymap2.`skymap2_number` AS `Carte (N2)`, "
+                "skymap3.`skymap3_number` AS `Carte (N3)` "
+                "FROM objects "
+                "INNER JOIN categories "
+                "ON categories.`category_id` = objects.`object_category` "
+                "INNER JOIN constellations "
+                "ON constellations.`constellation_id` = objects.`object_constellation` "
+                "INNER JOIN skymap1 "
+                "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
+                "INNER JOIN skymap2 "
+                "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
+                "INNER JOIN skymap3 "
+                "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
+                "WHERE constellations.`constellation_name` IN (:constellationFilter) "
+                "ORDER BY objects.`object_name` ASC;"
+                );
 
-    query.prepare(queryStr);
+    // Format constellation filter
+    {
+        QString constellationFilterString = "";
+        QVectorIterator<QString> it(m_constellationFilter);
+        while (it.hasNext()) {
+            constellationFilterString += ("'" + it.next() + "', ");
+        }
+        int lastIndex = constellationFilterString.lastIndexOf(QChar(','));
+        constellationFilterString = constellationFilterString.left(lastIndex);
+        qDebug() << constellationFilterString;
+    }
+    query.bindValue(":constellationFilter", "0");
     query.exec();
+    qDebug() << query.lastQuery();
 
     // Setup a query model to hold the data
     QSqlQueryModel *model = new QSqlQueryModel();
