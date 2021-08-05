@@ -99,6 +99,58 @@ bool NewObject::CheckInput()
     }
 
 
+    // === Messier verification
+    int testMessier = m_ui->MessierSpinBox->value();
+    if (testMessier == 0)
+    {
+        testMessier = NULL;
+    }
+    else
+    {
+        // Select all object with the same name
+        m_db->open();
+        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_messier` = \"" + QString::number(testMessier) + "\"");
+        query.exec();
+        m_db->close();
+        if (query.next())
+        {
+            qDebug() << "Error : messier exists";
+            return false;
+        }
+        else
+        {
+            qDebug() << "OK : messier";
+            qDebug() << "Messier : " << testMessier;
+        }
+    }
+
+
+    // === NGC verification
+    int testNgc = m_ui->NgcSpinBox->value();
+    if (testNgc == 0)
+    {
+        testNgc = NULL;
+    }
+    else
+    {
+        // Select all object with the same name
+        m_db->open();
+        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_ngc` = \"" + QString::number(testNgc) + "\"");
+        query.exec();
+        m_db->close();
+        if (query.next())
+        {
+            qDebug() << "Error : NGC exists";
+            return false;
+        }
+        else
+        {
+            qDebug() << "OK : NGC";
+            qDebug() << "NGC : " << testMessier;
+        }
+    }
+
+
     // === Other name 1 verification
     QString testOtherName1 = m_ui->OtherNameLineEdit_1->text();
     if (testOtherName1 != "")
@@ -143,6 +195,35 @@ bool NewObject::CheckInput()
     }
 
 
+    // === Magnitude verification
+    double testApparentMagnitude = m_ui->ApparentMagnitudeDoubleSpinBox_1->value();
+    double testSecondApparentMagnitude = NULL;
+    if (m_ui->ApparentMagnitudeDoubleSpinBox_2->isEnabled())
+    {
+        testSecondApparentMagnitude = m_ui->ApparentMagnitudeDoubleSpinBox_2->value();
+        // If primary magnitude > secondary magnitude : swap variables
+        if (testApparentMagnitude > testSecondApparentMagnitude)
+        {
+            // Swap variables
+            testApparentMagnitude = testApparentMagnitude + testSecondApparentMagnitude;
+            testSecondApparentMagnitude = testApparentMagnitude - testSecondApparentMagnitude;
+            testApparentMagnitude = testApparentMagnitude - testSecondApparentMagnitude;
+
+            // Update spinboxes
+            m_ui->ApparentMagnitudeDoubleSpinBox_1->setValue(testApparentMagnitude);
+            m_ui->ApparentMagnitudeDoubleSpinBox_2->setValue(testSecondApparentMagnitude);
+        }
+        qDebug() << "OK : SecondApparentMagnitude";
+        qDebug() << "SecondApparentMagnitude : " << testSecondApparentMagnitude;
+    }
+    else
+    {
+        testSecondApparentMagnitude = NULL;
+    }
+    qDebug() << "OK : ApparentMagnitude";
+    qDebug() << "ApparentMagnitude : " << testApparentMagnitude;
+
+
     // === Position verification
     // RA
     QString testRightAscention =
@@ -167,37 +248,46 @@ bool NewObject::CheckInput()
     qDebug() << "Name : " << testDeclination;
 
 
-    // === Magnitude verification
-    double testApparentMagnitude = m_ui->ApparentMagnitudeDoubleSpinBox_1->value();
-    double testSecondApparentMagnitude = 0.00;
-    if (m_ui->ApparentMagnitudeDoubleSpinBox_2->isEnabled())
-    {
-        testSecondApparentMagnitude = m_ui->ApparentMagnitudeDoubleSpinBox_2->value();
-        if (testApparentMagnitude > testSecondApparentMagnitude)
-        {
-            // Swap variables
-            testApparentMagnitude = testApparentMagnitude + testSecondApparentMagnitude;
-            testSecondApparentMagnitude = testApparentMagnitude - testSecondApparentMagnitude;
-            testApparentMagnitude = testApparentMagnitude - testSecondApparentMagnitude;
+    // COPYING TEST VALUES INTO ATTRIBUTES
 
-            // Update spinboxes
-            m_ui->ApparentMagnitudeDoubleSpinBox_1->setValue(testApparentMagnitude);
-            m_ui->ApparentMagnitudeDoubleSpinBox_2->setValue(testSecondApparentMagnitude);
-        }
-        qDebug() << "OK : SecondApparentMagnitude";
-        qDebug() << "SecondApparentMagnitude : " << testSecondApparentMagnitude;
-    }
-    qDebug() << "OK : ApparentMagnitude";
-    qDebug() << "ApparentMagnitude : " << testApparentMagnitude;
-
-
+    // === General section
+    // Common name
     m_name = testName;
-    m_otherName1 = testOtherName1;
-    m_otherName2 = testOtherName2;
-    m_rightAscension = testRightAscention;
-    m_declination = testDeclination;
+    // Messier
+    m_messier = testMessier; // <<-- "" if undefined
+    // NGC
+    m_ngc = testNgc; // <<-- "" if undefined
+    // Othernames
+    m_otherName1 = testOtherName1; // <<-- NULL if undefined
+    m_otherName2 = testOtherName2; // <<-- NULL if undefined
+    // Type
+    m_category = m_ui->TypeComboBox->currentText();
+    // Constellation
+    m_constellation = m_ui->ConstellationComboBox->currentText();
+    // Apperent magnitude (primary)
     m_apparentMagnitude = testApparentMagnitude;
-    m_secondApparentMagnitude = testSecondApparentMagnitude;
+    // Apperent magnitude (secondary)
+    m_secondApparentMagnitude = testSecondApparentMagnitude; // <<-- NULL if undefined
+
+    // === Position section
+    // Right ascension
+    m_rightAscension = testRightAscention;
+    // Declination
+    m_declination = testDeclination;
+
+    // === Skymap section
+    // Map 1
+    m_skyMap1 = m_ui->Map1SpinBox->value();
+    // Map 2
+    m_skyMap2 = m_ui->Map1SpinBox->value();
+    // Map 3
+    m_skyMap3 = m_ui->Map1SpinBox->value();
+
+    // === Appreciation section
+    // Description
+    m_description = m_ui->DescriptionTextEdit->toPlainText();
+    m_note = m_ui->NoteHorizontalSlider->value();
+
 
     return true;
 }

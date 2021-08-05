@@ -36,6 +36,7 @@ private:
     QSqlDatabase *m_db;
 
     // Input values
+    // General section
     QString m_name = "";
     int m_messier = 0;
     int m_ngc = 0;
@@ -45,14 +46,22 @@ private:
     QString m_constellation = "";
     double m_apparentMagnitude = 0.00;
     double m_secondApparentMagnitude = 0.00;
+    double m_distance = 0.00;
+    double m_diameter = 0.00;
+
+    // Position section
     QString m_rightAscension = "";
     QString m_declination = "";
-    int m_note = 0;
+
+    // Skymap section
     int m_skyMap1 = 0;
     int m_skyMap2 = 0;
     int m_skyMap3 = 0;
-    double m_distance = 0.00;
-    double m_diameter = 0.00;
+
+    // Appreciation section
+    QString m_description = "";
+    int m_note = 0;
+
 
 public:
     // ######################## Public methods ######################### //
