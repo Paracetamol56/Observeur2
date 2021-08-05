@@ -30,6 +30,9 @@
 #include <typedialog.h>
 #include <newobject.h>
 
+// Error handling
+#include <errorhandler.h>
+
 namespace Ui
 {
     class MainWindow;

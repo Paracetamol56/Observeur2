@@ -79,13 +79,8 @@ MainWindow::MainWindow(QWidget* parent)
     else
     {
         // Display a message box if the database file is not found
-        QMessageBox errorMessageBox;
-        errorMessageBox.setText("Erreur : Base de donnée manquante");
-        errorMessageBox.setInformativeText("Aucun fichier \"data.sqlite\" trouvé");
-        errorMessageBox.setStandardButtons(QMessageBox::Ok);
-        errorMessageBox.setIcon(QMessageBox::Critical);
-        errorMessageBox.exec();
-        QApplication::quit();
+        Error errorMessage(ErrorPriority::Critical, ErrorType::FileMissing, "Aucun fichier \"data.sqlite\" trouvé");
+        errorMessage.printMessage();
     }
 }
 
