@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QMessageBox>
+#include <QApplication>
 
 enum class ErrorPriority
 {

@@ -77,7 +77,7 @@ void Error::printMessage()
         break;
 
     case QMessageBox::Close:
-
+        QApplication::quit();
         break;
 
     case QMessageBox::Discard:

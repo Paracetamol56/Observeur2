@@ -1,5 +1,5 @@
-#include "newobject.h"
-#include "ui_newobject.h"
+#include "objectform.h"
+#include "ui_objectform.h"
 
 
 ///
@@ -8,9 +8,9 @@
 /// \param parent
 /// \param db
 ///
-NewObject::NewObject(QWidget *parent, QSqlDatabase *db)
+ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db)
     : QWidget(parent)
-    , m_ui(new Ui::NewObject)
+    , m_ui(new Ui::ObjectForm)
     , m_db(db)
 {
     // ########################## Setup the UI ######################### //
@@ -59,7 +59,7 @@ NewObject::NewObject(QWidget *parent, QSqlDatabase *db)
 /// Destructor
 /// \brief NewObject::~NewObject
 ///
-NewObject::~NewObject()
+ObjectForm::~ObjectForm()
 {
     delete m_ui;
 }
@@ -70,7 +70,7 @@ NewObject::~NewObject()
 /// \brief NewObject::CheckInput
 /// \return true if all is right
 ///
-bool NewObject::CheckInput()
+bool ObjectForm::CheckInput()
 {
     // === Name verification
     QString testName = m_ui->NameLineEdit->text();
@@ -290,7 +290,7 @@ bool NewObject::CheckInput()
 /// check if there is text and enable (or not) OtherNameLineEdit_2
 /// \brief NewObject::on_OtherNameLineEdit_1_editingFinished
 ///
-void NewObject::on_OtherNameLineEdit_1_editingFinished()
+void ObjectForm::on_OtherNameLineEdit_1_editingFinished()
 {
     if (m_ui->OtherNameLineEdit_1->text() == "")
     {
@@ -311,7 +311,7 @@ void NewObject::on_OtherNameLineEdit_1_editingFinished()
 /// \brief NewObject::on_TypeComboBox_currentTextChanged
 /// \param arg1
 ///
-void NewObject::on_TypeComboBox_currentTextChanged(const QString &arg1)
+void ObjectForm::on_TypeComboBox_currentTextChanged(const QString &arg1)
 {
     if (arg1 == "Etoile double")
     {
@@ -329,7 +329,7 @@ void NewObject::on_TypeComboBox_currentTextChanged(const QString &arg1)
 /// \brief NewObject::on_NoteHorizontalSlider_valueChanged
 /// \param value
 ///
-void NewObject::on_NoteHorizontalSlider_valueChanged(int value)
+void ObjectForm::on_NoteHorizontalSlider_valueChanged(int value)
 {
     m_ui->NoteDisplayLabel->setText(QString(QString::number(value) + "/10"));
     m_note = value;
@@ -340,7 +340,7 @@ void NewObject::on_NoteHorizontalSlider_valueChanged(int value)
 /// When the cancel button is clicked
 /// \brief NewObject::on_CancelPushButton_clicked
 ///
-void NewObject::on_CancelPushButton_clicked()
+void ObjectForm::on_CancelPushButton_clicked()
 {
     close();
 }
@@ -350,11 +350,38 @@ void NewObject::on_CancelPushButton_clicked()
 /// Save Button
 /// \brief NewObject::on_SavePushButton_clicked
 ///
-void NewObject::on_SavePushButton_clicked()
+void ObjectForm::on_SavePushButton_clicked()
 {
     try
     {
-        CheckInput();
+        if (CheckInput())
+        {
+            QSqlQuery query;
+            query.prepare(
+                        "INSERT INTO objects "
+                        "(object_name, object_messier, object_ngc, object_othername1, object_othername2, object_ category, object_constellation, object_apparent_magnitude, object_secondary_magnitude, object_right_ascension, object_delination, object_appreciation, object_note, object_skymap1_id, object_skymap2_id, object_skymap3_id, object_distance, object_diameter) "
+                        "VALUES "
+                        "(:name, :messier, :ngc, :othername1, :othername2, :category, :constellation, :apparentMagnitude, :secondaryApparentMagnitude, :distance, :diameter, :rightAscension, :declination, :skymap1, :skymap2, :skymap3, :description, :note)");
+            query.bindValue(":name", m_name);
+            query.bindValue(":messier", m_messier);
+            query.bindValue(":ngc", m_ngc);
+            query.bindValue(":othername1", m_otherName1);
+            query.bindValue(":othername2", m_otherName2);
+
+            query.bindValue(":apparentMagnitude", m_apparentMagnitude);
+            query.bindValue(":secondaryApparentMagnitude", m_secondApparentMagnitude);
+            query.bindValue(":distance", m_distance);
+            query.bindValue(":diamter", m_diameter);
+            query.bindValue(":rightAscension", m_rightAscension);
+            query.bindValue(":declination", m_declination);
+            query.bindValue(":skymap1", QString::number(m_skyMap1));
+            query.bindValue(":skymap2", QString::number(m_skyMap2));
+            query.bindValue(":skymap3", QString::number(m_skyMap3));
+            query.bindValue(":description", m_description);
+            query.bindValue(":note", QString::number(m_note));
+
+            query.exec();
+        }
     }
     catch (Error e)
     {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NewObject</class>
- <widget class="QWidget" name="NewObject">
+ <class>ObjectForm</class>
+ <widget class="QWidget" name="ObjectForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Ajouter un nouvel objet</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>

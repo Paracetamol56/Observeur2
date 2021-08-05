@@ -20,20 +20,20 @@ SOURCES += \
     errorhandler.cpp \
     main.cpp \
     mainwindow.cpp \
-    newobject.cpp \
+    objectform.cpp \
     typedialog.cpp
 
 HEADERS += \
     constellationdialog.h \
     errorhandler.h \
     mainwindow.h \
-    newobject.h \
+    objectform.h \
     typedialog.h
 
 FORMS += \
     constellationdialog.ui \
     mainwindow.ui \
-    newobject.ui \
+    objectform.ui \
     typedialog.ui
 
 # Default rules for deployment.

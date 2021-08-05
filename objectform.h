@@ -1,5 +1,5 @@
-#ifndef NEWOBJECT_H
-#define NEWOBJECT_H
+#ifndef OBJECTFORM_H
+#define OBJECTFORM_H
 
 // Widget
 #include <QWidget>
@@ -25,17 +25,17 @@
 
 namespace Ui
 {
-class NewObject;
+class ObjectForm;
 }
 
-class NewObject : public QWidget
+class ObjectForm : public QWidget
 {
     Q_OBJECT
 
 private:
     // ###################### Private attributes ####################### //
 
-    Ui::NewObject *m_ui;
+    Ui::ObjectForm *m_ui;
     QSqlDatabase *m_db;
 
     // Input values
@@ -70,9 +70,9 @@ public:
     // ######################## Public methods ######################### //
 
     //Constructor
-    explicit NewObject(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
+    explicit ObjectForm(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
     // Destructor
-    ~NewObject();
+    ~ObjectForm();
 
     // Verifying function
     bool CheckInput();
@@ -88,4 +88,4 @@ private slots:
     void on_TypeComboBox_currentTextChanged(const QString &arg1);
 };
 
-#endif // NEWOBJECT_H
+#endif // OBJECTFORM_H

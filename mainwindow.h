@@ -28,7 +28,7 @@
 // Other windows
 #include <constellationdialog.h>
 #include <typedialog.h>
-#include <newobject.h>
+#include <objectform.h>
 
 // Error handling
 #include <errorhandler.h>
