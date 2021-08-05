@@ -76,7 +76,7 @@ bool NewObject::CheckInput()
     QString testName = m_ui->NameLineEdit->text();
     if (testName == "")
     {
-        qDebug() << "Error : name";
+        throw Error(ErrorPriority::BadInput, ErrorType::MissingInput, "Vous devez specifier un nom");
         return false;
     }
     else
@@ -88,7 +88,7 @@ bool NewObject::CheckInput()
         m_db->close();
         if (query.next())
         {
-            qDebug() << "Error : name exists";
+            throw Error(ErrorPriority::BadInput, ErrorType::InvalidInput, "Ce nom existe déjà dans la base de donnée");
             return false;
         }
         else
@@ -101,11 +101,7 @@ bool NewObject::CheckInput()
 
     // === Messier verification
     int testMessier = m_ui->MessierSpinBox->value();
-    if (testMessier == 0)
-    {
-        testMessier = NULL;
-    }
-    else
+    if (testMessier != 0)
     {
         // Select all object with the same name
         m_db->open();
@@ -114,7 +110,7 @@ bool NewObject::CheckInput()
         m_db->close();
         if (query.next())
         {
-            qDebug() << "Error : messier exists";
+            throw Error(ErrorPriority::BadInput, ErrorType::InvalidInput, "Cet object messier existe déjà dans la base de donnée");
             return false;
         }
         else
@@ -127,11 +123,7 @@ bool NewObject::CheckInput()
 
     // === NGC verification
     int testNgc = m_ui->NgcSpinBox->value();
-    if (testNgc == 0)
-    {
-        testNgc = NULL;
-    }
-    else
+    if (testNgc != 0)
     {
         // Select all object with the same name
         m_db->open();
@@ -140,7 +132,7 @@ bool NewObject::CheckInput()
         m_db->close();
         if (query.next())
         {
-            qDebug() << "Error : NGC exists";
+            throw Error(ErrorPriority::BadInput, ErrorType::InvalidInput, "Cet object NGC existe déjà dans la base de donnée");
             return false;
         }
         else
@@ -157,12 +149,12 @@ bool NewObject::CheckInput()
     {
         // Select all object with the same name
         m_db->open();
-        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName1 + "\"");
+        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName1 + "\" OR `object_othername2` = \"" + testOtherName1 + "\"");
         query.exec();
         m_db->close();
         if (query.next())
         {
-            qDebug() << "Error : othername1 exists";
+            throw Error(ErrorPriority::BadInput, ErrorType::InvalidInput, "Cet autre nom (1) existe déjà dans la base de donnée");
             return false;
         }
         else
@@ -179,12 +171,12 @@ bool NewObject::CheckInput()
     {
         // Select all object with the same name
         m_db->open();
-        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername2` = \"" + testOtherName2 + "\"");
+        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName2 + "\" OR `object_othername2` = \"" + testOtherName2 + "\"");
         query.exec();
         m_db->close();
         if (query.next())
         {
-            qDebug() << "Error : othername2 exists";
+            throw Error(ErrorPriority::BadInput, ErrorType::InvalidInput, "Cet autre nom (2) existe déjà dans la base de donnée");
             return false;
         }
         else
@@ -197,7 +189,7 @@ bool NewObject::CheckInput()
 
     // === Magnitude verification
     double testApparentMagnitude = m_ui->ApparentMagnitudeDoubleSpinBox_1->value();
-    double testSecondApparentMagnitude = NULL;
+    double testSecondApparentMagnitude = 0;
     if (m_ui->ApparentMagnitudeDoubleSpinBox_2->isEnabled())
     {
         testSecondApparentMagnitude = m_ui->ApparentMagnitudeDoubleSpinBox_2->value();
@@ -218,7 +210,7 @@ bool NewObject::CheckInput()
     }
     else
     {
-        testSecondApparentMagnitude = NULL;
+        testSecondApparentMagnitude = 0;
     }
     qDebug() << "OK : ApparentMagnitude";
     qDebug() << "ApparentMagnitude : " << testApparentMagnitude;
@@ -360,6 +352,13 @@ void NewObject::on_CancelPushButton_clicked()
 ///
 void NewObject::on_SavePushButton_clicked()
 {
-    qDebug() << CheckInput();
+    try
+    {
+        CheckInput();
+    }
+    catch (Error e)
+    {
+        e.printMessage();
+    }
 }
 

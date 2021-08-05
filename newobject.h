@@ -19,6 +19,9 @@
 #include <QString>
 #include <QStringList>
 
+// Error handling
+#include <errorhandler.h>
+
 
 namespace Ui
 {
