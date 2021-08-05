@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     constellationdialog.cpp \
+    errorhandler.cpp \
     main.cpp \
     mainwindow.cpp \
     newobject.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     constellationdialog.h \
+    errorhandler.h \
     mainwindow.h \
     newobject.h \
     typedialog.h
