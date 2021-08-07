@@ -310,8 +310,8 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
 ///
 void MainWindow::on_AllTypesButton_clicked()
 {
-    TypeDialog dialog(nullptr, m_db);
-    dialog.exec();
+    TypeTable typeTableDialog(nullptr, m_db);
+    typeTableDialog.exec();
 }
 
 
@@ -405,6 +405,16 @@ void MainWindow::on_AllTypeCheckBox_clicked()
 
 
 ///
+/// \brief MainWindow::on_AllObjectsPushButton_clicked
+///
+void MainWindow::on_AllObjectsPushButton_clicked()
+{
+    ObjectTable objectTableDialog(nullptr, m_db);
+    objectTableDialog.exec();
+}
+
+
+///
 /// \brief MainWindow::on_actionLight_triggered
 ///
 void MainWindow::on_actionLight_triggered()
@@ -447,3 +457,5 @@ void MainWindow::on_actionNouvel_objet_triggered()
     ObjectForm *newObjectWindow = new ObjectForm(nullptr, m_db, 0);
     newObjectWindow->show();
 }
+
+

@@ -21,20 +21,23 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     objectform.cpp \
-    typedialog.cpp
+    objecttable.cpp \
+    typedialog.cpp \
+    typetable.cpp
 
 HEADERS += \
     constellationdialog.h \
     errorhandler.h \
     mainwindow.h \
     objectform.h \
-    typedialog.h
+    objecttable.h \
+    tabledialog.h \
+    typetable.h
 
 FORMS += \
     constellationdialog.ui \
     mainwindow.ui \
-    objectform.ui \
-    typedialog.ui
+    tabledialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

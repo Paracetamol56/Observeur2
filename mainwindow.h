@@ -27,7 +27,8 @@
 
 // Other windows
 #include <constellationdialog.h>
-#include <typedialog.h>
+#include <typetable.h>
+#include <objecttable.h>
 #include <objectform.h>
 
 // Error handling
@@ -83,6 +84,7 @@ private slots:
     void on_TypeListWidget_itemClicked(QListWidgetItem *item);
     void on_AllTypesButton_clicked();
     void on_actionNouvel_objet_triggered();
+    void on_AllObjectsPushButton_clicked();
 };
 
 #endif // MAINWINDOW_H
