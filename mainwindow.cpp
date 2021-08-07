@@ -444,6 +444,6 @@ void MainWindow::on_actionNight_vision_triggered()
 
 void MainWindow::on_actionNouvel_objet_triggered()
 {
-    ObjectForm *newObjectWindow = new ObjectForm(nullptr, m_db);
+    ObjectForm *newObjectWindow = new ObjectForm(nullptr, m_db, 0);
     newObjectWindow->show();
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 04 août 2021 à 00:59
+-- Généré le : ven. 06 août 2021 à 11:52
 -- Version du serveur :  10.4.18-MariaDB
 -- Version de PHP : 8.0.3
 
@@ -55,7 +55,7 @@ INSERT INTO `categories` (`category_id`, `category_name`, `category_description`
 (15, 'Nébuleuse en émission', 'En astronomie, les nébuleuses en émission sont des nuages de gaz ionisé dans le milieu interstellaire qui absorbent la lumière d\'une étoile chaude proche et la réémettent sous forme de couleurs variées à des énergies plus basses.'),
 (16, 'Nébuleuse planétaire', 'Une nébuleuse planétaire est un corps céleste qui ressemble à un disque d\'aspect nébuleux. En raison de cet aspect, semblable à celui des planètes. On sait maintenant que les nébuleuses planétaires n\'ont en fait aucun rapport avec les planètes. Il s\'agit d\'une nébuleuse en émission constituée d\'une coquille de gaz en expansion éjectée d\'une étoile en fin de vie.'),
 (17, 'Nébuleuse diffuse', 'En astronomie, les nébuleuses diffuses sont des nuages de matières interstellaires dispersées, constitués de gaz et de poussières mais les nébuleuses diffuses se distinguent par leurs émissions lumineuses.'),
-(18, 'Nébuleuse obscure', 'Les nébuleuses obscures sont des régions où les poussières du milieu interstellaire semblent se concentrer en grands nuages qui apparaissent en régions pauvres en étoiles.\r\n\r\nLes nébuleuses sombres peuvent être vues si elles obscurcissent une partie d\'une nébuleuse en émission ou de réflexion, ou si elles bloquent la lumière des étoiles en arrière-plan.');
+(18, 'Nébuleuse obscure', 'Les nébuleuses obscures sont des régions où les poussières du milieu interstellaire semblent se concentrer en grands nuages qui apparaissent en régions pauvres en étoiles.\r\nLes nébuleuses sombres peuvent être vues si elles obscurcissent une partie d\'une nébuleuse en émission ou de réflexion, ou si elles bloquent la lumière des étoiles en arrière-plan.');
 
 -- --------------------------------------------------------
 
@@ -175,7 +175,7 @@ INSERT INTO `constellations` (`constellation_id`, `constellation_name`, `constel
 --
 
 CREATE TABLE `objects` (
-  `objects_id` int(6) UNSIGNED NOT NULL,
+  `object_id` int(6) UNSIGNED NOT NULL,
   `object_name` varchar(256) DEFAULT NULL,
   `object_messier` int(3) UNSIGNED DEFAULT NULL,
   `object_ngc` int(4) UNSIGNED DEFAULT NULL,
@@ -200,7 +200,7 @@ CREATE TABLE `objects` (
 -- Déchargement des données de la table `objects`
 --
 
-INSERT INTO `objects` (`objects_id`, `object_name`, `object_messier`, `object_ngc`, `object_othername1`, `object_othername2`, `object_category`, `object_constellation`, `object_apparent_magnitude`, `object_secondary_magnitude`, `object_right_ascension`, `object_declination`, `object_appreciation`, `object_note`, `object_skymap1_id`, `object_skymap2_id`, `object_skymap3_id`, `object_distance`, `object_diameter`) VALUES
+INSERT INTO `objects` (`object_id`, `object_name`, `object_messier`, `object_ngc`, `object_othername1`, `object_othername2`, `object_category`, `object_constellation`, `object_apparent_magnitude`, `object_secondary_magnitude`, `object_right_ascension`, `object_declination`, `object_appreciation`, `object_note`, `object_skymap1_id`, `object_skymap2_id`, `object_skymap3_id`, `object_distance`, `object_diameter`) VALUES
 (1, 'Nébuleuse de l\'haltère', 27, 6853, 'Dumbbell', 'Nébuleuse du trognon de pomme', 16, 66, 7.4, NULL, '19h59m36.34s', '22°43′16.1″', 'Large et plutôt lumineux,\r\npas mal à faire en public.', 8, 1, 1, 10, 1360, 2.88),
 (2, 'Amas d\'Hercule', 13, 6205, NULL, NULL, 6, 40, 5.8, NULL, '6h41m41.44s', '36°27\'36.9\"', 'Très dense, lumineux et bien défini', 9, 1, 1, 10, 22180, 145),
 (3, 'Nébuleuse d\'Orion', 42, 1976, NULL, NULL, 17, 58, 3.7, NULL, '05h35m16.5s', '-05°23′23\"', 'Coeur très lumineux et facile à trouver', 9, 1, 1, 14, 1344, 24);
@@ -314,7 +314,7 @@ ALTER TABLE `constellations`
 -- Index pour la table `objects`
 --
 ALTER TABLE `objects`
-  ADD PRIMARY KEY (`objects_id`),
+  ADD PRIMARY KEY (`object_id`),
   ADD KEY `object_constellation` (`object_constellation`),
   ADD KEY `object_category` (`object_category`),
   ADD KEY `object_skymap3_id` (`object_skymap3_id`),
@@ -359,7 +359,7 @@ ALTER TABLE `constellations`
 -- AUTO_INCREMENT pour la table `objects`
 --
 ALTER TABLE `objects`
-  MODIFY `objects_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `object_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `skymap1`

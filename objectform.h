@@ -38,6 +38,8 @@ private:
     Ui::ObjectForm *m_ui;
     QSqlDatabase *m_db;
 
+    int m_objectId = 0;
+
     // Input values
     // General section
     QString m_name = "";
@@ -69,8 +71,8 @@ private:
 public:
     // ######################## Public methods ######################### //
 
-    //Constructor
-    explicit ObjectForm(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
+    // Constructor
+    explicit ObjectForm(QWidget *parent = nullptr, QSqlDatabase *db = nullptr, int objectId = 0);
     // Destructor
     ~ObjectForm();
 

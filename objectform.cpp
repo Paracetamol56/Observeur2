@@ -4,24 +4,24 @@
 
 ///
 /// Constructor
-/// \brief NewObject::NewObject
+/// \brief ObjectForm::ObjectForm
 /// \param parent
 /// \param db
 ///
-ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db)
+ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     : QWidget(parent)
     , m_ui(new Ui::ObjectForm)
     , m_db(db)
+    , m_objectId(objectId)
 {
     // ########################## Setup the UI ######################### //
 
     m_ui->setupUi(this);
 
-
-    // ######### Get data from database to fill the constallation table ########## //
-
     // Open the database connection
     m_db->open();
+
+    // ######### Get data from database to fill the comboboxes ######### //
 
     // Query container object
     QSqlQuery query;
@@ -48,6 +48,169 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db)
     {
         QString itemStr = query.value(0).toString();
         m_ui->ConstellationComboBox->addItem(itemStr);
+    }
+
+    // ################ Get the object row from the id ################# //
+
+    if (m_objectId != 0)
+    {
+        // Set the window title
+        setWindowTitle("Modifier un objet");
+
+        // Set the query
+        query.prepare(
+                    "SELECT "
+                    "objects.`object_name`, "
+                    "objects.`object_messier`, "
+                    "objects.`object_ngc`, "
+                    "objects.`object_othername1`, "
+                    "objects.`object_othername2`, "
+                    "categories.`category_name`, "
+                    "constellations.`constellation_name`, "
+                    "objects.`object_apparent_magnitude`, "
+                    "objects.`object_secondary_magnitude`, "
+                    "objects.`object_distance`, "
+                    "objects.`object_diameter`, "
+                    "objects.`object_right_ascension`, "
+                    "objects.`object_declination`, "
+                    "skymap1.`skymap1_number`, "
+                    "skymap2.`skymap2_number`, "
+                    "skymap3.`skymap3_number`, "
+                    "objects.`object_appreciation`, "
+                    "objects.`object_note` "
+                    "FROM objects "
+                    "INNER JOIN categories "
+                    "ON categories.`category_id` = objects.`object_category` "
+                    "INNER JOIN constellations "
+                    "ON constellations.`constellation_id` = objects.`object_constellation` "
+                    "INNER JOIN skymap1 "
+                    "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
+                    "INNER JOIN skymap2 "
+                    "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
+                    "INNER JOIN skymap3 "
+                    "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
+                    "WHERE objects.`object_id` = \"" + QString::number(m_objectId) + "\";"
+                    );
+        query.exec();
+
+        // Get values from query and update the form
+
+        query.first();
+
+        // === General section
+        // Name
+        m_name = query.value(0).toString();
+        m_ui->NameLineEdit->setText(m_name);
+        // Messier
+        m_messier = query.value(1).toInt();
+        m_ui->MessierSpinBox->setValue(m_messier);
+        // NGC
+        m_ngc = query.value(2).toInt();
+        m_ui->NgcSpinBox->setValue(m_ngc);
+        // Other name (1)
+        m_otherName1 = query.value(3).toString();
+        m_ui->OtherNameLineEdit_1->setText(m_otherName1);
+        // Other name (2)
+        m_otherName2 = query.value(4).toString();
+        if (m_otherName2 != "")
+        {
+            m_ui->OtherNameLineEdit_2->setEnabled(true);
+            m_ui->OtherNameLineEdit_2->setText(m_otherName2);
+        }
+        // Category
+        m_category = query.value(5).toString();
+        m_ui->TypeComboBox->setCurrentText(m_category);
+        // Constellation
+        m_constellation = query.value(6).toString();
+        m_ui->ConstellationComboBox->setCurrentText(m_constellation);
+        // Apparent magnitude
+        m_apparentMagnitude = query.value(7).toDouble();
+        m_ui->ApparentMagnitudeDoubleSpinBox_1->setValue(m_apparentMagnitude);
+        // Secondary apparent magnitude
+        m_secondApparentMagnitude = query.value(8).toDouble();
+        if (m_secondApparentMagnitude != 0)
+        {
+            m_ui->ApparentMagnitudeDoubleSpinBox_2->setEnabled(true);
+            m_ui->ApparentMagnitudeDoubleSpinBox_2->setValue(m_secondApparentMagnitude);
+        }
+        // Distance
+        m_distance = query.value(9).toDouble();
+        m_ui->DistanceDoubleSpinBox->setValue(m_distance);
+        // Diameter
+        m_diameter = query.value(10).toDouble();
+        m_ui->DiametreDoubleSpinBox->setValue(m_diameter);
+
+        // === Position section
+        // Right ascension
+        m_rightAscension = query.value(11).toString();
+        {
+            int hour = m_rightAscension.split('h').front().toInt();
+            int minute = m_rightAscension.split('h').back().split('m').front().toInt();
+            double second = m_rightAscension.split('m').back().split('s').front().toDouble();
+            m_ui->RAHourSpinBox->setValue(hour);
+            m_ui->RAMinuteSpinBox->setValue(minute);
+            m_ui->RASecondDoubleSpinBox->setValue(second);
+        }
+        // Declination
+        m_declination = query.value(12).toString();
+        {
+            int degreeIndex = m_declination.indexOf("°");
+            int minuteIndex = m_declination.indexOf("'");
+            int secondIndex = m_declination.indexOf(QChar('\"'));
+
+            QString StrData = m_declination;
+            QString HexStrData;
+            for (int i = 0; i < StrData.length(); i++) {
+                HexStrData.append(QString::number(StrData.at(i).unicode(), 10));
+                HexStrData.append(" ");
+            }
+
+            qDebug() << HexStrData;
+
+            qDebug() << (char)39 << m_declination.count((char)39);
+
+            qDebug() << degreeIndex;
+            qDebug() << minuteIndex;
+            qDebug() << secondIndex;
+
+            qDebug() << m_declination.mid(0, degreeIndex);
+            qDebug() << m_declination.mid(degreeIndex, minuteIndex);
+            qDebug() << m_declination.mid(minuteIndex, secondIndex);
+
+            int degree = m_declination.split("°").front().toInt();
+            int minute = m_declination.split("°").back().split("\'").front().toInt();
+            double second = m_declination.split("\'").back().split("\"").front().toDouble();
+            m_ui->DecDegreeSpinBox->setValue(degree);
+            m_ui->DecMinuteSpinBox->setValue(minute);
+            m_ui->DecSecondDoubleSpinBox->setValue(second);
+        }
+
+        // === Skymap section
+        // Skymap 1
+        m_skyMap1 = query.value(13).toInt();
+        m_ui->Map1SpinBox->setValue(m_skyMap1);
+        // Skymap 2
+        m_skyMap2 = query.value(14).toInt();
+        m_ui->Map2SpinBox->setValue(m_skyMap2);
+        // Skymap 3
+        m_skyMap3 = query.value(15).toInt();
+        m_ui->Map3SpinBox->setValue(m_skyMap3);
+
+        // === Appreciation section
+        m_description = query.value(16).toString();
+        m_ui->DescriptionTextEdit->setText(m_description);
+        m_note = query.value(17).toInt();
+        m_ui->NoteDisplayLabel->setText(QString::number(m_note));
+        m_ui->NoteHorizontalSlider->setValue(m_note);
+    }
+    else
+    {
+        query.prepare("SELECT MAX(object_id) FROM objects");
+
+        query.exec();
+
+        query.first();
+        m_objectId = query.value(0).toInt() + 1;
     }
 
     // Close the database connection
@@ -235,7 +398,7 @@ bool ObjectForm::CheckInput()
             + QString::number(m_ui->DecMinuteSpinBox->value())
             + "\'"
             + QString::number(m_ui->DecSecondDoubleSpinBox->value())
-            + "\"";
+            + "\'\'";
     qDebug() << "OK : Declination";
     qDebug() << "Name : " << testDeclination;
 
@@ -260,6 +423,10 @@ bool ObjectForm::CheckInput()
     m_apparentMagnitude = testApparentMagnitude;
     // Apperent magnitude (secondary)
     m_secondApparentMagnitude = testSecondApparentMagnitude; // <<-- NULL if undefined
+    // Diameter
+    m_diameter = m_ui->DiametreDoubleSpinBox->value();
+    // Distance
+    m_distance = m_ui->DistanceDoubleSpinBox->value();
 
     // === Position section
     // Right ascension
@@ -356,31 +523,55 @@ void ObjectForm::on_SavePushButton_clicked()
     {
         if (CheckInput())
         {
+            m_db->open();
+
             QSqlQuery query;
+
             query.prepare(
-                        "INSERT INTO objects "
-                        "(object_name, object_messier, object_ngc, object_othername1, object_othername2, object_ category, object_constellation, object_apparent_magnitude, object_secondary_magnitude, object_right_ascension, object_delination, object_appreciation, object_note, object_skymap1_id, object_skymap2_id, object_skymap3_id, object_distance, object_diameter) "
+                        QString("INSERT INTO objects "
+                        "(`object_id`, "
+                        "`object_name`, "
+                        "`object_messier`, "
+                        "`object_ngc`, "
+                        "`object_othername1`, "
+                        "`object_othername2`, "
+                        "`object_apparent_magnitude`, "
+                        "`object_secondary_magnitude`, "
+                        "`object_distance`, "
+                        "`object_diameter`, "
+                        "`object_right_ascension`, "
+                        "`object_declination`, "
+                        "`object_skymap1_id`, "
+                        "`object_skymap2_id`, "
+                        "`object_skymap3_id`, "
+                        "`object_appreciation`, "
+                        "`object_note`) "
                         "VALUES "
-                        "(:name, :messier, :ngc, :othername1, :othername2, :category, :constellation, :apparentMagnitude, :secondaryApparentMagnitude, :distance, :diameter, :rightAscension, :declination, :skymap1, :skymap2, :skymap3, :description, :note)");
-            query.bindValue(":name", m_name);
-            query.bindValue(":messier", m_messier);
-            query.bindValue(":ngc", m_ngc);
-            query.bindValue(":othername1", m_otherName1);
-            query.bindValue(":othername2", m_otherName2);
+                        "(" + QString::number(m_objectId) + ", \""
+                        + m_name +"\", "
+                        + QString::number(m_messier) + ", "
+                        + QString::number(m_ngc) + ", \""
+                        + m_otherName1 + "\", \""
+                        + m_otherName2 + "\", "
+                        + QString::number(m_apparentMagnitude) + ", "
+                        + QString::number(m_secondApparentMagnitude) + ", "
+                        + QString::number(m_distance) + ", "
+                        + QString::number(m_diameter) + ", \""
+                        + m_rightAscension + "\", \""
+                        + m_declination + "\", "
+                        + QString::number(m_skyMap1) + ", "
+                        + QString::number(m_skyMap2) + ", "
+                        + QString::number(m_skyMap3) + ", \""
+                        + m_description + "\", "
+                        + QString::number(m_note) + ");")
+                        );
 
-            query.bindValue(":apparentMagnitude", m_apparentMagnitude);
-            query.bindValue(":secondaryApparentMagnitude", m_secondApparentMagnitude);
-            query.bindValue(":distance", m_distance);
-            query.bindValue(":diamter", m_diameter);
-            query.bindValue(":rightAscension", m_rightAscension);
-            query.bindValue(":declination", m_declination);
-            query.bindValue(":skymap1", QString::number(m_skyMap1));
-            query.bindValue(":skymap2", QString::number(m_skyMap2));
-            query.bindValue(":skymap3", QString::number(m_skyMap3));
-            query.bindValue(":description", m_description);
-            query.bindValue(":note", QString::number(m_note));
+            qDebug() << query.exec();
 
-            query.exec();
+            qDebug() << query.lastError();
+            qDebug() << query.lastQuery();
+
+            m_db->close();
         }
     }
     catch (Error e)
