@@ -16,6 +16,12 @@ Error::Error(ErrorPriority prioryty, ErrorType type, QString message)
 }
 
 
+///
+/// SQL error constructor
+/// \brief Error::Error
+/// \param priority
+/// \param query
+///
 Error::Error(ErrorPriority priority, QSqlQuery *query)
 {
     m_prioryty = priority;
