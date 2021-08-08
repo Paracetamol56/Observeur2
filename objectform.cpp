@@ -45,7 +45,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
     // === Constellation query
     // Set the query
-    query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellations` WHERE 1 ORDER BY `constellation_name` ASC");
+    query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellations` WHERE 1");
 
     if (query.exec() == false)
     {
@@ -232,6 +232,8 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
         query.first();
         m_objectId = query.value(0).toInt() + 1;
+        qDebug() << query.value(0).toInt();
+        qDebug() << m_objectId;
     }
 
     // Close the database connection
@@ -380,8 +382,7 @@ bool ObjectForm::CheckInput()
                         "WHERE `category_name` = \"" + m_ui->TypeComboBox->currentText() + "\"");
         if (query.exec() == false)
         {
-            Error sqlError(ErrorPriority::Warning, &query);
-            sqlError.printMessage();
+            throw Error(ErrorPriority::Warning, &query);
         }
         m_db->close();
         if (query.next())
@@ -403,8 +404,7 @@ bool ObjectForm::CheckInput()
                         "WHERE `constellation_name` = \"" + m_ui->ConstellationComboBox->currentText() + "\"");
         if (query.exec() == false)
         {
-            Error sqlError(ErrorPriority::Warning, &query);
-            sqlError.printMessage();
+            throw Error(ErrorPriority::Warning, &query);
         }
         m_db->close();
         if (query.next())
@@ -642,10 +642,13 @@ void ObjectForm::on_SavePushButton_clicked()
                 sqlError.printMessage();
             }
 
-            qDebug() << query.lastError();
-            qDebug() << query.lastQuery();
-
             m_db->close();
+
+            close();
+        }
+        else
+        {
+            throw Error(ErrorPriority::Undefined, ErrorType::Undefined, "La verification des entrés à échoué");
         }
     }
     catch (Error e)
