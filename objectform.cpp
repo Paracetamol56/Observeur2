@@ -75,7 +75,9 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
                     "objects.`object_ngc`, "
                     "objects.`object_othername1`, "
                     "objects.`object_othername2`, "
+                    "objects.`object_category`"
                     "categories.`category_name`, "
+                    "objects.`object_constellation`"
                     "constellations.`constellation_name`, "
                     "objects.`object_apparent_magnitude`, "
                     "objects.`object_secondary_magnitude`, "
@@ -133,31 +135,31 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
             m_ui->OtherNameLineEdit_2->setText(m_otherName2);
         }
         // Category
-        m_category = query.value(5).toString();
-        m_ui->TypeComboBox->setCurrentText(m_category);
+        m_category = query.value(5).toInt();
+        m_ui->TypeComboBox->setCurrentText(query.value(6).toString());
         // Constellation
-        m_constellation = query.value(6).toString();
-        m_ui->ConstellationComboBox->setCurrentText(m_constellation);
+        m_constellation = query.value(7).toInt();
+        m_ui->ConstellationComboBox->setCurrentText(query.value(8).toString());
         // Apparent magnitude
-        m_apparentMagnitude = query.value(7).toDouble();
+        m_apparentMagnitude = query.value(9).toDouble();
         m_ui->ApparentMagnitudeDoubleSpinBox_1->setValue(m_apparentMagnitude);
         // Secondary apparent magnitude
-        m_secondApparentMagnitude = query.value(8).toDouble();
+        m_secondApparentMagnitude = query.value(10).toDouble();
         if (m_secondApparentMagnitude != 0)
         {
             m_ui->ApparentMagnitudeDoubleSpinBox_2->setEnabled(true);
             m_ui->ApparentMagnitudeDoubleSpinBox_2->setValue(m_secondApparentMagnitude);
         }
         // Distance
-        m_distance = query.value(9).toDouble();
+        m_distance = query.value(11).toDouble();
         m_ui->DistanceDoubleSpinBox->setValue(m_distance);
         // Diameter
-        m_diameter = query.value(10).toDouble();
+        m_diameter = query.value(12).toDouble();
         m_ui->DiametreDoubleSpinBox->setValue(m_diameter);
 
         // === Position section
         // Right ascension
-        m_rightAscension = query.value(11).toString();
+        m_rightAscension = query.value(13).toString();
         {
             int hour = m_rightAscension.split('h').front().toInt();
             int minute = m_rightAscension.split('h').back().split('m').front().toInt();
@@ -167,7 +169,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
             m_ui->RASecondDoubleSpinBox->setValue(second);
         }
         // Declination
-        m_declination = query.value(12).toString();
+        m_declination = query.value(14).toString();
         {
             int degreeIndex = m_declination.indexOf("°");
             int minuteIndex = m_declination.indexOf("'");
@@ -202,19 +204,19 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
         // === Skymap section
         // Skymap 1
-        m_skyMap1 = query.value(13).toInt();
+        m_skyMap1 = query.value(15).toInt();
         m_ui->Map1SpinBox->setValue(m_skyMap1);
         // Skymap 2
-        m_skyMap2 = query.value(14).toInt();
+        m_skyMap2 = query.value(16).toInt();
         m_ui->Map2SpinBox->setValue(m_skyMap2);
         // Skymap 3
-        m_skyMap3 = query.value(15).toInt();
+        m_skyMap3 = query.value(17).toInt();
         m_ui->Map3SpinBox->setValue(m_skyMap3);
 
         // === Appreciation section
-        m_description = query.value(16).toString();
+        m_description = query.value(18).toString();
         m_ui->DescriptionTextEdit->setText(m_description);
-        m_note = query.value(17).toInt();
+        m_note = query.value(19).toInt();
         m_ui->NoteDisplayLabel->setText(QString::number(m_note));
         m_ui->NoteHorizontalSlider->setValue(m_note);
     }
@@ -266,11 +268,7 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_name` = \"" + testName + "\"");
-        if (query.exec() == false)
-        {
-            Error sqlError(ErrorPriority::Warning, &query);
-            sqlError.printMessage();
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -292,11 +290,7 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_messier` = \"" + QString::number(testMessier) + "\"");
-        if (query.exec() == false)
-        {
-            Error sqlError(ErrorPriority::Warning, &query);
-            sqlError.printMessage();
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -318,11 +312,7 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_ngc` = \"" + QString::number(testNgc) + "\"");
-        if (query.exec() == false)
-        {
-            Error sqlError(ErrorPriority::Warning, &query);
-            sqlError.printMessage();
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -344,11 +334,7 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName1 + "\" OR `object_othername2` = \"" + testOtherName1 + "\"");
-        if (query.exec() == false)
-        {
-            Error sqlError(ErrorPriority::Warning, &query);
-            sqlError.printMessage();
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -370,11 +356,7 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName2 + "\" OR `object_othername2` = \"" + testOtherName2 + "\"");
-        if (query.exec() == false)
-        {
-            Error sqlError(ErrorPriority::Warning, &query);
-            sqlError.printMessage();
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -385,6 +367,51 @@ bool ObjectForm::CheckInput()
         {
             qDebug() << "OK : othername2";
             qDebug() << "Name : " << testOtherName2;
+        }
+    }
+
+    // === Type verification
+    // Select type id with the same type name
+    int testType = 0;
+    {
+        m_db->open();
+        QSqlQuery query("SELECT `category_id` "
+                        "FROM `categories` "
+                        "WHERE `category_name` = \"" + m_ui->TypeComboBox->currentText() + "\"");
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Warning, &query);
+            sqlError.printMessage();
+        }
+        m_db->close();
+        if (query.next())
+        {
+            testType = query.value(0).toInt();
+            qDebug() << "OK : Types";
+            qDebug() << "Name : " << testType;
+        }
+    }
+
+
+    // === Constellation verification
+    // Select constellation id with the same constellation name
+    int testConstellation = 0;
+    {
+        m_db->open();
+        QSqlQuery query("SELECT `constellation_id` "
+                        "FROM `constellations` "
+                        "WHERE `constellation_name` = \"" + m_ui->ConstellationComboBox->currentText() + "\"");
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Warning, &query);
+            sqlError.printMessage();
+        }
+        m_db->close();
+        if (query.next())
+        {
+            testConstellation = query.value(0).toInt();
+            qDebug() << "OK : Constellation";
+            qDebug() << "Name : " << testConstellation;
         }
     }
 
@@ -455,9 +482,9 @@ bool ObjectForm::CheckInput()
     m_otherName1 = testOtherName1; // <<-- NULL if undefined
     m_otherName2 = testOtherName2; // <<-- NULL if undefined
     // Type
-    m_category = m_ui->TypeComboBox->currentText();
+    m_category = testType;
     // Constellation
-    m_constellation = m_ui->ConstellationComboBox->currentText();
+    m_constellation = testConstellation;
     // Apperent magnitude (primary)
     m_apparentMagnitude = testApparentMagnitude;
     // Apperent magnitude (secondary)
@@ -574,6 +601,8 @@ void ObjectForm::on_SavePushButton_clicked()
                         "`object_ngc`, "
                         "`object_othername1`, "
                         "`object_othername2`, "
+                        "`object_category`, "
+                        "`object_constellation`, "
                         "`object_apparent_magnitude`, "
                         "`object_secondary_magnitude`, "
                         "`object_distance`, "
@@ -592,6 +621,8 @@ void ObjectForm::on_SavePushButton_clicked()
                         + QString::number(m_ngc) + ", \""
                         + m_otherName1 + "\", \""
                         + m_otherName2 + "\", "
+                        + QString::number(m_category) + ", "
+                        + QString::number(m_constellation) + ", "
                         + QString::number(m_apparentMagnitude) + ", "
                         + QString::number(m_secondApparentMagnitude) + ", "
                         + QString::number(m_distance) + ", "

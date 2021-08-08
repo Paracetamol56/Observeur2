@@ -25,3 +25,15 @@ TableDialog::~TableDialog()
 {
     delete m_ui;
 }
+
+
+void TableDialog::on_ClosePushButton_clicked()
+{
+    close();
+}
+
+
+void TableDialog::on_PrintPushButton_clicked()
+{
+
+}

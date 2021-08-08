@@ -47,8 +47,8 @@ private:
     int m_ngc = 0;
     QString m_otherName1 = "";
     QString m_otherName2 = "";
-    QString m_category = "";
-    QString m_constellation = "";
+    int m_category = 0;
+    int m_constellation = 0;
     double m_apparentMagnitude = 0.00;
     double m_secondApparentMagnitude = 0.00;
     double m_distance = 0.00;

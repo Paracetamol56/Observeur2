@@ -42,6 +42,11 @@ public:
 
     // Table populate function
     virtual void tablePopulate() =0;
+
+private slots:
+
+    void on_ClosePushButton_clicked();
+    void on_PrintPushButton_clicked();
 };
 
 #endif // TABLEDIALOG_H
