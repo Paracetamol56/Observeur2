@@ -1,8 +1,18 @@
 #ifndef ERRORHANDLER_H
 #define ERRORHANDLER_H
 
-#include <QString>
+// MessageBox
 #include <QMessageBox>
+
+// SQL Database
+#include <QSqlDatabase>
+#include <QSql>
+#include <QSqlError>
+#include <QSqlQuery>
+
+// Utilities
+#include <QString>
+#include <QStringList>
 #include <QApplication>
 
 enum class ErrorPriority
@@ -22,7 +32,8 @@ enum class ErrorType
     Undefined,
     InvalidInput,
     MissingInput,
-    FileMissing
+    FileMissing,
+    SqlError
 };
 
 class Error
@@ -31,14 +42,18 @@ private:
     // ###################### Private attributes ####################### //
 
     QString m_message = "";
-    ErrorPriority m_prioryty;
-    ErrorType m_type;
+    ErrorPriority m_prioryty = ErrorPriority::Undefined;
+    ErrorType m_type = ErrorType::Undefined;
+    QSqlQuery *m_sqlQuery = nullptr;
 
 public:
     // ######################## Public methods ######################### //
 
-    // Constructor
+    // Constructors
+    // Classic
     Error(ErrorPriority prioryty = ErrorPriority::Undefined, ErrorType type = ErrorType::Undefined, QString message = "");
+    // SQL error
+    Error(ErrorPriority prioryty = ErrorPriority::Undefined, QSqlQuery *query = nullptr);
 
     // Display the error in a QMessageBox
     void printMessage();
@@ -47,11 +62,13 @@ public:
     QString getMessage();
     ErrorPriority getPrioryty();
     ErrorType getType();
+    QSqlQuery *getSqlQuery();
 
     // Setters
     void setMessage(QString message);
     void setPrioryty(ErrorPriority priority);
     void setType(ErrorType type);
+    void setSqlQuery(QSqlQuery *query);
 };
 
 #endif // ERRORHANDLER_H

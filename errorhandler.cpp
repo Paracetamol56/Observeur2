@@ -2,7 +2,7 @@
 
 
 ///
-/// Constructor
+/// Classic constructor
 /// \brief Error::Error
 /// \param prioryty
 /// \param type
@@ -16,13 +16,26 @@ Error::Error(ErrorPriority prioryty, ErrorType type, QString message)
 }
 
 
+Error::Error(ErrorPriority priority, QSqlQuery *query)
+{
+    m_prioryty = priority;
+    m_type = ErrorType::SqlError;
+    m_sqlQuery = query;
+}
+
 ///
 /// Display the error in a QMessageBox
 /// \brief Error::printMessage
 ///
 void Error::printMessage()
 {
+    // Main message box
     QMessageBox errorMessage;
+
+    // Priority setting
+    // Set the title
+    // Set the icon
+    // Set the buttons
     switch (m_prioryty) {
     case ErrorPriority::Undefined:
         errorMessage.setStandardButtons(QMessageBox::Ok);
@@ -48,6 +61,8 @@ void Error::printMessage()
         break;
     }
 
+    // Type
+    // Set the text
     switch (m_type) {
     case ErrorType::Undefined:
         errorMessage.setText("Error code 0x00");
@@ -64,12 +79,18 @@ void Error::printMessage()
     case ErrorType::FileMissing:
         errorMessage.setText("Error code 0x03 : FileMissing");
         break;
+
+    case ErrorType::SqlError:
+        errorMessage.setText("Error code 0x04 : SqlError");
+        errorMessage.setDetailedText("SQL ERROR : \n" + m_sqlQuery->lastError().text() + "\n\nON QUERY : \n" + m_sqlQuery->lastQuery());
+        break;
     }
 
+    // Set the informative message
     errorMessage.setInformativeText(m_message);
 
 
-
+    // Action
     switch (errorMessage.exec())
     {
     case QMessageBox::Ok:

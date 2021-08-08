@@ -30,11 +30,15 @@ void ObjectTable::tablePopulate()
     // Set the query
     query.prepare(
                 "SELECT "
-                "`object_name` AS `Nom`, "
-                "`object_messier` AS `Messier` "
+                "* "
                 "FROM `objects` "
                 "WHERE 1");
-    query.exec();
+
+    if (query.exec() == false)
+    {
+        Error sqlError(ErrorPriority::Warning, &query);
+        sqlError.printMessage();
+    }
 
     // Setup a query model to hold the data
     QSqlQueryModel *model = new QSqlQueryModel();

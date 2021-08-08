@@ -3,6 +3,9 @@
 
 #include "tabledialog.h"
 
+// Error handling
+#include "errorhandler.h"
+
 class TypeTable
     : public TableDialog
 {

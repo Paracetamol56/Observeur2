@@ -29,7 +29,12 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     // === Type query
     // Set the query
     query.prepare("SELECT `category_name` AS `Type` FROM `categories` WHERE 1 ORDER BY `category_name` ASC");
-    query.exec();
+
+    if (query.exec() == false)
+    {
+        Error sqlError(ErrorPriority::Warning, &query);
+        sqlError.printMessage();
+    }
 
     // Add items one by one in a list widget
     while(query.next())
@@ -41,7 +46,12 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     // === Constellation query
     // Set the query
     query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellations` WHERE 1 ORDER BY `constellation_name` ASC");
-    query.exec();
+
+    if (query.exec() == false)
+    {
+        Error sqlError(ErrorPriority::Warning, &query);
+        sqlError.printMessage();
+    }
 
     // Add items one by one in a list widget
     while(query.next())
@@ -91,7 +101,12 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
                     "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
                     "WHERE objects.`object_id` = \"" + QString::number(m_objectId) + "\";"
                     );
-        query.exec();
+
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Warning, &query);
+            sqlError.printMessage();
+        }
 
         // Get values from query and update the form
 
@@ -207,7 +222,11 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     {
         query.prepare("SELECT MAX(object_id) FROM objects");
 
-        query.exec();
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Warning, &query);
+            sqlError.printMessage();
+        }
 
         query.first();
         m_objectId = query.value(0).toInt() + 1;
@@ -247,7 +266,11 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_name` = \"" + testName + "\"");
-        query.exec();
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Warning, &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
@@ -269,7 +292,11 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_messier` = \"" + QString::number(testMessier) + "\"");
-        query.exec();
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Warning, &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
@@ -291,7 +318,11 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_ngc` = \"" + QString::number(testNgc) + "\"");
-        query.exec();
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Warning, &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
@@ -313,7 +344,11 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName1 + "\" OR `object_othername2` = \"" + testOtherName1 + "\"");
-        query.exec();
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Warning, &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
@@ -335,7 +370,11 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName2 + "\" OR `object_othername2` = \"" + testOtherName2 + "\"");
-        query.exec();
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Warning, &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
@@ -566,7 +605,11 @@ void ObjectForm::on_SavePushButton_clicked()
                         + QString::number(m_note) + ");")
                         );
 
-            qDebug() << query.exec();
+            if (query.exec() == false)
+            {
+                Error sqlError(ErrorPriority::Warning, &query);
+                sqlError.printMessage();
+            }
 
             qDebug() << query.lastError();
             qDebug() << query.lastQuery();

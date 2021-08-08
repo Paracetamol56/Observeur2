@@ -41,7 +41,12 @@ MainWindow::MainWindow(QWidget* parent)
         // === Constellation query
         // Set the query
         query.prepare("SELECT `constellation_name` AS `Constellations` FROM `constellations` WHERE 1");
-        query.exec();
+
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Critical, &query);
+            sqlError.printMessage();
+        }
 
         // Add items one by one in a list widget
         while(query.next())
@@ -57,7 +62,12 @@ MainWindow::MainWindow(QWidget* parent)
         // === Type query
         // Set the query
         query.prepare("SELECT `category_name` AS `Type` FROM `categories` WHERE 1 ORDER BY `Type`");
-        query.exec();
+
+        if (query.exec() == false)
+        {
+            Error sqlError(ErrorPriority::Critical, &query);
+            sqlError.printMessage();
+        }
 
         // Add items one by one in a list widget
         while(query.next())
@@ -160,7 +170,11 @@ void MainWindow::updateObject()
                 "ORDER BY objects.`object_name` ASC;"
                 );
 
-    query.exec();
+    if (query.exec() == false)
+    {
+        Error sqlError(ErrorPriority::Critical, &query);
+        sqlError.printMessage();
+    }
 
     // Setup a query model to hold the data
     QSqlQueryModel *model = new QSqlQueryModel();
