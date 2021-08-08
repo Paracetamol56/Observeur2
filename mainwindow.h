@@ -26,13 +26,13 @@
 #include <QListWidgetItem>
 
 // Other windows
-#include <constellationdialog.h>
-#include <typetable.h>
-#include <objecttable.h>
-#include <objectform.h>
+#include "constellationtable.h"
+#include "typetable.h"
+#include "objecttable.h"
+#include "objectform.h"
 
 // Error handling
-#include <errorhandler.h>
+#include "errorhandler.h"
 
 namespace Ui
 {

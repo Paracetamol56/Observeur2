@@ -1,4 +1,4 @@
-#include <typetable.h>
+#include "typetable.h"
 #include "ui_tabledialog.h"
 
 
@@ -48,9 +48,17 @@ void TypeTable::tablePopulate()
     // Put the model into the table view
     m_ui->tableView->setModel(sortModel);
 
+    // Window style
+    setWindowTitle("Types");
+    m_ui->label->setText("Tous les types");
+
     // Table style
+    m_ui->tableView->setSelectionMode(QAbstractItemView::NoSelection);
+    m_ui->tableView->verticalHeader()->setVisible(false);
+    m_ui->tableView->horizontalHeader()->setStretchLastSection(true);
     m_ui->tableView->resizeColumnToContents(0);
     m_ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
 
     // Close the database connection
     m_db->close();

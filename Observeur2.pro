@@ -16,17 +16,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    constellationdialog.cpp \
+    constellationtable.cpp \
     errorhandler.cpp \
     main.cpp \
     mainwindow.cpp \
     objectform.cpp \
     objecttable.cpp \
-    typedialog.cpp \
+    tabledialod.cpp \
     typetable.cpp
 
 HEADERS += \
-    constellationdialog.h \
+    constellationtable.h \
     errorhandler.h \
     mainwindow.h \
     objectform.h \

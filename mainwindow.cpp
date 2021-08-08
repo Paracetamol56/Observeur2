@@ -211,8 +211,8 @@ void MainWindow::on_actionA_propos_triggered()
 ///
 void MainWindow::on_AllConsellationsButton_clicked()
 {
-    ConstellationDialog dialog(nullptr, m_db);
-    dialog.exec();
+    ConstellationTable constellationTableDIalog(nullptr, m_db);
+    constellationTableDIalog.exec();
 }
 
 

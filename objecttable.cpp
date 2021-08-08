@@ -47,7 +47,12 @@ void ObjectTable::tablePopulate()
     // Put the model into the table view
     m_ui->tableView->setModel(sortModel);
 
+    // Window style
+    setWindowTitle("Types");
+    m_ui->label->setText("Tous les types");
+
     // Table style
+    m_ui->tableView->setSelectionMode(QAbstractItemView::NoSelection);
     m_ui->tableView->resizeColumnToContents(0);
     m_ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 

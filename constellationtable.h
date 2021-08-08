@@ -1,9 +1,9 @@
-#ifndef OBJECTTABLE_H
-#define OBJECTTABLE_H
+#ifndef CONSTELLATIONTABLE_H
+#define CONSTELLATIONTABLE_H
 
 #include "tabledialog.h"
 
-class ObjectTable
+class ConstellationTable
     : public TableDialog
 {
 
@@ -11,10 +11,10 @@ public:
     // ######################## Public methods ######################### //
 
     // Constructor
-    ObjectTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
+    ConstellationTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
 
     // Table populate function
     void tablePopulate() override;
 };
 
-#endif // OBJECTTABLE_H
+#endif // CONSTELLATIONTABLE_H

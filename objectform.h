@@ -20,7 +20,7 @@
 #include <QStringList>
 
 // Error handling
-#include <errorhandler.h>
+#include "errorhandler.h"
 
 
 namespace Ui

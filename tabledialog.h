@@ -41,7 +41,7 @@ public:
     ~TableDialog();
 
     // Table populate function
-    virtual void tablePopulate();
+    virtual void tablePopulate() =0;
 };
 
 #endif // TABLEDIALOG_H

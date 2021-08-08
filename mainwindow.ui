@@ -635,13 +635,6 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QPushButton" name="SortButton_3">
-            <property name="text">
-             <string>Filtrer</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
        </layout>
