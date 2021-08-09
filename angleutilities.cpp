@@ -11,13 +11,43 @@ Angle::Angle(double totalDegree)
 // Constructor (from three values and a bool to choose between hour angle and degree angle)
 Angle::Angle(bool isHour, int degree, int minute, double seconde)
 {
-    if (isHour == true)
+    try
     {
-        m_totalDegree = ( degree * 15 ) + ( minute / 60 ) + ( seconde / 3600 );
+        if (isHour == true)
+        {
+            if (degree < -360 || degree > 360)
+                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\ndegré en dehors de l'intervalle");
+
+            if (minute < 0 || minute >= 60)
+                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\nminute en dehors de l'intervalle");
+
+            if (seconde < 0 || seconde >= 60)
+                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\nseconde en dehors de l'intervalle");
+        }
+        else
+        {
+            if (degree < 0 || 24 >= 360)
+                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\ndegré en dehors de l'intervalle");
+
+            if (minute < 0 || minute >= 60)
+                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\nminute en dehors de l'intervalle");
+
+            if (seconde < 0 || seconde >= 60)
+                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\nseconde en dehors de l'intervalle");
+        }
+
+        if (isHour == true)
+        {
+            m_totalDegree = ( degree * 15 ) + ( minute / 60 ) + ( seconde / 3600 );
+        }
+        else
+        {
+            m_totalDegree = degree + ( minute / 60 ) + ( seconde / 3600 );
+        }
     }
-    else
+    catch (Error e)
     {
-        m_totalDegree = degree + ( minute / 60 ) + ( seconde / 3600 );
+        e.printMessage();
     }
 }
 
@@ -30,7 +60,7 @@ Angle::Angle(QString strAngle)
         if (strAngle.count() >= 12 && strAngle.count() < 14)
         {
             bool isHour = false;
-            size_t indexD = 0, indexM = 0, indexS = 0;
+            size_t indexD = 0, indexM = 0;
 
             // Index of 'h' or '°'
             if (strAngle.count('h') == 1)
@@ -41,7 +71,7 @@ Angle::Angle(QString strAngle)
             else if (strAngle.count(QChar(176)) == 1)
                 indexD = strAngle.indexOf(QChar(176));
             else
-                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nmissing character 'h' or '°'");
+                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ncharactère 'h' ou '°' manquant");
 
             if (isHour == true)
             {
@@ -49,11 +79,11 @@ Angle::Angle(QString strAngle)
                 if (strAngle.count('m') == 1)
                     indexM = strAngle.indexOf('m');
                 else
-                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nmissing character 'm'");
+                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ncharactère 'm' manquant");
 
                 // Index of 's'
                 if (strAngle.count('s') != 1)
-                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nmissing character 's'");
+                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ncharactère 's' manquant");
             }
             else
             {
@@ -61,11 +91,11 @@ Angle::Angle(QString strAngle)
                 if (strAngle.count(QChar(39)) == 1)
                     indexM = strAngle.indexOf(QChar(39));
                 else
-                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nmissing character '\''");
+                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ncharactère '\'' manquant");
 
                 // Index of '\"'
                 if (strAngle.count(QChar(34)) != 1)
-                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nmissing character '\"'");
+                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ncharactère '\"' manquant");
             }
 
             if (isHour == true)
@@ -83,7 +113,7 @@ Angle::Angle(QString strAngle)
         }
         else
         {
-            throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nimpossible size");
+            throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ntaille impossible");
         }
     }
     catch (Error e)

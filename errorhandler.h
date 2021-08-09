@@ -35,7 +35,8 @@ enum class ErrorType
     FileMissing,
     SqlError,
     AngleError,
-    InvalidAngleString
+    InvalidAngleString,
+    InvalidAngleInput
 };
 
 class Error
