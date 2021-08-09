@@ -11,12 +11,9 @@ class TypeTable
 {
 
 public:
-    // ######################## Public methods ######################### //
 
-    // Constructor
     TypeTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
 
-    // Table populate function
     void tablePopulate() override;
 };
 

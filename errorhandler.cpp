@@ -90,6 +90,9 @@ void Error::printMessage()
         errorMessage.setText("Error code 0x04 : SqlError");
         errorMessage.setDetailedText("SQL ERROR : \n" + m_sqlQuery->lastError().text() + "\n\nON QUERY : \n" + m_sqlQuery->lastQuery());
         break;
+    case ErrorType::AngleError:
+        errorMessage.setText("Error code 0x05 : AngleError");
+        break;
     }
 
     // Set the informative message

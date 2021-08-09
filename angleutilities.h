@@ -21,17 +21,30 @@ public:
 
     double getTotalDegree() const;
     double getTotalHour() const;
-    void setTotalDegree(double totalDegree);
+    void setTotalDegree(double totalDegree = 0.00);
+    void setTotalHour(double totalHour = 0.00);
 
+    // Degree angle getters
     int getDegree() const;
     int getDegreeMinute() const;
     double getDegreeSecond() const;
     QString getDegreeAngle() const;
 
+    // Degree angle setters
+    void setDegree(int degree = 0);
+    void setDegreeMinute(int minute = 0);
+    void setDegreeSecond(double second = 0.00);
+
+    // Hour angle getters
     int getHour() const;
     int getHourMinute() const;
     double getHourSecond() const;
     QString getHourAngle() const;
+
+    // Hour angle setters
+    void setHour(int hour = 0);
+    void setHourMinute(int minute = 0);
+    void setHourSecond(double seconde = 0.00);
 };
 
 // Define a celestial position in equatorial coordinate system

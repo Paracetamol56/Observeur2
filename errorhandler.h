@@ -33,13 +33,13 @@ enum class ErrorType
     InvalidInput,
     MissingInput,
     FileMissing,
-    SqlError
+    SqlError,
+    AngleError
 };
 
 class Error
 {
 private:
-    // ###################### Private attributes ####################### //
 
     QString m_message = "";
     ErrorPriority m_prioryty = ErrorPriority::Undefined;
@@ -47,7 +47,6 @@ private:
     QSqlQuery *m_sqlQuery = nullptr;
 
 public:
-    // ######################## Public methods ######################### //
 
     // Constructors
     // Classic

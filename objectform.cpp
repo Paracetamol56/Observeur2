@@ -2,26 +2,18 @@
 #include "ui_objectform.h"
 
 
-///
-/// Constructor
-/// \brief ObjectForm::ObjectForm
-/// \param parent
-/// \param db
-///
 ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     : QWidget(parent)
     , m_ui(new Ui::ObjectForm)
     , m_db(db)
     , m_objectId(objectId)
 {
-    // ########################## Setup the UI ######################### //
-
     m_ui->setupUi(this);
 
     // Open the database connection
     m_db->open();
 
-    // ######### Get data from database to fill the comboboxes ######### //
+    // Get data from database to fill the comboboxes
 
     // Query container object
     QSqlQuery query;
@@ -60,7 +52,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
         m_ui->ConstellationComboBox->addItem(itemStr);
     }
 
-    // ################ Get the object row from the id ################# //
+    // Get the object row from the id
 
     if (m_objectId != 0)
     {
@@ -241,21 +233,13 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 }
 
 
-///
-/// Destructor
-/// \brief NewObject::~NewObject
-///
 ObjectForm::~ObjectForm()
 {
     delete m_ui;
 }
 
 
-///
-/// Verify all input fields and call error message in case of invalid values
-/// \brief NewObject::CheckInput
-/// \return true if all is right
-///
+// Verify all input fields and call error message in case of invalid values
 bool ObjectForm::CheckInput()
 {
     // === Name verification
@@ -446,7 +430,7 @@ bool ObjectForm::CheckInput()
 
 
     // === Position verification
-    // RA
+    // Right ascension
     QString testRightAscention =
             QString::number(m_ui->RAHourSpinBox->value())
             + "h"
@@ -457,7 +441,7 @@ bool ObjectForm::CheckInput()
     qDebug() << "OK : RightAscention";
     qDebug() << "Name : " << testRightAscention;
 
-    // Dec
+    // Declination
     QString testDeclination =
             QString::number(m_ui->DecDegreeSpinBox->value())
             + "°"
@@ -518,11 +502,9 @@ bool ObjectForm::CheckInput()
 }
 
 
-///
-/// When the user finish typing in OtherNameLineEdit_1,
-/// check if there is text and enable (or not) OtherNameLineEdit_2
-/// \brief NewObject::on_OtherNameLineEdit_1_editingFinished
-///
+
+// When the user finish typing in OtherNameLineEdit_1,
+// check if there is text and enable (or not) OtherNameLineEdit_2
 void ObjectForm::on_OtherNameLineEdit_1_editingFinished()
 {
     if (m_ui->OtherNameLineEdit_1->text() == "")
@@ -538,12 +520,8 @@ void ObjectForm::on_OtherNameLineEdit_1_editingFinished()
 }
 
 
-///
-/// When the user finish selection,
-/// check if the choice is "Etoile double" and enable (or not) OtherNameLineEdit_2
-/// \brief NewObject::on_TypeComboBox_currentTextChanged
-/// \param arg1
-///
+// When the user finish selection,
+// check if the choice is "Etoile double" and enable (or not) OtherNameLineEdit_2
 void ObjectForm::on_TypeComboBox_currentTextChanged(const QString &arg1)
 {
     if (arg1 == "Etoile double")
@@ -557,11 +535,7 @@ void ObjectForm::on_TypeComboBox_currentTextChanged(const QString &arg1)
 }
 
 
-///
-/// When The note value is changed on the slider
-/// \brief NewObject::on_NoteHorizontalSlider_valueChanged
-/// \param value
-///
+// When The note value is changed on the slider
 void ObjectForm::on_NoteHorizontalSlider_valueChanged(int value)
 {
     m_ui->NoteDisplayLabel->setText(QString(QString::number(value) + "/10"));
@@ -569,20 +543,12 @@ void ObjectForm::on_NoteHorizontalSlider_valueChanged(int value)
 }
 
 
-///
-/// When the cancel button is clicked
-/// \brief NewObject::on_CancelPushButton_clicked
-///
 void ObjectForm::on_CancelPushButton_clicked()
 {
     close();
 }
 
 
-///
-/// Save Button
-/// \brief NewObject::on_SavePushButton_clicked
-///
 void ObjectForm::on_SavePushButton_clicked()
 {
     try

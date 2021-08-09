@@ -11,12 +11,9 @@ class ConstellationTable
 {
 
 public:
-    // ######################## Public methods ######################### //
 
-    // Constructor
     ConstellationTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
 
-    // Table populate function
     void tablePopulate() override;
 };
 

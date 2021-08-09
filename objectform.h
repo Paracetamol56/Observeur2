@@ -33,7 +33,6 @@ class ObjectForm : public QWidget
     Q_OBJECT
 
 private:
-    // ###################### Private attributes ####################### //
 
     Ui::ObjectForm *m_ui;
     QSqlDatabase *m_db;
@@ -69,11 +68,8 @@ private:
 
 
 public:
-    // ######################## Public methods ######################### //
 
-    // Constructor
     explicit ObjectForm(QWidget *parent = nullptr, QSqlDatabase *db = nullptr, int objectId = 0);
-    // Destructor
     ~ObjectForm();
 
     // Verifying function

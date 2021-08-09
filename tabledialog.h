@@ -27,17 +27,13 @@ class TableDialog
     Q_OBJECT
 
 protected:
-    // ###################### Protected attributes ##################### //
 
     Ui::TableDialog *m_ui;
     QSqlDatabase *m_db;
 
 public:
-    // ######################## Public methods ######################### //
 
-    //Constructor
     explicit TableDialog(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
-    // Destructor
     ~TableDialog();
 
     // Table populate function

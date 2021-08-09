@@ -11,12 +11,9 @@ class ObjectTable
 {
 
 public:
-    // ######################## Public methods ######################### //
 
-    // Constructor
     ObjectTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
 
-    // Table populate function
     void tablePopulate() override;
 };
 

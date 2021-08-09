@@ -1,25 +1,14 @@
 #include "angleutilities.h"
 
 
-///
 /// Constructor (from a double)
-/// \brief Angle::Angle
-/// \param totalDegree
-///
 Angle::Angle(double totalDegree)
 {
     m_totalDegree = totalDegree;
 }
 
 
-///
-/// Constructor (from three values and a bool to choose between hour angle and degree angle)
-/// \brief Angle::Angle
-/// \param isHour
-/// \param degree
-/// \param minute
-/// \param seconde
-///
+// Constructor (from three values and a bool to choose between hour angle and degree angle)
 Angle::Angle(bool isHour, int degree, int minute, double seconde)
 {
     if (isHour == true)
@@ -33,11 +22,7 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
 }
 
 
-///
-/// Constructor (from a string, eg: "00h00m00.00s" or "00°00'00.00""
-/// \brief Angle::Angle
-/// \param strAngle
-///
+// Constructor (from a string, eg: "00h00m00.00s" or "00°00'00.00"")
 Angle::Angle(QString strAngle)
 {
     if (strAngle.count() == 12)
@@ -58,149 +43,208 @@ Angle::Angle(QString strAngle)
         }
         else
         {
-            //error
+            // todo: error
         }
     }
 }
 
 
-///
-/// \brief Angle::getTotalDegree
-/// \return Total degree
-///
 double Angle::getTotalDegree() const
 {
     return m_totalDegree;
 }
 
 
-///
-/// \brief Angle::getTotalHour
-/// \return Total hour
-///
 double Angle::getTotalHour() const
 {
-    return (m_totalDegree / 15);
+    if (m_totalDegree >= 0.00)
+    {
+        return m_totalDegree / 15;
+    }
+    else
+    {
+        return (360.00 + m_totalDegree) / 15;
+    }
 }
 
 
-///
-/// \brief Angle::setTotalDegree
-/// \param totalDegree
-///
 void Angle::setTotalDegree(double totalDegree)
 {
+    if (totalDegree <= -360.00 || totalDegree >= 360.00)
+    {
+        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur de degré pour un angle : " + QString::number(totalDegree)));
+        return;
+    }
+
     m_totalDegree = totalDegree;
 }
 
 
-///
-/// \brief Angle::getDegree
-/// \return Degree part from degree angle
-///
+void Angle::setTotalHour(double totalHour)
+{
+    if (totalHour < 0.00 || totalHour >= 24.00)
+    {
+        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur d'heure pour un angle : " + QString::number(totalHour)));
+        return;
+    }
+
+    m_totalDegree = totalHour * 15;
+}
+
+
+// Return Degree part from degree angle
 int Angle::getDegree() const
 {
     return std::trunc(m_totalDegree);
 }
 
 
-///
-/// \brief Angle::getDegreeMinute
-/// \return Minute part from degree angle
-///
+// Return Minute part from degree angle
 int Angle::getDegreeMinute() const
 {
-    return (std::trunc((m_totalDegree - getDegree()) * 60));
+    return std::abs(std::trunc((m_totalDegree - getDegree()) * 60));
 }
 
 
-///
-/// \brief Angle::getDegreeSecond
-/// \return Second part from degree angle
-///
+// Return Second part from degree angle
 double Angle::getDegreeSecond() const
 {
-    return ((((m_totalDegree - getDegree()) * 60) - getDegreeMinute()) * 60);
+    return ((std::abs((m_totalDegree - getDegree()) * 60) - getDegreeMinute()) * 60);
 }
 
 
-///
-/// \brief Angle::getDegreeAngle
-/// \return Degree angle in the form of string eg: "00°00'00.00""
-///
+// Return Degree angle in the form of string eg: "00°00'00.00""
 QString Angle::getDegreeAngle() const
 {
     QString strAngle =
-            QString::number(getDegree()).rightJustified(2, 0)
-            + "°"
-            + QString::number(getDegreeMinute()).rightJustified(2, 0)
-            + "'"
-            + QString::number(getDegreeSecond(), 'f', int(getHourSecond() * 100.0) % 10 ? 2 : 1).rightJustified(4, 0)
-            + "\"";
+            QString::number(getDegree()).rightJustified(2, '0')
+            + QChar(176)
+            + QString::number(getDegreeMinute()).rightJustified(2, '0')
+            + QChar(39)
+            + QString::number(getDegreeSecond(), 'f', 2).rightJustified(5, '0')
+            + QChar(34);
     return strAngle;
 }
 
 
-///
-/// \brief Angle::getDegree
-/// \return Hour part from hour angle
-///
+void Angle::setDegree(int degree)
+{
+    if (degree <= -360 || degree >= 360)
+    {
+        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur de degré pour un angle : " + QString::number(degree)));
+        return;
+    }
+
+    m_totalDegree -= getDegree();
+    m_totalDegree += degree;
+}
+
+
+void Angle::setDegreeMinute(int minute)
+{
+    if (minute < 0 || minute >= 60)
+    {
+        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur de minute pour un angle : " + QString::number(minute)));
+        return;
+    }
+
+    m_totalDegree -= (double)getDegreeMinute() / 60.00;
+    m_totalDegree += (double)minute / 60.00;
+}
+
+
+void Angle::setDegreeSecond(double second)
+{
+    if (second < 0.00 || second >= 60.00)
+    {
+        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur de seconde pour un angle : " + QString::number(second)));
+        return;
+    }
+
+    m_totalDegree -= getDegreeSecond() / 3600;
+    m_totalDegree += second / 3600;
+}
+
+
+// Return Hour part from hour angle
 int Angle::getHour() const
 {
-    return std::trunc(m_totalDegree / 15);
+    if (m_totalDegree >= 0.00)
+    {
+        return std::trunc(m_totalDegree / 15);
+    }
+    else
+    {
+        return std::trunc((360.00 + m_totalDegree) / 15);
+    }
 }
 
 
-///
-/// \brief Angle::getHourMinute
-/// \return Minute part from hour angle
-///
+// Return Minute part from hour angle
 int Angle::getHourMinute() const
 {
-    return std::trunc(((m_totalDegree / 15) - getHour()) * 60);
+    return std::abs(std::trunc((getTotalHour() - std::trunc(getTotalHour())) * 60));
 }
 
 
-///
-/// \brief Angle::getHourSecond
-/// \return Second part from hour angle
-///
+// Return Second part from hour angle
 double Angle::getHourSecond() const
 {
-    return (((((m_totalDegree / 15) - getHour()) * 60) - getHourMinute()) * 60);
+    return (std::abs((getTotalHour() - std::trunc(getTotalHour())) * 60) - getHourMinute()) * 60;
 }
 
 
-///
-/// \brief Angle::getHourAngle
-/// \return Hour angle in the form of string eg: "00h00m00.00s"
-///
+// Return Hour angle in the form of string eg: "00h00m00.00s"
 QString Angle::getHourAngle() const
 {
     QString strAngle =
-            QString::number(getHour()).rightJustified(2, 0)
+            QString::number(getHour()).rightJustified(2, '0')
             + "h"
-            + QString::number(getHourMinute()).rightJustified(2, 0)
+            + QString::number(getHourMinute()).rightJustified(2, '0')
             + "m"
-            + QString::number(getHourSecond(), 'f', int(getHourSecond() * 100.0) % 10 ? 2 : 1).rightJustified(4, 0)
+            + QString::number(getHourSecond(), 'f', 2).rightJustified(5, '0')
             + "s";
     return strAngle;
 }
 
 
+void Angle::setHour(int hour)
+{
+    if (hour < 0 || hour >= 24)
+    {
+        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur d'heure pour un angle : " + QString::number(hour)));
+        return;
+    }
+
+    m_totalDegree -= 15 * getHour();
+    m_totalDegree += 15 * hour;
+}
 
 
+void Angle::setHourMinute(int minute)
+{
+    if (minute < 0 || minute >= 60)
+    {
+        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur dde minute pour un angle : " + QString::number(minute)));
+        return;
+    }
+
+    m_totalDegree -= 15 * (double)getHourMinute() / 60.00;
+    m_totalDegree += 15 * (double)minute / 60.00;
+}
 
 
+void Angle::setHourSecond(double seconde)
+{
+    if (seconde < 0.00 || seconde >= 60.00)
+    {
+        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur de seconde pour un angle : " + QString::number(seconde)));
+        return;
+    }
 
-
-
-
-
-
-
-
-
+    m_totalDegree -= 15 * getHourSecond() / 3600;
+    m_totalDegree += 15 * seconde / 3600;
+}
 
 
 
