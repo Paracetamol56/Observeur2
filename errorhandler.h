@@ -10,10 +10,17 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
+// File
+#include <QFile>
+#include <QDir>
+
 // Utilities
 #include <QString>
 #include <QStringList>
+#include <QMessageBox>
 #include <QApplication>
+
+#include "angleutilities.h"
 
 enum class ErrorPriority
 {
@@ -27,49 +34,87 @@ enum class ErrorPriority
     BadInput,
 };
 
-enum class ErrorType
+struct Error
 {
-    Undefined,
-    InvalidInput,
-    MissingInput,
-    FileMissing,
-    SqlError,
-    AngleError,
-    InvalidAngleString,
-    InvalidAngleInput
-};
-
-class Error
-{
-private:
-
     QString m_message = "";
     ErrorPriority m_prioryty = ErrorPriority::Undefined;
-    ErrorType m_type = ErrorType::Undefined;
-    QSqlQuery *m_sqlQuery = nullptr;
 
-public:
-
-    // Constructors
-    // Classic
-    Error(ErrorPriority prioryty = ErrorPriority::Undefined, ErrorType type = ErrorType::Undefined, QString message = "");
-    // SQL error
-    Error(ErrorPriority prioryty = ErrorPriority::Undefined, QSqlQuery *query = nullptr);
-
+    // Classic constructor
+    Error(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "");
     // Display the error in a QMessageBox
-    void printMessage();
-
-    // Getters
-    QString getMessage();
-    ErrorPriority getPrioryty();
-    ErrorType getType();
-    QSqlQuery *getSqlQuery();
-
-    // Setters
-    void setMessage(QString message);
-    void setPrioryty(ErrorPriority priority);
-    void setType(ErrorType type);
-    void setSqlQuery(QSqlQuery *query);
+    virtual void printMessage();
+    void setMessageBoxPriority(QMessageBox *errorMessage = nullptr);
+    void messageBoxExec(QMessageBox *errorMessage = nullptr);
 };
 
+
+struct InputError
+    : Error
+{
+    InputError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "");
+    virtual void printMessage() override;
+};
+
+
+struct MissingInputError
+    : InputError
+{
+    MissingInputError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "");
+    virtual void printMessage() override;
+};
+
+
+struct FileError
+    : Error
+{
+    QFile *m_file = nullptr;
+
+    FileError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", QFile *file = nullptr);
+    virtual void printMessage() override;
+};
+
+
+struct FileMissingError
+    : FileError
+{
+    FileMissingError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", QFile *file = nullptr);
+    virtual void printMessage() override;
+};
+
+
+struct SqlError
+    : Error
+{
+    QSqlQuery *m_sqlQuery = nullptr;
+
+    SqlError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", QSqlQuery *sqlQuery = nullptr);
+    virtual void printMessage() override;
+};
+
+/*
+struct AngleError
+    : Error
+{
+    Angle *m_angle = nullptr;
+
+    AngleError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", Angle *angle = nullptr);
+    virtual void printMessage() override;
+};
+
+
+struct InvalidAngleString
+    : AngleError
+{
+    InvalidAngleString(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", Angle *angle = nullptr);
+    virtual void printMessage() override;
+};
+
+
+struct InvalidAngleInput
+    : AngleError
+{
+    InvalidAngleInput(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", Angle *angle = nullptr);
+    virtual void printMessage() override;
+};
+*/
 #endif // ERRORHANDLER_H

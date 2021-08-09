@@ -1,115 +1,67 @@
 #include "errorhandler.h"
 
 
-///
-/// Classic constructor
-/// \brief Error::Error
-/// \param prioryty
-/// \param type
-/// \param message
-///
-Error::Error(ErrorPriority prioryty, ErrorType type, QString message)
+Error::Error(ErrorPriority prioryty, QString message)
 {
     m_message = message;
-    m_type = type;
     m_prioryty = prioryty;
 }
 
 
-///
-/// SQL error constructor
-/// \brief Error::Error
-/// \param priority
-/// \param query
-///
-Error::Error(ErrorPriority priority, QSqlQuery *query)
-{
-    m_prioryty = priority;
-    m_type = ErrorType::SqlError;
-    m_sqlQuery = query;
-}
-
-///
-/// Display the error in a QMessageBox
-/// \brief Error::printMessage
-///
 void Error::printMessage()
 {
     // Main message box
     QMessageBox errorMessage;
 
+    setMessageBoxPriority(&errorMessage);
+
+    // Set the informative message
+    errorMessage.setInformativeText(m_message);
+
+    messageBoxExec(&errorMessage);
+}
+
+
+void Error::setMessageBoxPriority(QMessageBox *errorMessage)
+{
     // Priority setting
     // Set the title
     // Set the icon
     // Set the buttons
     switch (m_prioryty) {
     case ErrorPriority::Undefined:
-        errorMessage.setStandardButtons(QMessageBox::Ok);
-        errorMessage.setIcon(QMessageBox::NoIcon);
+        errorMessage->setStandardButtons(QMessageBox::Ok);
+        errorMessage->setIcon(QMessageBox::NoIcon);
         break;
 
     case ErrorPriority::Warning:
-        errorMessage.setWindowTitle("Warning");
-        errorMessage.setStandardButtons(QMessageBox::Ok);
-        errorMessage.setIcon(QMessageBox::Warning);
+        errorMessage->setWindowTitle("Warning");
+        errorMessage->setStandardButtons(QMessageBox::Ok);
+        errorMessage->setIcon(QMessageBox::Warning);
         break;
 
     case ErrorPriority::Critical:
-        errorMessage.setWindowTitle("Critical");
-        errorMessage.setStandardButtons(QMessageBox::Close);
-        errorMessage.setIcon(QMessageBox::Critical);
+        errorMessage->setWindowTitle("Critical");
+        errorMessage->setStandardButtons(QMessageBox::Close);
+        errorMessage->setIcon(QMessageBox::Critical);
         break;
 
     case ErrorPriority::BadInput:
-        errorMessage.setWindowTitle("BadInput");
-        errorMessage.setStandardButtons(QMessageBox::Discard | QMessageBox::Retry);
-        errorMessage.setIcon(QMessageBox::Warning);
+        errorMessage->setWindowTitle("BadInput");
+        errorMessage->setStandardButtons(QMessageBox::Discard | QMessageBox::Retry);
+        errorMessage->setIcon(QMessageBox::Warning);
         break;
     }
-
-    // Type
-    // Set the text
-    switch (m_type) {
-    case ErrorType::Undefined:
-        errorMessage.setText("Error code 0x00");
-        break;
-
-    case ErrorType::InvalidInput:
-        errorMessage.setText("Error code 0x01 : InvalidInput");
-        break;
-
-    case ErrorType::MissingInput:
-        errorMessage.setText("Error code 0x02 : MissingInput");
-        break;
-
-    case ErrorType::FileMissing:
-        errorMessage.setText("Error code 0x03 : FileMissing");
-        break;
-
-    case ErrorType::SqlError:
-        errorMessage.setText("Error code 0x04 : SqlError");
-        errorMessage.setDetailedText("SQL ERROR : \n" + m_sqlQuery->lastError().text() + "\n\nON QUERY : \n" + m_sqlQuery->lastQuery());
-        break;
-    case ErrorType::AngleError:
-        errorMessage.setText("Error code 0x05 : AngleError");
-        break;
-    case ErrorType::InvalidAngleString:
-        errorMessage.setText("Error code 0x06 : InvalidAngleString");
-        break;
-    case ErrorType::InvalidAngleInput:
-        errorMessage.setText("Error code 0x07 : InvalidAngleInput");
-        break;
-    }
-
-    // Set the informative message
-    errorMessage.setInformativeText(m_message);
+}
 
 
+void Error::messageBoxExec(QMessageBox *errorMessage)
+{
     // Action
-    switch (errorMessage.exec())
+    switch (errorMessage->exec())
     {
     case QMessageBox::Ok:
-        errorMessage.close();
+        errorMessage->close();
         break;
 
     case QMessageBox::Close:
@@ -117,45 +69,142 @@ void Error::printMessage()
         break;
 
     case QMessageBox::Discard:
-        errorMessage.close();
+        errorMessage->close();
         break;
 
     case QMessageBox::Retry:
-        errorMessage.close();
+        errorMessage->close();
         break;
     }
 }
 
 
-// Getters
-QString Error::getMessage()
-{
-    return m_message;
-}
+InputError::InputError(ErrorPriority prioryty, QString message)
+    : Error(prioryty, message)
+{}
 
-ErrorPriority Error::getPrioryty()
-{
-    return m_prioryty;
-}
 
-ErrorType Error::getType()
+void InputError::printMessage()
 {
-    return m_type;
+    QMessageBox errorMessage;
+    setMessageBoxPriority(&errorMessage);
+    errorMessage.setText("InputError");
+    errorMessage.setInformativeText(m_message);
+    messageBoxExec(&errorMessage);
 }
 
 
-// Setters
-void Error::setMessage(QString message)
+MissingInputError::MissingInputError(ErrorPriority prioryty, QString message)
+    : InputError(prioryty, message)
+{}
+
+
+void MissingInputError::printMessage()
 {
-    m_message = message;
+    QMessageBox errorMessage;
+    setMessageBoxPriority(&errorMessage);
+    errorMessage.setText("MissingInputError");
+    errorMessage.setInformativeText(m_message);
+    messageBoxExec(&errorMessage);
 }
 
-void Error::setPrioryty(ErrorPriority priority)
+
+FileError::FileError(ErrorPriority prioryty, QString message, QFile *file)
+    : Error(prioryty, message)
 {
-    m_prioryty = priority;
+    m_file = file;
 }
 
-void Error::setType(ErrorType type)
+
+void FileError::printMessage()
 {
-    m_type = type;
+    QMessageBox errorMessage;
+    setMessageBoxPriority(&errorMessage);
+    errorMessage.setText("FileError");
+    errorMessage.setInformativeText(m_message);
+    errorMessage.setDetailedText(QString("FILE PATH : \n" + QFileInfo(*m_file).path()));
+    messageBoxExec(&errorMessage);
 }
+
+
+FileMissingError::FileMissingError(ErrorPriority prioryty, QString message, QFile *file)
+    : FileError(prioryty, message, file)
+{}
+
+
+void FileMissingError::printMessage()
+{
+    QMessageBox errorMessage;
+    setMessageBoxPriority(&errorMessage);
+    errorMessage.setText("FileMissingError");
+    errorMessage.setInformativeText(m_message);
+    errorMessage.setDetailedText(QString("FILE PATH : \n" + QFileInfo(*m_file).path()));
+    messageBoxExec(&errorMessage);
+}
+
+
+SqlError::SqlError(ErrorPriority prioryty, QString message, QSqlQuery *sqlQuery)
+    : Error(prioryty, message)
+{
+    m_sqlQuery = sqlQuery;
+}
+
+
+void SqlError::printMessage()
+{
+    QMessageBox errorMessage;
+    setMessageBoxPriority(&errorMessage);
+    errorMessage.setText("SqlError");
+    errorMessage.setInformativeText(m_message);
+    errorMessage.setDetailedText("SQL ERROR : \n" + m_sqlQuery->lastError().text() + "\n\nON QUERY : \n" + m_sqlQuery->lastQuery());
+    messageBoxExec(&errorMessage);
+}
+
+/*
+AngleError::AngleError(ErrorPriority prioryty, QString message, Angle *angle)
+    : Error(prioryty, message)
+{
+    m_angle = angle;
+}
+
+
+void AngleError::printMessage()
+{
+    QMessageBox errorMessage;
+    setMessageBoxPriority(&errorMessage);
+    errorMessage.setText("AngleError");
+    errorMessage.setInformativeText(m_message);
+    messageBoxExec(&errorMessage);
+}
+
+
+InvalidAngleString::InvalidAngleString(ErrorPriority prioryty, QString message, Angle *angle)
+    : AngleError(prioryty, message, angle)
+{}
+
+
+void InvalidAngleString::printMessage()
+{
+    QMessageBox errorMessage;
+    setMessageBoxPriority(&errorMessage);
+    errorMessage.setText("InvalidAngleString");
+    errorMessage.setInformativeText(m_message);
+    messageBoxExec(&errorMessage);
+}
+
+
+InvalidAngleInput::InvalidAngleInput(ErrorPriority prioryty, QString message, Angle *angle)
+    : AngleError(prioryty, message, angle)
+{}
+
+
+void InvalidAngleInput::printMessage()
+{
+    QMessageBox errorMessage;
+    setMessageBoxPriority(&errorMessage);
+    errorMessage.setText("InvalidAngleInput");
+    errorMessage.setInformativeText(m_message);
+    errorMessage.setDetailedText("ANGLE : \n" + QString::number(m_angle->getTotalDegree()) + "°");
+    messageBoxExec(&errorMessage);
+}
+*/

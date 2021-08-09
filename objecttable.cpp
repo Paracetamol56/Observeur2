@@ -36,7 +36,7 @@ void ObjectTable::tablePopulate()
 
     if (query.exec() == false)
     {
-        Error sqlError(ErrorPriority::Warning, &query);
+        SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les objets", &query);
         sqlError.printMessage();
     }
 

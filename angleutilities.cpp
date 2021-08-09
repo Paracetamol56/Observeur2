@@ -16,24 +16,24 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
         if (isHour == true)
         {
             if (degree < -360 || degree > 360)
-                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\ndegré en dehors de l'intervalle");
+                throw Error(ErrorPriority::Warning, "Entrée incorrect pour construire cette angle,\ndegré en dehors de l'intervalle");
 
             if (minute < 0 || minute >= 60)
-                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\nminute en dehors de l'intervalle");
+                throw Error(ErrorPriority::Warning, "Entrée incorrect pour construire cette angle,\nminute en dehors de l'intervalle");
 
             if (seconde < 0 || seconde >= 60)
-                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\nseconde en dehors de l'intervalle");
+                throw Error(ErrorPriority::Warning, "Entrée incorrect pour construire cette angle,\nseconde en dehors de l'intervalle");
         }
         else
         {
             if (degree < 0 || 24 >= 360)
-                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\ndegré en dehors de l'intervalle");
+                throw Error(ErrorPriority::Warning, "Entrée incorrect pour construire cette angle,\ndegré en dehors de l'intervalle");
 
             if (minute < 0 || minute >= 60)
-                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\nminute en dehors de l'intervalle");
+                throw Error(ErrorPriority::Warning, "Entrée incorrect pour construire cette angle,\nminute en dehors de l'intervalle");
 
             if (seconde < 0 || seconde >= 60)
-                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleInput, "Entrée incorrect pour construire cette angle,\nseconde en dehors de l'intervalle");
+                throw Error(ErrorPriority::Warning, "Entrée incorrect pour construire cette angle,\nseconde en dehors de l'intervalle");
         }
 
         if (isHour == true)
@@ -71,7 +71,7 @@ Angle::Angle(QString strAngle)
             else if (strAngle.count(QChar(176)) == 1)
                 indexD = strAngle.indexOf(QChar(176));
             else
-                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ncharactère 'h' ou '°' manquant");
+                throw Error(ErrorPriority::Warning, "Chaine incorrect pour construire cette angle,\ncharactère 'h' ou '°' manquant");
 
             if (isHour == true)
             {
@@ -79,11 +79,11 @@ Angle::Angle(QString strAngle)
                 if (strAngle.count('m') == 1)
                     indexM = strAngle.indexOf('m');
                 else
-                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ncharactère 'm' manquant");
+                    throw Error(ErrorPriority::Warning, "Chaine incorrect pour construire cette angle,\ncharactère 'm' manquant");
 
                 // Index of 's'
                 if (strAngle.count('s') != 1)
-                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ncharactère 's' manquant");
+                    throw Error(ErrorPriority::Warning, "Chaine incorrect pour construire cette angle,\ncharactère 's' manquant");
             }
             else
             {
@@ -91,11 +91,11 @@ Angle::Angle(QString strAngle)
                 if (strAngle.count(QChar(39)) == 1)
                     indexM = strAngle.indexOf(QChar(39));
                 else
-                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ncharactère '\'' manquant");
+                    throw Error(ErrorPriority::Warning, "Chaine incorrect pour construire cette angle,\ncharactère '\'' manquant");
 
                 // Index of '\"'
                 if (strAngle.count(QChar(34)) != 1)
-                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ncharactère '\"' manquant");
+                    throw Error(ErrorPriority::Warning, "Chaine incorrect pour construire cette angle,\ncharactère '\"' manquant");
             }
 
             if (isHour == true)
@@ -113,7 +113,7 @@ Angle::Angle(QString strAngle)
         }
         else
         {
-            throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Chaine incorrect pour construire cette angle,\ntaille impossible");
+            throw Error(ErrorPriority::Warning, "Chaine incorrect pour construire cette angle,\ntaille impossible");
         }
     }
     catch (Error e)
@@ -146,7 +146,7 @@ void Angle::setTotalDegree(double totalDegree)
 {
     if (totalDegree <= -360.00 || totalDegree >= 360.00)
     {
-        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur de degré pour un angle : " + QString::number(totalDegree)));
+        throw Error(ErrorPriority::Warning, QString("Il est impossible d'utiliser cette valeur de degré pour un angle : " + QString::number(totalDegree)));
         return;
     }
 
@@ -158,7 +158,7 @@ void Angle::setTotalHour(double totalHour)
 {
     if (totalHour < 0.00 || totalHour >= 24.00)
     {
-        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur d'heure pour un angle : " + QString::number(totalHour)));
+        throw Error(ErrorPriority::Warning, QString("Il est impossible d'utiliser cette valeur d'heure pour un angle : " + QString::number(totalHour)));
         return;
     }
 
@@ -205,7 +205,7 @@ void Angle::setDegree(int degree)
 {
     if (degree <= -360 || degree >= 360)
     {
-        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur de degré pour un angle : " + QString::number(degree)));
+        throw Error(ErrorPriority::Warning, QString("Il est impossible d'utiliser cette valeur de degré pour un angle : " + QString::number(degree)));
         return;
     }
 
@@ -218,7 +218,7 @@ void Angle::setDegreeMinute(int minute)
 {
     if (minute < 0 || minute >= 60)
     {
-        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur de minute pour un angle : " + QString::number(minute)));
+        throw Error(ErrorPriority::Warning, QString("Il est impossible d'utiliser cette valeur de minute pour un angle : " + QString::number(minute)));
         return;
     }
 
@@ -239,7 +239,7 @@ void Angle::setDegreeSecond(double second)
 {
     if (second < 0.00 || second >= 60.00)
     {
-        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur de seconde pour un angle : " + QString::number(second)));
+        throw Error(ErrorPriority::Warning, QString("Il est impossible d'utiliser cette valeur de seconde pour un angle : " + QString::number(second)));
         return;
     }
 
@@ -302,7 +302,7 @@ void Angle::setHour(int hour)
 {
     if (hour < 0 || hour >= 24)
     {
-        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur d'heure pour un angle : " + QString::number(hour)));
+        throw Error(ErrorPriority::Warning, QString("Il est impossible d'utiliser cette valeur d'heure pour un angle : " + QString::number(hour)));
         return;
     }
 
@@ -315,7 +315,7 @@ void Angle::setHourMinute(int minute)
 {
     if (minute < 0 || minute >= 60)
     {
-        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur dde minute pour un angle : " + QString::number(minute)));
+        throw Error(ErrorPriority::Warning, QString("Il est impossible d'utiliser cette valeur dde minute pour un angle : " + QString::number(minute)));
         return;
     }
 
@@ -328,7 +328,7 @@ void Angle::setHourSecond(double seconde)
 {
     if (seconde < 0.00 || seconde >= 60.00)
     {
-        throw Error(ErrorPriority::Warning, ErrorType::AngleError, QString("Il est impossible d'utiliser cette valeur de seconde pour un angle : " + QString::number(seconde)));
+        throw Error(ErrorPriority::Warning, QString("Il est impossible d'utiliser cette valeur de seconde pour un angle : " + QString::number(seconde)));
         return;
     }
 

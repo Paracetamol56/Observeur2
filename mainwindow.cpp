@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget* parent)
 
         if (query.exec() == false)
         {
-            Error sqlError(ErrorPriority::Critical, &query);
+            SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les constellations", &query);
             sqlError.printMessage();
         }
 
@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget* parent)
 
         if (query.exec() == false)
         {
-            Error sqlError(ErrorPriority::Critical, &query);
+            SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les types", &query);
             sqlError.printMessage();
         }
 
@@ -77,18 +77,9 @@ MainWindow::MainWindow(QWidget* parent)
     else
     {
         // Display a message box if the database file is not found
-        Error errorMessage(ErrorPriority::Critical, ErrorType::FileMissing, "Aucun fichier \"data.sqlite\" trouvé");
+        FileMissingError errorMessage(ErrorPriority::Critical, "Aucun fichier \"data.sqlite\" trouvé");
         errorMessage.printMessage();
     }
-
-    // TESTS
-
-    Angle testAngle(QString ("05°15'00.00\""));
-
-    qDebug() << "getTotalDegree " << testAngle.getTotalDegree();
-    qDebug() << "getDegreeAngle " << testAngle.getDegreeAngle();
-
-    // END TESTS
 }
 
 
@@ -158,7 +149,7 @@ void MainWindow::updateObject()
 
     if (query.exec() == false)
     {
-        Error sqlError(ErrorPriority::Critical, &query);
+        SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les objets", &query);
         sqlError.printMessage();
     }
 

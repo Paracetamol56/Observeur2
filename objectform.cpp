@@ -24,7 +24,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
     if (query.exec() == false)
     {
-        Error sqlError(ErrorPriority::Warning, &query);
+        SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les types", &query);
         sqlError.printMessage();
     }
 
@@ -41,7 +41,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
     if (query.exec() == false)
     {
-        Error sqlError(ErrorPriority::Warning, &query);
+        SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les constellations", &query);
         sqlError.printMessage();
     }
 
@@ -98,7 +98,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
         if (query.exec() == false)
         {
-            Error sqlError(ErrorPriority::Warning, &query);
+            SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les informations de l'objet", &query);
             sqlError.printMessage();
         }
 
@@ -218,7 +218,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
         if (query.exec() == false)
         {
-            Error sqlError(ErrorPriority::Warning, &query);
+            SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner l'ID", &query);
             sqlError.printMessage();
         }
 
@@ -246,7 +246,7 @@ bool ObjectForm::CheckInput()
     QString testName = m_ui->NameLineEdit->text();
     if (testName == "")
     {
-        throw Error(ErrorPriority::BadInput, ErrorType::MissingInput, "Vous devez specifier un nom");
+        throw MissingInputError(ErrorPriority::BadInput, "Vous devez specifier un nom");
         return false;
     }
     else
@@ -254,11 +254,15 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_name` = \"" + testName + "\"");
-        query.exec();
+        if (query.exec() == false)
+        {
+            throw SqlError(ErrorPriority::Critical, "Impossible de verifier le nom", &query);
+            return false;
+        }
         m_db->close();
         if (query.next())
         {
-            throw Error(ErrorPriority::BadInput, ErrorType::InvalidInput, "Ce nom existe déjà dans la base de donnée");
+            throw InputError(ErrorPriority::BadInput, "Ce nom existe déjà dans la base de donnée");
             return false;
         }
         else
@@ -276,11 +280,15 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_messier` = \"" + QString::number(testMessier) + "\"");
-        query.exec();
+        if (query.exec() == false)
+        {
+            throw SqlError(ErrorPriority::Critical, "Impossible de verifier le champ Messier", &query);
+            return false;
+        }
         m_db->close();
         if (query.next())
         {
-            throw Error(ErrorPriority::BadInput, ErrorType::InvalidInput, "Cet object messier existe déjà dans la base de donnée");
+            throw InputError(ErrorPriority::BadInput, "Cet object messier existe déjà dans la base de donnée");
             return false;
         }
         else
@@ -298,11 +306,15 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_ngc` = \"" + QString::number(testNgc) + "\"");
-        query.exec();
+        if (query.exec() == false)
+        {
+            throw SqlError(ErrorPriority::Critical, "Impossible de verifier le champ NGC", &query);
+            return false;
+        }
         m_db->close();
         if (query.next())
         {
-            throw Error(ErrorPriority::BadInput, ErrorType::InvalidInput, "Cet object NGC existe déjà dans la base de donnée");
+            throw InputError(ErrorPriority::BadInput, "Cet object NGC existe déjà dans la base de donnée");
             return false;
         }
         else
@@ -320,11 +332,15 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName1 + "\" OR `object_othername2` = \"" + testOtherName1 + "\"");
-        query.exec();
+        if (query.exec() == false)
+        {
+            throw SqlError(ErrorPriority::Critical, "Impossible de verifier l'a category'autre nom", &query);
+            return false;
+        }
         m_db->close();
         if (query.next())
         {
-            throw Error(ErrorPriority::BadInput, ErrorType::InvalidInput, "Cet autre nom (1) existe déjà dans la base de donnée");
+            throw InputError(ErrorPriority::BadInput, "Cet autre nom (1) existe déjà dans la base de donnée");
             return false;
         }
         else
@@ -342,11 +358,15 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName2 + "\" OR `object_othername2` = \"" + testOtherName2 + "\"");
-        query.exec();
+        if (query.exec() == false)
+        {
+            throw SqlError(ErrorPriority::Critical, "Impossible de verifier l'a category'autre nom (2)", &query);
+            return false;
+        }
         m_db->close();
         if (query.next())
         {
-            throw Error(ErrorPriority::BadInput, ErrorType::InvalidInput, "Cet autre nom (2) existe déjà dans la base de donnée");
+            throw InputError(ErrorPriority::BadInput, "Cet autre nom (2) existe déjà dans la base de donnée");
             return false;
         }
         else
@@ -366,7 +386,8 @@ bool ObjectForm::CheckInput()
                         "WHERE `category_name` = \"" + m_ui->TypeComboBox->currentText() + "\"");
         if (query.exec() == false)
         {
-            throw Error(ErrorPriority::Warning, &query);
+            throw SqlError(ErrorPriority::Critical, "Impossible de verifier la category", &query);
+            return false;
         }
         m_db->close();
         if (query.next())
@@ -374,6 +395,11 @@ bool ObjectForm::CheckInput()
             testType = query.value(0).toInt();
             qDebug() << "OK : Types";
             qDebug() << "Name : " << testType;
+        }
+        else
+        {
+            throw InputError(ErrorPriority::BadInput, "Ce nom de type n'est pas reconnu");
+            return false;
         }
     }
 
@@ -388,7 +414,7 @@ bool ObjectForm::CheckInput()
                         "WHERE `constellation_name` = \"" + m_ui->ConstellationComboBox->currentText() + "\"");
         if (query.exec() == false)
         {
-            throw Error(ErrorPriority::Warning, &query);
+            throw SqlError(ErrorPriority::Critical, "Impossible de verifier la constellation", &query);
         }
         m_db->close();
         if (query.next())
@@ -396,6 +422,11 @@ bool ObjectForm::CheckInput()
             testConstellation = query.value(0).toInt();
             qDebug() << "OK : Constellation";
             qDebug() << "Name : " << testConstellation;
+        }
+        else
+        {
+            throw InputError(ErrorPriority::BadInput, "Ce nom de constellation n'est pas reconnu");
+            return false;
         }
     }
 
@@ -604,7 +635,7 @@ void ObjectForm::on_SavePushButton_clicked()
 
             if (query.exec() == false)
             {
-                Error sqlError(ErrorPriority::Warning, &query);
+                SqlError sqlError(ErrorPriority::Warning, "Failed to insert object", &query);
                 sqlError.printMessage();
             }
 
@@ -614,7 +645,7 @@ void ObjectForm::on_SavePushButton_clicked()
         }
         else
         {
-            throw Error(ErrorPriority::Undefined, ErrorType::Undefined, "La verification des entrés à échoué");
+            throw Error(ErrorPriority::Undefined, "La verification des entrés à échoué");
         }
     }
     catch (Error e)

@@ -37,7 +37,7 @@ void TypeTable::tablePopulate()
 
     if (query.exec() == false)
     {
-        Error sqlError(ErrorPriority::Warning, &query);
+        SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les types", &query);
         sqlError.printMessage();
     }
 
