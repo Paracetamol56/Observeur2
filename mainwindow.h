@@ -45,7 +45,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    // ###################### Private attributes ####################### //
 
     // UI object
     Ui::MainWindow* m_ui;
@@ -61,17 +60,13 @@ private:
     QVector<QString> m_typeFilter = {};
 
 public:
-    // ######################## Public methods ######################### //
 
-    // Constructor
     explicit MainWindow(QWidget* parent = 0);
-    // Destructor
     ~MainWindow();
 
     // Object list updater
     void updateObject();
 
-    // ######################### Private slots ######################### //
 private slots:
     void on_actionA_propos_triggered();
     void on_actionQuitter_triggered();

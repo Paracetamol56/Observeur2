@@ -25,26 +25,70 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
 // Constructor (from a string, eg: "00h00m00.00s" or "00°00'00.00"")
 Angle::Angle(QString strAngle)
 {
-    if (strAngle.count() == 12)
+    try
     {
-        if (strAngle.at(2) == 'h')
+        if (strAngle.count() >= 12 && strAngle.count() < 14)
         {
-            int hour = strAngle.mid(0, 1).toInt();
-            int minute = strAngle.mid(3, 4).toInt();
-            double seconde = strAngle.mid(6, 10).toDouble();
-            m_totalDegree = ( hour * 15 ) + ( minute / 60 ) + ( seconde / 3600 );
-        }
-        else if (strAngle.at(2) == "°")
-        {
-            int degree = strAngle.mid(0, 1).toInt();
-            int minute = strAngle.mid(3, 4).toInt();
-            double seconde = strAngle.mid(6, 10).toDouble();
-            m_totalDegree = degree + ( minute / 60 ) + ( seconde / 3600 );
+            bool isHour = false;
+            size_t indexD = 0, indexM = 0, indexS = 0;
+
+            // Index of 'h' or '°'
+            if (strAngle.count('h') == 1)
+            {
+                indexD = strAngle.indexOf('h');
+                isHour = true;
+            }
+            else if (strAngle.count(QChar(176)) == 1)
+                indexD = strAngle.indexOf(QChar(176));
+            else
+                throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nmissing character 'h' or '°'");
+
+            if (isHour == true)
+            {
+                // Index of 'm'
+                if (strAngle.count('m') == 1)
+                    indexM = strAngle.indexOf('m');
+                else
+                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nmissing character 'm'");
+
+                // Index of 's'
+                if (strAngle.count('s') != 1)
+                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nmissing character 's'");
+            }
+            else
+            {
+                // Index of '\''
+                if (strAngle.count(QChar(39)) == 1)
+                    indexM = strAngle.indexOf(QChar(39));
+                else
+                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nmissing character '\''");
+
+                // Index of '\"'
+                if (strAngle.count(QChar(34)) != 1)
+                    throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nmissing character '\"'");
+            }
+
+            if (isHour == true)
+            {
+                setHour(strAngle.mid(0, indexD).toInt());
+                setHourMinute(strAngle.mid(indexD + 1, 2).toInt());
+                setHourSecond(strAngle.mid(indexM + 1, 5).toDouble());
+            }
+            else
+            {
+                setDegree(strAngle.mid(0, indexD).toInt());
+                setDegreeMinute(strAngle.mid(indexD + 1, 2).toInt());
+                setDegreeSecond(strAngle.mid(indexM + 1, 5).toDouble());
+            }
         }
         else
         {
-            // todo: error
+            throw Error(ErrorPriority::Warning, ErrorType::InvalidAngleString, "Incorrect string to construct the angle,\nimpossible size");
         }
+    }
+    catch (Error e)
+    {
+        e.printMessage();
     }
 }
 
@@ -148,8 +192,16 @@ void Angle::setDegreeMinute(int minute)
         return;
     }
 
-    m_totalDegree -= (double)getDegreeMinute() / 60.00;
-    m_totalDegree += (double)minute / 60.00;
+    if (m_totalDegree >= 0)
+    {
+        m_totalDegree -= (double)getDegreeMinute() / 60.00;
+        m_totalDegree += (double)minute / 60.00;
+    }
+    else
+    {
+        m_totalDegree += (double)getDegreeMinute() / 60.00;
+        m_totalDegree -= (double)minute / 60.00;
+    }
 }
 
 
@@ -161,8 +213,16 @@ void Angle::setDegreeSecond(double second)
         return;
     }
 
-    m_totalDegree -= getDegreeSecond() / 3600;
-    m_totalDegree += second / 3600;
+    if (m_totalDegree >= 0)
+    {
+        m_totalDegree -= getDegreeSecond() / 3600;
+        m_totalDegree += second / 3600;
+    }
+    else
+    {
+        m_totalDegree += getDegreeSecond() / 3600;
+        m_totalDegree -= second / 3600;
+    }
 }
 
 

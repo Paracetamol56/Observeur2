@@ -5,6 +5,9 @@
 #include <QString>
 #include <math.h>
 
+// Debug output
+#include <QDebug>
+
 // Error handling
 #include "errorhandler.h"
 

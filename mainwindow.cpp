@@ -1,24 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-///
-/// Constructor
-/// \brief MainWindow::MainWindow
-/// \param parent
-///
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , m_ui(new Ui::MainWindow)
     , m_db(new QSqlDatabase)
 {
-    // ########################## Setup the UI ######################### //
-
     m_ui->setupUi(this);
 
+    // Initiate database
 
-    // ####################### Initiate database ####################### //
-
-    // Set database type
     *m_db = QSqlDatabase::addDatabase("QSQLITE");
     // Set the database path and name
     QString dbPath = QDir::currentPath();
@@ -26,16 +18,13 @@ MainWindow::MainWindow(QWidget* parent)
     // Check if file exists
     if (QFile::exists(dbPath))
     {
-        // qDebug() << dbPath;
         m_db->setDatabaseName(dbPath);
 
 
-        // ######### Get data from database to fill the constallation table ########## //
+        // Get data from database to fill the constallation table
 
-        // Open the database connection
         m_db->open();
 
-        // Query container object
         QSqlQuery query;
 
         // === Constellation query
@@ -80,7 +69,6 @@ MainWindow::MainWindow(QWidget* parent)
             m_ui->TypeListWidget->addItem(item);
         }
 
-        // Close the database connection
         m_db->close();
 
         // Display all the objects
@@ -92,23 +80,25 @@ MainWindow::MainWindow(QWidget* parent)
         Error errorMessage(ErrorPriority::Critical, ErrorType::FileMissing, "Aucun fichier \"data.sqlite\" trouvé");
         errorMessage.printMessage();
     }
+
+    // TESTS
+
+    Angle testAngle(QString ("05°15'00.00\""));
+
+    qDebug() << "getTotalDegree " << testAngle.getTotalDegree();
+    qDebug() << "getDegreeAngle " << testAngle.getDegreeAngle();
+
+    // END TESTS
 }
 
 
-///
-/// Destructor
-/// \brief MainWindow::~MainWindow
-///
 MainWindow::~MainWindow()
 {
     delete m_ui;
 }
 
 
-///
-/// Object list updater
-/// \brief MainWindow::updateObject
-///
+// Object list updater
 void MainWindow::updateObject()
 {
     // Format constellation filter
@@ -133,14 +123,10 @@ void MainWindow::updateObject()
         typeFilterString = typeFilterString.left(lastIndex);
     }
 
-    // Open the database connection
     m_db->open();
 
-    // Query container object
     QSqlQuery query;
 
-    // === Constellation query
-    // Set the query
     query.prepare(
                 "SELECT "
                 "objects.`object_name` AS `Nom`, "
@@ -180,7 +166,6 @@ void MainWindow::updateObject()
     QSqlQueryModel *model = new QSqlQueryModel();
     model->setQuery(query);
 
-    // Convert to a QSortFilterProxyModel
     QSortFilterProxyModel *sortModel = new QSortFilterProxyModel();
     sortModel->setSourceModel(model);
 
@@ -192,23 +177,16 @@ void MainWindow::updateObject()
     m_ui->objectTableView->horizontalHeader()->setSectionResizeMode(6, QHeaderView::Stretch);
     m_ui->objectTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    // Close the database connection
     m_db->close();
 }
 
 
-///
-/// \brief MainWindow::on_actionQuitter_triggered
-///
 void MainWindow::on_actionQuitter_triggered()
 {
     QApplication::quit();
 }
 
 
-///
-/// \brief MainWindow::on_actionA_propos_triggered
-///
 void MainWindow::on_actionA_propos_triggered()
 {
     QMessageBox aboutMessageBox;
@@ -220,9 +198,6 @@ void MainWindow::on_actionA_propos_triggered()
 }
 
 
-///
-/// \brief MainWindow::on_AllConsellationsButton_clicked
-///
 void MainWindow::on_AllConsellationsButton_clicked()
 {
     ConstellationTable constellationTableDIalog(nullptr, m_db);
@@ -230,19 +205,13 @@ void MainWindow::on_AllConsellationsButton_clicked()
 }
 
 
-///
-/// \brief MainWindow::on_ConstellationListWidget_itemClicked
-/// \param item
-///
 void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
 {
     // If the clicked item is checked
     if (item->checkState() == Qt::Checked)
     {
-        // Verify if the item isn't already in the vector
         if (m_constellationFilter.count(item->text()) < 1)
         {
-            // Add the item in the vector
             m_constellationFilter.push_back(item->text());
 
             // If all items are checked (filter count == list count)
@@ -251,7 +220,6 @@ void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
                 // Checked the parent checkbox
                 m_ui->AllConstellationCheckBox->setCheckState(Qt::Checked);
             }
-            // Else
             else
             {
                 // Partialy check the parent checkbox
@@ -259,10 +227,8 @@ void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
             }
         }
     }
-    // Else
     else if (item->checkState() == Qt::Unchecked)
     {
-        // Remove the item from the vector
         m_constellationFilter.removeOne(item->text());
 
         if (m_constellationFilter.count() < 1)
@@ -274,20 +240,16 @@ void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
             m_ui->AllConstellationCheckBox->setCheckState(Qt::PartiallyChecked);
         }
     }
-    // Update the object table
+
     updateObject();
 }
 
 
-///
-/// \brief MainWindow::on_AllConstellationCheckBox_clicked
-///
 void MainWindow::on_AllConstellationCheckBox_clicked()
 {
     // If AllConstellationCheckBox is checked
     if (m_ui->AllConstellationCheckBox->checkState() == Qt::Checked)
     {
-        // Clear old filter vector
         m_constellationFilter.clear();
 
         // Iterate through the list widget
@@ -300,10 +262,8 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
             m_constellationFilter.push_back(item->text());
         }
     }
-    // Else
     else if (m_ui->AllConstellationCheckBox->checkState() == Qt::Unchecked)
     {
-        // Clear old filter vector
         m_constellationFilter.clear();
 
         // Iterate through the list widget
@@ -314,14 +274,11 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
             item->setCheckState(Qt::Unchecked);
         }
     }
-    // Update the object table
+
     updateObject();
 }
 
 
-///
-/// \brief MainWindow::on_AllTypesButton_clicked
-///
 void MainWindow::on_AllTypesButton_clicked()
 {
     TypeTable typeTableDialog(nullptr, m_db);
@@ -329,19 +286,13 @@ void MainWindow::on_AllTypesButton_clicked()
 }
 
 
-///
-/// \brief MainWindow::on_TypeListWidget_itemClicked
-/// \param item
-///
 void MainWindow::on_TypeListWidget_itemClicked(QListWidgetItem *item)
 {
     // If the clicked item is checked
     if (item->checkState() == Qt::Checked)
     {
-        // Verify if the item isn't already in the vector
         if (m_typeFilter.count(item->text()) < 1)
         {
-            // Add the item in the vector
             m_typeFilter.push_back(item->text());
 
             // If all items are checked (filter count == list count)
@@ -350,7 +301,6 @@ void MainWindow::on_TypeListWidget_itemClicked(QListWidgetItem *item)
                 // Checked the parent checkbox
                 m_ui->AllTypeCheckBox->setCheckState(Qt::Checked);
             }
-            // Else
             else
             {
                 // Partialy check the parent checkbox
@@ -358,10 +308,8 @@ void MainWindow::on_TypeListWidget_itemClicked(QListWidgetItem *item)
             }
         }
     }
-    // Else
     else if (item->checkState() == Qt::Unchecked)
     {
-        // Remove the item from the vector
         m_typeFilter.removeOne(item->text());
 
         if (m_typeFilter.count() < 1)
@@ -373,20 +321,16 @@ void MainWindow::on_TypeListWidget_itemClicked(QListWidgetItem *item)
             m_ui->AllTypeCheckBox->setCheckState(Qt::PartiallyChecked);
         }
     }
-    // Update the object table
+
     updateObject();
 }
 
 
-///
-/// \brief MainWindow::on_AllTypeCheckBox_clicked
-///
 void MainWindow::on_AllTypeCheckBox_clicked()
 {
     // If AllConstellationCheckBox is checked
     if (m_ui->AllTypeCheckBox->checkState() == Qt::Checked)
     {
-        // Clear old filter vector
         m_typeFilter.clear();
 
         // Iterate through the list widget
@@ -399,10 +343,8 @@ void MainWindow::on_AllTypeCheckBox_clicked()
             m_typeFilter.push_back(item->text());
         }
     }
-    // Else
     else if (m_ui->AllTypeCheckBox->checkState() == Qt::Unchecked)
     {
-        // Clear old filter vector
         m_typeFilter.clear();
 
         // Iterate through the list widget
@@ -413,14 +355,11 @@ void MainWindow::on_AllTypeCheckBox_clicked()
             item->setCheckState(Qt::Unchecked);
         }
     }
-    // Update the object table
+
     updateObject();
 }
 
 
-///
-/// \brief MainWindow::on_AllObjectsPushButton_clicked
-///
 void MainWindow::on_AllObjectsPushButton_clicked()
 {
     ObjectTable objectTableDialog(nullptr, m_db);
@@ -428,9 +367,6 @@ void MainWindow::on_AllObjectsPushButton_clicked()
 }
 
 
-///
-/// \brief MainWindow::on_actionLight_triggered
-///
 void MainWindow::on_actionLight_triggered()
 {
     QPalette lightPalette(palette());
@@ -439,9 +375,6 @@ void MainWindow::on_actionLight_triggered()
 }
 
 
-///
-/// \brief MainWindow::on_actionDark_triggered
-///
 void MainWindow::on_actionDark_triggered()
 {
     QPalette darkPalette(palette());
@@ -450,9 +383,6 @@ void MainWindow::on_actionDark_triggered()
 }
 
 
-///
-/// \brief MainWindow::on_actionNight_vision_triggered
-///
 void MainWindow::on_actionNight_vision_triggered()
 {
     QPalette nightVisionPalette(palette());

@@ -93,6 +93,9 @@ void Error::printMessage()
     case ErrorType::AngleError:
         errorMessage.setText("Error code 0x05 : AngleError");
         break;
+    case ErrorType::InvalidAngleString:
+        errorMessage.setText("Error code 0x06 : InvalidAngleString");
+        break;
     }
 
     // Set the informative message
