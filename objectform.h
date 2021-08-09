@@ -22,6 +22,8 @@
 // Error handling
 #include "errorhandler.h"
 
+#include "angleutilities.h"
+
 
 namespace Ui
 {
@@ -54,8 +56,8 @@ private:
     double m_diameter = 0.00;
 
     // Position section
-    QString m_rightAscension = "";
-    QString m_declination = "";
+    Angle m_rightAscension = Angle(0.00);
+    Angle m_declination = Angle(0.00);
 
     // Skymap section
     int m_skyMap1 = 0;

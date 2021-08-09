@@ -151,47 +151,18 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
         // === Position section
         // Right ascension
-        m_rightAscension = query.value(13).toString();
+        m_rightAscension = Angle(query.value(13).toString());
         {
-            int hour = m_rightAscension.split('h').front().toInt();
-            int minute = m_rightAscension.split('h').back().split('m').front().toInt();
-            double second = m_rightAscension.split('m').back().split('s').front().toDouble();
-            m_ui->RAHourSpinBox->setValue(hour);
-            m_ui->RAMinuteSpinBox->setValue(minute);
-            m_ui->RASecondDoubleSpinBox->setValue(second);
+            m_ui->RAHourSpinBox->setValue(m_rightAscension.getHour());
+            m_ui->RAMinuteSpinBox->setValue(m_rightAscension.getHourMinute());
+            m_ui->RASecondDoubleSpinBox->setValue(m_rightAscension.getHourSecond());
         }
         // Declination
-        m_declination = query.value(14).toString();
+        m_declination = Angle(query.value(14).toString());
         {
-            int degreeIndex = m_declination.indexOf("°");
-            int minuteIndex = m_declination.indexOf("'");
-            int secondIndex = m_declination.indexOf(QChar('\"'));
-
-            QString StrData = m_declination;
-            QString HexStrData;
-            for (int i = 0; i < StrData.length(); i++) {
-                HexStrData.append(QString::number(StrData.at(i).unicode(), 10));
-                HexStrData.append(" ");
-            }
-
-            qDebug() << HexStrData;
-
-            qDebug() << (char)39 << m_declination.count((char)39);
-
-            qDebug() << degreeIndex;
-            qDebug() << minuteIndex;
-            qDebug() << secondIndex;
-
-            qDebug() << m_declination.mid(0, degreeIndex);
-            qDebug() << m_declination.mid(degreeIndex, minuteIndex);
-            qDebug() << m_declination.mid(minuteIndex, secondIndex);
-
-            int degree = m_declination.split("°").front().toInt();
-            int minute = m_declination.split("°").back().split("\'").front().toInt();
-            double second = m_declination.split("\'").back().split("\"").front().toDouble();
-            m_ui->DecDegreeSpinBox->setValue(degree);
-            m_ui->DecMinuteSpinBox->setValue(minute);
-            m_ui->DecSecondDoubleSpinBox->setValue(second);
+            m_ui->DecDegreeSpinBox->setValue(m_declination.getDegree());
+            m_ui->DecMinuteSpinBox->setValue(m_declination.getDegreeMinute());
+            m_ui->DecSecondDoubleSpinBox->setValue(m_declination.getDegreeSecond());
         }
 
         // === Skymap section
@@ -254,11 +225,7 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_name` = \"" + testName + "\"");
-        if (query.exec() == false)
-        {
-            throw SqlError(ErrorPriority::Critical, "Impossible de verifier le nom", &query);
-            return false;
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -280,11 +247,7 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_messier` = \"" + QString::number(testMessier) + "\"");
-        if (query.exec() == false)
-        {
-            throw SqlError(ErrorPriority::Critical, "Impossible de verifier le champ Messier", &query);
-            return false;
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -306,11 +269,7 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_ngc` = \"" + QString::number(testNgc) + "\"");
-        if (query.exec() == false)
-        {
-            throw SqlError(ErrorPriority::Critical, "Impossible de verifier le champ NGC", &query);
-            return false;
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -332,11 +291,7 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName1 + "\" OR `object_othername2` = \"" + testOtherName1 + "\"");
-        if (query.exec() == false)
-        {
-            throw SqlError(ErrorPriority::Critical, "Impossible de verifier l'a category'autre nom", &query);
-            return false;
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -358,11 +313,7 @@ bool ObjectForm::CheckInput()
         // Select all object with the same name
         m_db->open();
         QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_othername1` = \"" + testOtherName2 + "\" OR `object_othername2` = \"" + testOtherName2 + "\"");
-        if (query.exec() == false)
-        {
-            throw SqlError(ErrorPriority::Critical, "Impossible de verifier l'a category'autre nom (2)", &query);
-            return false;
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -384,11 +335,7 @@ bool ObjectForm::CheckInput()
         QSqlQuery query("SELECT `category_id` "
                         "FROM `categories` "
                         "WHERE `category_name` = \"" + m_ui->TypeComboBox->currentText() + "\"");
-        if (query.exec() == false)
-        {
-            throw SqlError(ErrorPriority::Critical, "Impossible de verifier la category", &query);
-            return false;
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -412,10 +359,7 @@ bool ObjectForm::CheckInput()
         QSqlQuery query("SELECT `constellation_id` "
                         "FROM `constellations` "
                         "WHERE `constellation_name` = \"" + m_ui->ConstellationComboBox->currentText() + "\"");
-        if (query.exec() == false)
-        {
-            throw SqlError(ErrorPriority::Critical, "Impossible de verifier la constellation", &query);
-        }
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -462,26 +406,16 @@ bool ObjectForm::CheckInput()
 
     // === Position verification
     // Right ascension
-    QString testRightAscention =
-            QString::number(m_ui->RAHourSpinBox->value())
-            + "h"
-            + QString::number(m_ui->RAMinuteSpinBox->value())
-            + "m"
-            + QString::number(m_ui->RASecondDoubleSpinBox->value())
-            + "s";
+    Angle testRightAscention(true, m_ui->RAHourSpinBox->value(), m_ui->RAMinuteSpinBox->value(), m_ui->RASecondDoubleSpinBox->value());
+
     qDebug() << "OK : RightAscention";
-    qDebug() << "Name : " << testRightAscention;
+    qDebug() << "Name : " << testRightAscention.getTotalHour();
 
     // Declination
-    QString testDeclination =
-            QString::number(m_ui->DecDegreeSpinBox->value())
-            + "°"
-            + QString::number(m_ui->DecMinuteSpinBox->value())
-            + "\'"
-            + QString::number(m_ui->DecSecondDoubleSpinBox->value())
-            + "\'\'";
+    Angle testDeclination(false, m_ui->DecDegreeSpinBox->value(), m_ui->DecMinuteSpinBox->value(), m_ui->DecSecondDoubleSpinBox->value());
+
     qDebug() << "OK : Declination";
-    qDebug() << "Name : " << testDeclination;
+    qDebug() << "Name : " << testDeclination.getTotalDegree();
 
 
     // COPYING TEST VALUES INTO ATTRIBUTES
@@ -612,26 +546,46 @@ void ObjectForm::on_SavePushButton_clicked()
                         "`object_appreciation`, "
                         "`object_note`) "
                         "VALUES "
-                        "(" + QString::number(m_objectId) + ", \""
-                        + m_name +"\", "
-                        + QString::number(m_messier) + ", "
-                        + QString::number(m_ngc) + ", \""
-                        + m_otherName1 + "\", \""
-                        + m_otherName2 + "\", "
-                        + QString::number(m_category) + ", "
-                        + QString::number(m_constellation) + ", "
-                        + QString::number(m_apparentMagnitude) + ", "
-                        + QString::number(m_secondApparentMagnitude) + ", "
-                        + QString::number(m_distance) + ", "
-                        + QString::number(m_diameter) + ", \""
-                        + m_rightAscension + "\", \""
-                        + m_declination + "\", "
-                        + QString::number(m_skyMap1) + ", "
-                        + QString::number(m_skyMap2) + ", "
-                        + QString::number(m_skyMap3) + ", \""
-                        + m_description + "\", "
-                        + QString::number(m_note) + ");")
-                        );
+                        "(:objectId, "
+                        ":name, "
+                        ":messier, "
+                        ":ngc, "
+                        ":otherName1, "
+                        ":otherName2, "
+                        ":category, "
+                        ":constellation, "
+                        ":apparentMagnitude, "
+                        ":secondApparentMagnitude, "
+                        ":distance, "
+                        ":diameter, "
+                        ":rightAscension, "
+                        ":declination, "
+                        ":skyMap1, "
+                        ":skyMap2, "
+                        ":skyMap3, "
+                        ":description, "
+                        ":note)"
+                        ));
+
+            query.bindValue(":objectId", QString::number(m_objectId));
+            query.bindValue(":name", m_name);
+            query.bindValue(":messier", QString::number(m_messier));
+            query.bindValue(":ngc", QString::number(m_ngc));
+            query.bindValue(":otherName1", m_otherName1);
+            query.bindValue(":otherName2", m_otherName2);
+            query.bindValue(":category", QString::number(m_category));
+            query.bindValue(":constellation", QString::number(m_constellation));
+            query.bindValue(":apparentMagnitude", QString::number(m_apparentMagnitude));
+            query.bindValue(":secondApparentMagnitude", QString::number(m_secondApparentMagnitude));
+            query.bindValue(":distance", QString::number(m_distance));
+            query.bindValue(":diameter", QString::number(m_diameter));
+            query.bindValue(":rightAscension", m_rightAscension.getHourAngle());
+            query.bindValue(":declination", m_declination.getDegreeAngle());
+            query.bindValue(":skyMap1", QString::number(m_skyMap1));
+            query.bindValue(":skyMap2", QString::number(m_skyMap2));
+            query.bindValue(":skyMap3", QString::number(m_skyMap3));
+            query.bindValue(":description", m_description);
+            query.bindValue(":note", QString::number(m_note));
 
             if (query.exec() == false)
             {
