@@ -37,9 +37,9 @@ HEADERS += \
     typetable.h
 
 FORMS += \
-    constellationdialog.ui \
     mainwindow.ui \
-    tabledialog.ui
+    tabledialog.ui \
+    objectform.ui
 
 RESOURCES += \
     ressources.qrc

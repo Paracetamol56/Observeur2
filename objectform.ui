@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ObjectForm</class>
+ <widget class="QWidget" name="ObjectForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>811</width>
+    <height>509</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Ajouter un nouvel objet</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="ressources.qrc">
+    <normaloff>:/Ressources/icons/icons8-telescope-96.png</normaloff>:/Ressources/icons/icons8-telescope-96.png</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_4">
+   <item>
+    <layout class="QHBoxLayout" name="GroupColumns">
+     <item>
+      <layout class="QVBoxLayout" name="Column1">
+       <item>
+        <widget class="QGroupBox" name="GeneralGroupBox">
+         <property name="title">
+          <string>Général</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="NameLabel">
+            <property name="text">
+             <string>Nom commun</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="NameLineEdit">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="MessierLabel">
+            <property name="text">
+             <string>Messier</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="MessierSpinBox">
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>110</number>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="NgcLabel">
+            <property name="text">
+             <string>NGC</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="NgcSpinBox">
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>7840</number>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="OtherNameLabel">
+            <property name="text">
+             <string>Autre nom</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="OtherNameLineEdit_1"/>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="TypeLabel">
+            <property name="text">
+             <string>Type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="TypeComboBox"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="ConstellationLabel">
+            <property name="text">
+             <string>Constellation</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QComboBox" name="ConstellationComboBox"/>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="ApparentMagnitudeLabel">
+            <property name="text">
+             <string>Magnitude apparente</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QDoubleSpinBox" name="ApparentMagnitudeDoubleSpinBox_1">
+            <property name="minimum">
+             <double>-30.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>50.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="ApparentMagnitudeLabel_2">
+            <property name="text">
+             <string>Magnitude apparente secondaire</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QDoubleSpinBox" name="ApparentMagnitudeDoubleSpinBox_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimum">
+             <double>-30.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>50.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="DistanceLabel">
+            <property name="text">
+             <string>Distance</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QDoubleSpinBox" name="DistanceDoubleSpinBox">
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <double>1000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>10.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="DiameterLabel">
+            <property name="text">
+             <string>Diamètre</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QDoubleSpinBox" name="DiametreDoubleSpinBox">
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <double>1000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>10.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="OtherNameLineEdit_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="PositionGroupBox">
+         <property name="title">
+          <string>Position</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="RALabel">
+            <property name="text">
+             <string>Ascention droite</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="RAHorizontalLayout" stretch="3,1,3,1,3,1">
+            <item>
+             <widget class="QSpinBox" name="RAHourSpinBox">
+              <property name="maximum">
+               <number>23</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="RAHourLabel">
+              <property name="text">
+               <string>h</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="RAMinuteSpinBox">
+              <property name="maximum">
+               <number>59</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="RAMinuteLabel">
+              <property name="text">
+               <string>m</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="RASecondDoubleSpinBox">
+              <property name="maximum">
+               <double>59.990000000000002</double>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="RASecondLabel">
+              <property name="text">
+               <string>s</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="DecLabel">
+            <property name="text">
+             <string>Déclinaison</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="DecHorizontalLayout" stretch="3,1,3,1,3,1">
+            <item>
+             <widget class="QSpinBox" name="DecDegreeSpinBox">
+              <property name="minimum">
+               <number>-89</number>
+              </property>
+              <property name="maximum">
+               <number>89</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="DecDegreeLabel">
+              <property name="text">
+               <string>°</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="DecMinuteSpinBox">
+              <property name="maximum">
+               <number>59</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="DecMinuteLabel">
+              <property name="text">
+               <string>'</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="DecSecondDoubleSpinBox">
+              <property name="maximum">
+               <double>59.990000000000002</double>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="DecSecondLabel">
+              <property name="text">
+               <string>&quot;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="Column2">
+       <item>
+        <widget class="QGroupBox" name="MapGroupBox">
+         <property name="title">
+          <string>Cartes</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="1">
+             <widget class="QLabel" name="Map2Label">
+              <property name="text">
+               <string>Niveau 2</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="Map1Label">
+              <property name="text">
+               <string>Niveau 1</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="Map3Label">
+              <property name="text">
+               <string>Niveau 3</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QSpinBox" name="Map1SpinBox">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="Map2SpinBox">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QSpinBox" name="Map3SpinBox">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>30</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="AutoComputePushButton">
+            <property name="text">
+             <string>Calculer automatiquement à partir de la position</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="AppreciationGroupBox">
+         <property name="title">
+          <string>Appréciation</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="DescriptionLabel">
+            <property name="text">
+             <string>Description</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QTextEdit" name="DescriptionTextEdit"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="NoteLabel">
+            <property name="text">
+             <string>Note</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="NoteHorizontalLayout" stretch="6,1">
+            <item>
+             <widget class="QSlider" name="NoteHorizontalSlider">
+              <property name="maximum">
+               <number>10</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="NoteDisplayLabel">
+              <property name="text">
+               <string>0/10</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="ButtonHorizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="SavePushButton">
+       <property name="text">
+        <string>Enregistrer</string>
+       </property>
+       <property name="icon">
+        <iconset resource="ressources.qrc">
+         <normaloff>:/Ressources/icons/icons8-add-property-96.png</normaloff>:/Ressources/icons/icons8-add-property-96.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="CancelPushButton">
+       <property name="text">
+        <string>Annuler</string>
+       </property>
+       <property name="icon">
+        <iconset resource="ressources.qrc">
+         <normaloff>:/Ressources/icons/icons8-delete-document-96.png</normaloff>:/Ressources/icons/icons8-delete-document-96.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
