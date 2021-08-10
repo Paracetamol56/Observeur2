@@ -658,6 +658,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectRows</enum>
         </property>
@@ -680,6 +683,13 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Todo list</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="AllObjectsPushButton">
@@ -713,11 +723,12 @@
     <property name="title">
      <string>Aide</string>
     </property>
+    <addaction name="actionAide_en_ligne"/>
     <addaction name="actionA_propos"/>
    </widget>
    <widget class="QMenu" name="menuAffichage">
     <property name="title">
-     <string>Affichage</string>
+     <string>Fenêtre</string>
     </property>
     <widget class="QMenu" name="menuTh_me">
      <property name="title">
@@ -727,6 +738,11 @@
      <addaction name="actionDark"/>
      <addaction name="actionNight_vision"/>
     </widget>
+    <addaction name="actionAfficher_toute_les_constellations"/>
+    <addaction name="actionAfficher_tous_les_types"/>
+    <addaction name="actionAfficher_tous_les_objets"/>
+    <addaction name="actionAfficher_la_todo_list"/>
+    <addaction name="separator"/>
     <addaction name="menuTh_me"/>
    </widget>
    <widget class="QMenu" name="menuEdition">
@@ -734,6 +750,10 @@
      <string>Edition</string>
     </property>
     <addaction name="actionNouvel_objet"/>
+    <addaction name="actionModifier_un_objet"/>
+    <addaction name="actionSupprimer_un_objet"/>
+    <addaction name="separator"/>
+    <addaction name="actionTout_selectionner"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuEdition"/>
@@ -767,7 +787,47 @@
   </action>
   <action name="actionNouvel_objet">
    <property name="text">
-    <string>Nouvel objet</string>
+    <string>Ajouter un objet</string>
+   </property>
+  </action>
+  <action name="actionTout_selectionner">
+   <property name="text">
+    <string>Tout selectionner</string>
+   </property>
+  </action>
+  <action name="actionAide_en_ligne">
+   <property name="text">
+    <string>Aide en ligne</string>
+   </property>
+  </action>
+  <action name="actionSupprimer_un_objet">
+   <property name="text">
+    <string>Supprimer un objet</string>
+   </property>
+  </action>
+  <action name="actionModifier_un_objet">
+   <property name="text">
+    <string>Modifier un objet</string>
+   </property>
+  </action>
+  <action name="actionAfficher_toute_les_constellations">
+   <property name="text">
+    <string>Afficher toute les constellations</string>
+   </property>
+  </action>
+  <action name="actionAfficher_tous_les_types">
+   <property name="text">
+    <string>Afficher tous les types</string>
+   </property>
+  </action>
+  <action name="actionAfficher_tous_les_objets">
+   <property name="text">
+    <string>Afficher tous les objets</string>
+   </property>
+  </action>
+  <action name="actionAfficher_la_todo_list">
+   <property name="text">
+    <string>Afficher la todo list</string>
    </property>
   </action>
  </widget>

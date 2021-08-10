@@ -185,7 +185,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     }
     else
     {
-        query.prepare("SELECT MAX(object_id) FROM objects");
+        query.prepare("SELECT COUNT(object_id) FROM objects");
 
         if (query.exec() == false)
         {
@@ -195,8 +195,6 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
         query.first();
         m_objectId = query.value(0).toInt() + 1;
-        qDebug() << query.value(0).toInt();
-        qDebug() << m_objectId;
     }
 
     // Close the database connection
@@ -232,11 +230,6 @@ bool ObjectForm::CheckInput()
             throw InputError(ErrorPriority::BadInput, "Ce nom existe déjà dans la base de donnée");
             return false;
         }
-        else
-        {
-            qDebug() << "OK : name";
-            qDebug() << "Name : " << testName;
-        }
     }
 
 
@@ -253,11 +246,6 @@ bool ObjectForm::CheckInput()
         {
             throw InputError(ErrorPriority::BadInput, "Cet object messier existe déjà dans la base de donnée");
             return false;
-        }
-        else
-        {
-            qDebug() << "OK : messier";
-            qDebug() << "Messier : " << testMessier;
         }
     }
 
@@ -276,11 +264,6 @@ bool ObjectForm::CheckInput()
             throw InputError(ErrorPriority::BadInput, "Cet object NGC existe déjà dans la base de donnée");
             return false;
         }
-        else
-        {
-            qDebug() << "OK : NGC";
-            qDebug() << "NGC : " << testMessier;
-        }
     }
 
 
@@ -297,11 +280,6 @@ bool ObjectForm::CheckInput()
         {
             throw InputError(ErrorPriority::BadInput, "Cet autre nom (1) existe déjà dans la base de donnée");
             return false;
-        }
-        else
-        {
-            qDebug() << "OK : othername1";
-            qDebug() << "Name : " << testOtherName1;
         }
     }
 
@@ -322,8 +300,6 @@ bool ObjectForm::CheckInput()
         }
         else
         {
-            qDebug() << "OK : othername2";
-            qDebug() << "Name : " << testOtherName2;
         }
     }
 
@@ -340,8 +316,6 @@ bool ObjectForm::CheckInput()
         if (query.next())
         {
             testType = query.value(0).toInt();
-            qDebug() << "OK : Types";
-            qDebug() << "Name : " << testType;
         }
         else
         {
@@ -364,8 +338,6 @@ bool ObjectForm::CheckInput()
         if (query.next())
         {
             testConstellation = query.value(0).toInt();
-            qDebug() << "OK : Constellation";
-            qDebug() << "Name : " << testConstellation;
         }
         else
         {
@@ -393,29 +365,19 @@ bool ObjectForm::CheckInput()
             m_ui->ApparentMagnitudeDoubleSpinBox_1->setValue(testApparentMagnitude);
             m_ui->ApparentMagnitudeDoubleSpinBox_2->setValue(testSecondApparentMagnitude);
         }
-        qDebug() << "OK : SecondApparentMagnitude";
-        qDebug() << "SecondApparentMagnitude : " << testSecondApparentMagnitude;
     }
     else
     {
         testSecondApparentMagnitude = 0;
     }
-    qDebug() << "OK : ApparentMagnitude";
-    qDebug() << "ApparentMagnitude : " << testApparentMagnitude;
 
 
     // === Position verification
     // Right ascension
     Angle testRightAscention(true, m_ui->RAHourSpinBox->value(), m_ui->RAMinuteSpinBox->value(), m_ui->RASecondDoubleSpinBox->value());
 
-    qDebug() << "OK : RightAscention";
-    qDebug() << "Name : " << testRightAscention.getTotalHour();
-
     // Declination
     Angle testDeclination(false, m_ui->DecDegreeSpinBox->value(), m_ui->DecMinuteSpinBox->value(), m_ui->DecSecondDoubleSpinBox->value());
-
-    qDebug() << "OK : Declination";
-    qDebug() << "Name : " << testDeclination.getTotalDegree();
 
 
     // COPYING TEST VALUES INTO ATTRIBUTES
@@ -453,9 +415,9 @@ bool ObjectForm::CheckInput()
     // Map 1
     m_skyMap1 = m_ui->Map1SpinBox->value();
     // Map 2
-    m_skyMap2 = m_ui->Map1SpinBox->value();
+    m_skyMap2 = m_ui->Map2SpinBox->value();
     // Map 3
-    m_skyMap3 = m_ui->Map1SpinBox->value();
+    m_skyMap3 = m_ui->Map3SpinBox->value();
 
     // === Appreciation section
     // Description

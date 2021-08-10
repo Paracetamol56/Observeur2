@@ -172,22 +172,7 @@ void MainWindow::updateObject()
 }
 
 
-void MainWindow::on_actionQuitter_triggered()
-{
-    QApplication::quit();
-}
-
-
-void MainWindow::on_actionA_propos_triggered()
-{
-    QMessageBox aboutMessageBox;
-    aboutMessageBox.setText("A propos de l'Observeur 2");
-    aboutMessageBox.setInformativeText("Logiciel de catalogue d'objet personnalisé pour l'astronomie amateur");
-    aboutMessageBox.setStandardButtons(QMessageBox::Ok);
-    aboutMessageBox.setIcon(QMessageBox::Information);
-    aboutMessageBox.exec();
-}
-
+// BUTTONS EVENTS
 
 void MainWindow::on_AllConsellationsButton_clicked()
 {
@@ -358,6 +343,74 @@ void MainWindow::on_AllObjectsPushButton_clicked()
 }
 
 
+void MainWindow::updateTableSelection()
+{
+    QItemSelectionModel *selectionModel = m_ui->objectTableView->selectionModel();
+
+    if (selectionModel->hasSelection())
+    {
+        qDebug() << selectionModel->selectedRows();
+
+        QString nameListString = "\"";
+
+        for (int i = 0; i < selectionModel->selectedRows().count(); ++i)
+        {
+            nameListString += selectionModel->model()->data(selectionModel->selectedRows().at(i).siblingAtColumn(0)).toString();
+            nameListString += "\", \"";
+        }
+
+        int lastIndex = nameListString.lastIndexOf(QChar(','));
+        nameListString = nameListString.left(lastIndex);
+
+        // Get the IDs of selected objects from the database
+
+        m_db->open();
+
+        QSqlQuery query;
+        query.prepare(
+                    "SELECT `object_id`"
+                    "FROM `objects`"
+                    "WHERE object_name IN (" + nameListString +")"
+                    );
+
+        //query.bindValue(":namefilter", nameListString);
+
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Critical, "Impossible de deffinir la selection", &query);
+            sqlError.printMessage();
+            return;
+        }
+
+        while(query.next())
+        {
+            m_selectedId.push_back(query.value(0).toInt());
+        }
+
+        m_db->close();
+    }
+}
+
+
+// MENU EVENTS
+
+void MainWindow::on_actionQuitter_triggered()
+{
+    QApplication::quit();
+}
+
+
+void MainWindow::on_actionA_propos_triggered()
+{
+    QMessageBox aboutMessageBox;
+    aboutMessageBox.setText("A propos de l'Observeur 2");
+    aboutMessageBox.setInformativeText("Logiciel de catalogue d'objet personnalisé pour l'astronomie amateur");
+    aboutMessageBox.setStandardButtons(QMessageBox::Ok);
+    aboutMessageBox.setIcon(QMessageBox::Information);
+    aboutMessageBox.exec();
+}
+
+
 void MainWindow::on_actionLight_triggered()
 {
     QPalette lightPalette(palette());
@@ -387,10 +440,98 @@ void MainWindow::on_actionNight_vision_triggered()
     setPalette(nightVisionPalette);
 }
 
+
 void MainWindow::on_actionNouvel_objet_triggered()
 {
-    ObjectForm *newObjectWindow = new ObjectForm(nullptr, m_db, 0);
-    newObjectWindow->show();
+    ObjectForm newObjectWindow(nullptr, m_db, 0);
+    newObjectWindow.show();
 }
+
+
+void MainWindow::on_actionModifier_un_objet_triggered()
+{
+
+}
+
+
+void MainWindow::on_actionSupprimer_un_objet_triggered()
+{
+    QMessageBox confirmMessageBox;
+    confirmMessageBox.setText("Etes vous sûr de vouloir supprimer cet objet ?");
+    confirmMessageBox.setInformativeText("Cette action est irreversible");
+    confirmMessageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    confirmMessageBox.setIcon(QMessageBox::Information);
+    switch (confirmMessageBox.exec())
+    {
+    case QMessageBox::Yes:
+        // todo
+        break;
+    case QMessageBox::No:
+        confirmMessageBox.close();
+        break;
+    }
+}
+
+
+void MainWindow::on_actionAfficher_toute_les_constellations_triggered()
+{
+    ConstellationTable constellationTableDIalog(nullptr, m_db);
+    constellationTableDIalog.exec();
+}
+
+
+void MainWindow::on_actionAfficher_tous_les_types_triggered()
+{
+    ConstellationTable constellationTableDIalog(nullptr, m_db);
+    constellationTableDIalog.exec();
+}
+
+
+void MainWindow::on_actionAfficher_tous_les_objets_triggered()
+{
+    ObjectTable objectTableDIalog(nullptr, m_db);
+    objectTableDIalog.exec();
+}
+
+
+void MainWindow::on_actionAfficher_la_todo_list_triggered()
+{
+    updateTableSelection();
+}
+
+
+
+
+
+
+
+void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos)
+{
+    QModelIndex index = m_ui->objectTableView->indexAt(pos);
+
+    QMenu contextMenu;
+    contextMenu.addAction(tr("Modifier"));
+    contextMenu.addAction(tr("Ajouter à la todo list"));
+    contextMenu.addAction(tr("Tout selectionner"));
+    contextMenu.addAction(tr("Supprimer"));
+
+    QAction* setAction = contextMenu.exec(m_ui->objectTableView->viewport()->mapToGlobal(pos));
+    if (setAction != 0)
+    {
+        qDebug() << index;
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 

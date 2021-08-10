@@ -46,10 +46,9 @@ class MainWindow : public QMainWindow
 
 private:
 
-    // UI object
-    Ui::MainWindow* m_ui;
-    // Database object
-    QSqlDatabase* m_db;
+    Ui::MainWindow *m_ui = nullptr;
+    QSqlDatabase *m_db = nullptr;
+    QVector<unsigned int> m_selectedId = {};
 
     // Filters
     // Constellation filter
@@ -64,10 +63,11 @@ public:
     explicit MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
-    // Object list updater
     void updateObject();
+    void updateTableSelection();
 
 private slots:
+
     void on_actionA_propos_triggered();
     void on_actionQuitter_triggered();
     void on_AllConsellationsButton_clicked();
@@ -81,6 +81,13 @@ private slots:
     void on_AllTypesButton_clicked();
     void on_actionNouvel_objet_triggered();
     void on_AllObjectsPushButton_clicked();
+    void on_objectTableView_customContextMenuRequested(const QPoint &pos);
+    void on_actionAfficher_toute_les_constellations_triggered();
+    void on_actionAfficher_tous_les_types_triggered();
+    void on_actionAfficher_tous_les_objets_triggered();
+    void on_actionAfficher_la_todo_list_triggered();
+    void on_actionModifier_un_objet_triggered();
+    void on_actionSupprimer_un_objet_triggered();
 };
 
 #endif // MAINWINDOW_H
