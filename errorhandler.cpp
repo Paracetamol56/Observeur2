@@ -37,19 +37,19 @@ void Error::setMessageBoxPriority(QMessageBox *errorMessage)
     case ErrorPriority::Warning:
         errorMessage->setWindowTitle("Warning");
         errorMessage->setStandardButtons(QMessageBox::Ok);
-        errorMessage->setIcon(QMessageBox::Warning);
+        errorMessage->setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-error-96.png"));
         break;
 
     case ErrorPriority::Critical:
         errorMessage->setWindowTitle("Critical");
         errorMessage->setStandardButtons(QMessageBox::Close);
-        errorMessage->setIcon(QMessageBox::Critical);
+        errorMessage->setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-high-priority-96.png"));
         break;
 
     case ErrorPriority::BadInput:
         errorMessage->setWindowTitle("BadInput");
         errorMessage->setStandardButtons(QMessageBox::Discard | QMessageBox::Retry);
-        errorMessage->setIcon(QMessageBox::Warning);
+        errorMessage->setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-error-96.png"));
         break;
     }
 }

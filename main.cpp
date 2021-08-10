@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     MainWindow mainWindow;
     mainWindow.showMaximized();
-
+/*
     // Open the QSS file
     QFile qssFile(":/Ressources/lightTheme.qss");
     qssFile.open(QFile::ReadOnly);
@@ -20,6 +20,6 @@ int main(int argc, char *argv[])
 
     // Setup stylesheet
     app.setStyleSheet(styleSheet);
-
+*/
     return app.exec();
 }

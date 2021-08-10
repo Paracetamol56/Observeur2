@@ -26,5 +26,16 @@
         <file>Ressources/Inter.ttf</file>
         <file>Ressources/lightTheme.qss</file>
         <file>Ressources/redTheme.qss</file>
+        <file>Ressources/icons/ui/icons8-checkmark-48.png</file>
+        <file>Ressources/icons/ui/icons8-semi-checkmark-48.png</file>
+        <file>Ressources/icons/ui/icons8-sort-48.png</file>
+        <file>Ressources/icons/ui/icons8-sort-down-48.png</file>
+        <file>Ressources/icons/ui/icons8-sort-left-48.png</file>
+        <file>Ressources/icons/ui/icons8-sort-right-48.png</file>
+        <file>Ressources/icons/ui/icons8-sort-up-48.png</file>
+        <file>Ressources/icons/errors/icons8-aide-96.png</file>
+        <file>Ressources/icons/errors/icons8-error-96.png</file>
+        <file>Ressources/icons/errors/icons8-high-priority-96.png</file>
+        <file>Ressources/icons/errors/icons8-info-96.png</file>
     </qresource>
 </RCC>
