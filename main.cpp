@@ -13,17 +13,13 @@ int main(int argc, char *argv[])
     MainWindow mainWindow;
     mainWindow.showMaximized();
 
-    /*
     // Open the QSS file
-    QString qssPath = QDir::currentPath();
-    qssPath =  qssPath + QString("/Ressources/theme.qss");
-    QFile qssFile(qssPath);
+    QFile qssFile(":/Ressources/lightTheme.qss");
     qssFile.open(QFile::ReadOnly);
     QString styleSheet { QLatin1String(qssFile.readAll()) };
 
     // Setup stylesheet
     app.setStyleSheet(styleSheet);
-    */
 
     return app.exec();
 }

@@ -11,6 +11,9 @@
 TypeTable::TypeTable(QWidget *parent, QSqlDatabase *db)
     : TableDialog(parent, db)
 {
+    setWindowIcon(QIcon(":/Ressources/icons/icons8-nebula-96.png"));
+    setWindowTitle("Tous les types");
+    m_ui->label->setText("Tous les types");
     tablePopulate();
 }
 
@@ -51,10 +54,6 @@ void TypeTable::tablePopulate()
 
     // Put the model into the table view
     m_ui->tableView->setModel(sortModel);
-
-    // Window style
-    setWindowTitle("Types");
-    m_ui->label->setText("Tous les types");
 
     // Table style
     m_ui->tableView->setSelectionMode(QAbstractItemView::NoSelection);

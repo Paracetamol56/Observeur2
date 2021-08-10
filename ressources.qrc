@@ -20,5 +20,11 @@
         <file>Ressources/icons/icons8-todo-list-96.png</file>
         <file>Ressources/icons/icons8-urgent-property-96.png</file>
         <file>Ressources/icons/icons8-user-manual-96.png</file>
+        <file>Ressources/icons/icons8-select-all-96.png</file>
+        <file>Ressources/icons/icons8-telescope-96.png</file>
+        <file>Ressources/darkTheme.qss</file>
+        <file>Ressources/Inter.ttf</file>
+        <file>Ressources/lightTheme.qss</file>
+        <file>Ressources/redTheme.qss</file>
     </qresource>
 </RCC>

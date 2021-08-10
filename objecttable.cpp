@@ -11,6 +11,9 @@
 ObjectTable::ObjectTable(QWidget *parent, QSqlDatabase *db)
     : TableDialog(parent, db)
 {
+    setWindowIcon(QIcon(":/Ressources/icons/icons8-show-property-96.png"));
+    setWindowTitle("Tous les objets");
+    m_ui->label->setText("Tous les objets");
     tablePopulate();
 }
 
@@ -50,10 +53,6 @@ void ObjectTable::tablePopulate()
 
     // Put the model into the table view
     m_ui->tableView->setModel(sortModel);
-
-    // Window style
-    setWindowTitle("Types");
-    m_ui->label->setText("Tous les types");
 
     // Table style
     m_ui->tableView->setSelectionMode(QAbstractItemView::NoSelection);

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>759</width>
-    <height>655</height>
+    <width>1280</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="palette">
@@ -455,6 +455,10 @@
   <property name="windowTitle">
    <string>L'Observeur 2</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="ressources.qrc">
+    <normaloff>:/Ressources/icons/icons8-telescope-96.png</normaloff>:/Ressources/icons/icons8-telescope-96.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -496,6 +500,10 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="Constellations">
+       <attribute name="icon">
+        <iconset resource="ressources.qrc">
+         <normaloff>:/Ressources/icons/icons8-constellation-96.png</normaloff>:/Ressources/icons/icons8-constellation-96.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Constellations</string>
        </attribute>
@@ -567,11 +575,19 @@
        </layout>
       </widget>
       <widget class="QWidget" name="Periode">
+       <attribute name="icon">
+        <iconset resource="ressources.qrc">
+         <normaloff>:/Ressources/icons/icons8-event-96.png</normaloff>:/Ressources/icons/icons8-event-96.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Periode</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="Types">
+       <attribute name="icon">
+        <iconset resource="ressources.qrc">
+         <normaloff>:/Ressources/icons/icons8-nebula-96.png</normaloff>:/Ressources/icons/icons8-nebula-96.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Types</string>
        </attribute>
@@ -633,6 +649,10 @@
             <property name="text">
              <string>Tous les types</string>
             </property>
+            <property name="icon">
+             <iconset resource="ressources.qrc">
+              <normaloff>:/Ressources/icons/icons8-nebula-96.png</normaloff>:/Ressources/icons/icons8-nebula-96.png</iconset>
+            </property>
            </widget>
           </item>
          </layout>
@@ -643,6 +663,18 @@
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
@@ -671,6 +703,15 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
         <item>
          <spacer name="horizontalSpacer_3">
           <property name="orientation">
@@ -689,12 +730,20 @@
           <property name="text">
            <string>Todo list</string>
           </property>
+          <property name="icon">
+           <iconset resource="ressources.qrc">
+            <normaloff>:/Ressources/icons/icons8-todo-list-96.png</normaloff>:/Ressources/icons/icons8-todo-list-96.png</iconset>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="AllObjectsPushButton">
           <property name="text">
            <string>Tous les objets</string>
+          </property>
+          <property name="icon">
+           <iconset resource="ressources.qrc">
+            <normaloff>:/Ressources/icons/icons8-show-property-96.png</normaloff>:/Ressources/icons/icons8-show-property-96.png</iconset>
           </property>
          </widget>
         </item>
@@ -709,7 +758,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>759</width>
+     <width>1280</width>
      <height>20</height>
     </rect>
    </property>
@@ -733,6 +782,10 @@
     <widget class="QMenu" name="menuTh_me">
      <property name="title">
       <string>Thème</string>
+     </property>
+     <property name="icon">
+      <iconset resource="ressources.qrc">
+       <normaloff>:/Ressources/icons/icons8-change-theme-96.png</normaloff>:/Ressources/icons/icons8-change-theme-96.png</iconset>
      </property>
      <addaction name="actionLight"/>
      <addaction name="actionDark"/>
@@ -761,11 +814,19 @@
    <addaction name="menuAide"/>
   </widget>
   <action name="actionQuitter">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-close-window-96.png</normaloff>:/Ressources/icons/icons8-close-window-96.png</iconset>
+   </property>
    <property name="text">
     <string>Quitter</string>
    </property>
   </action>
   <action name="actionA_propos">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-info-96.png</normaloff>:/Ressources/icons/icons8-info-96.png</iconset>
+   </property>
    <property name="text">
     <string>A propos</string>
    </property>
@@ -786,51 +847,89 @@
    </property>
   </action>
   <action name="actionNouvel_objet">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-add-property-96.png</normaloff>:/Ressources/icons/icons8-add-property-96.png</iconset>
+   </property>
    <property name="text">
     <string>Ajouter un objet</string>
    </property>
   </action>
   <action name="actionTout_selectionner">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-select-all-96.png</normaloff>:/Ressources/icons/icons8-select-all-96.png</iconset>
+   </property>
    <property name="text">
     <string>Tout selectionner</string>
    </property>
   </action>
   <action name="actionAide_en_ligne">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-user-manual-96.png</normaloff>:/Ressources/icons/icons8-user-manual-96.png</iconset>
+   </property>
    <property name="text">
     <string>Aide en ligne</string>
    </property>
   </action>
   <action name="actionSupprimer_un_objet">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-delete-document-96.png</normaloff>:/Ressources/icons/icons8-delete-document-96.png</iconset>
+   </property>
    <property name="text">
     <string>Supprimer l'objet</string>
    </property>
   </action>
   <action name="actionModifier_un_objet">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-edit-property-96.png</normaloff>:/Ressources/icons/icons8-edit-property-96.png</iconset>
+   </property>
    <property name="text">
     <string>Modifier l'objet</string>
    </property>
   </action>
   <action name="actionAfficher_toute_les_constellations">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-constellation-96.png</normaloff>:/Ressources/icons/icons8-constellation-96.png</iconset>
+   </property>
    <property name="text">
     <string>Afficher toute les constellations</string>
    </property>
   </action>
   <action name="actionAfficher_tous_les_types">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-nebula-96.png</normaloff>:/Ressources/icons/icons8-nebula-96.png</iconset>
+   </property>
    <property name="text">
     <string>Afficher tous les types</string>
    </property>
   </action>
   <action name="actionAfficher_tous_les_objets">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-show-property-96.png</normaloff>:/Ressources/icons/icons8-show-property-96.png</iconset>
+   </property>
    <property name="text">
     <string>Afficher tous les objets</string>
    </property>
   </action>
   <action name="actionAfficher_la_todo_list">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-todo-list-96.png</normaloff>:/Ressources/icons/icons8-todo-list-96.png</iconset>
+   </property>
    <property name="text">
     <string>Afficher la todo list</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

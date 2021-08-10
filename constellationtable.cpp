@@ -11,6 +11,9 @@
 ConstellationTable::ConstellationTable(QWidget *parent, QSqlDatabase *database)
     : TableDialog(parent, database)
 {
+    setWindowIcon(QIcon(":/Ressources/icons/icons8-constellation-96.png"));
+    setWindowTitle("Toutes les constellations");
+    m_ui->label->setText("Toutes les constellations");
     tablePopulate();
 }
 
@@ -56,10 +59,6 @@ void ConstellationTable::tablePopulate()
 
     // Put the model into the table view
     m_ui->tableView->setModel(sortModel);
-
-    // Window style
-    setWindowTitle("Constellation");
-    m_ui->label->setText("Toutes les constellations");
 
     // Table style
     m_ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);

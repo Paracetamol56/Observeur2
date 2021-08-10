@@ -437,31 +437,19 @@ void MainWindow::on_actionA_propos_triggered()
 
 void MainWindow::on_actionLight_triggered()
 {
-    QPalette lightPalette(palette());
-    lightPalette.setColor(QPalette::Base, Qt::lightGray);
-    setPalette(lightPalette);
+    //todo
 }
 
 
 void MainWindow::on_actionDark_triggered()
 {
-    QPalette darkPalette(palette());
-    darkPalette.setColor(QPalette::Base, Qt::darkGray);
-    setPalette(darkPalette);
+    //todo
 }
 
 
 void MainWindow::on_actionNight_vision_triggered()
 {
-    QPalette nightVisionPalette(palette());
-    // Color palette
-    // 207, 12, 0, 255   |   #cf0c00
-    // 156, 10, 1, 255   |   #9c0a01
-    // 106, 7, 2, 255    |   #6a0702
-    // 55, 5, 2, 255     |   #370502
-    // 4, 2, 3, 255      |   #040203
-
-    setPalette(nightVisionPalette);
+    //todo
 }
 
 
