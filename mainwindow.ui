@@ -394,16 +394,28 @@
    </property>
   </action>
   <action name="actionLight">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-luke-skywalker-96.png</normaloff>:/Ressources/icons/icons8-luke-skywalker-96.png</iconset>
+   </property>
    <property name="text">
     <string>Light</string>
    </property>
   </action>
   <action name="actionDark">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-darth-vader-96.png</normaloff>:/Ressources/icons/icons8-darth-vader-96.png</iconset>
+   </property>
    <property name="text">
     <string>Dark</string>
    </property>
   </action>
   <action name="actionNight_vision">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-vision-96.png</normaloff>:/Ressources/icons/icons8-vision-96.png</iconset>
+   </property>
    <property name="text">
     <string>Night vision</string>
    </property>

@@ -42,7 +42,9 @@ FORMS += \
     objectform.ui
 
 RESOURCES += \
-    ressources.qrc
+    ressources.qrc \
+    light.qrc \
+    dark.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
