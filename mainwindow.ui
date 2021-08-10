@@ -802,12 +802,12 @@
   </action>
   <action name="actionSupprimer_un_objet">
    <property name="text">
-    <string>Supprimer un objet</string>
+    <string>Supprimer l'objet</string>
    </property>
   </action>
   <action name="actionModifier_un_objet">
    <property name="text">
-    <string>Modifier un objet</string>
+    <string>Modifier l'objet</string>
    </property>
   </action>
   <action name="actionAfficher_toute_les_constellations">

@@ -80,6 +80,9 @@ MainWindow::MainWindow(QWidget* parent)
         FileMissingError errorMessage(ErrorPriority::Critical, "Aucun fichier \"data.sqlite\" trouvé");
         errorMessage.printMessage();
     }
+
+    // Connections
+    connect(m_ui->objectTableView, SIGNAL(tableSelectionChanged()), this, SLOT(on_tableViewSelection()));
 }
 
 
@@ -169,6 +172,75 @@ void MainWindow::updateObject()
     m_ui->objectTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     m_db->close();
+}
+
+
+void MainWindow::tableSelectionChanged()
+{
+    qDebug() << "update !!!!!";
+
+    QItemSelectionModel *selectionModel = m_ui->objectTableView->selectionModel();
+
+    if (selectionModel->hasSelection())
+    {
+        QString nameListString = "\"";
+
+        for (int i = 0; i < selectionModel->selectedRows().count(); ++i)
+        {
+            nameListString += selectionModel->model()->data(selectionModel->selectedRows().at(i).siblingAtColumn(0)).toString();
+            nameListString += "\", \"";
+        }
+
+        int lastIndex = nameListString.lastIndexOf(QChar(','));
+        nameListString = nameListString.left(lastIndex);
+
+        // Get the IDs of selected objects from the database
+
+        m_db->open();
+
+        QSqlQuery query;
+        query.prepare(
+                    "SELECT `object_id`"
+                    "FROM `objects`"
+                    "WHERE object_name IN (" + nameListString +")"
+                    );
+
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Critical, "Impossible de deffinir la selection", &query);
+            sqlError.printMessage();
+            return;
+        }
+
+        while(query.next())
+        {
+            m_selectedId.push_back(query.value(0).toInt());
+        }
+
+        m_db->close();
+    }
+
+    // Update the menu
+    if (m_selectedId.empty() == true)
+    {
+        m_ui->menuEdition->actions().at(1)->setEnabled(false);
+        m_ui->menuEdition->actions().at(2)->setEnabled(false);
+    }
+    else
+    {
+        if (m_selectedId.count() == 1)
+        {
+            m_ui->menuEdition->actions().at(1)->setEnabled(true);
+            m_ui->menuEdition->actions().at(2)->setText("Supprimer les objets");
+            m_ui->menuEdition->actions().at(2)->setEnabled(true);
+        }
+        else
+        {
+            m_ui->menuEdition->actions().at(1)->setEnabled(false);
+            m_ui->menuEdition->actions().at(2)->setText("Supprimer l'objets");
+            m_ui->menuEdition->actions().at(2)->setEnabled(true);
+        }
+    }
 }
 
 
@@ -343,54 +415,6 @@ void MainWindow::on_AllObjectsPushButton_clicked()
 }
 
 
-void MainWindow::updateTableSelection()
-{
-    QItemSelectionModel *selectionModel = m_ui->objectTableView->selectionModel();
-
-    if (selectionModel->hasSelection())
-    {
-        qDebug() << selectionModel->selectedRows();
-
-        QString nameListString = "\"";
-
-        for (int i = 0; i < selectionModel->selectedRows().count(); ++i)
-        {
-            nameListString += selectionModel->model()->data(selectionModel->selectedRows().at(i).siblingAtColumn(0)).toString();
-            nameListString += "\", \"";
-        }
-
-        int lastIndex = nameListString.lastIndexOf(QChar(','));
-        nameListString = nameListString.left(lastIndex);
-
-        // Get the IDs of selected objects from the database
-
-        m_db->open();
-
-        QSqlQuery query;
-        query.prepare(
-                    "SELECT `object_id`"
-                    "FROM `objects`"
-                    "WHERE object_name IN (" + nameListString +")"
-                    );
-
-        //query.bindValue(":namefilter", nameListString);
-
-        if (query.exec() == false)
-        {
-            SqlError sqlError(ErrorPriority::Critical, "Impossible de deffinir la selection", &query);
-            sqlError.printMessage();
-            return;
-        }
-
-        while(query.next())
-        {
-            m_selectedId.push_back(query.value(0).toInt());
-        }
-
-        m_db->close();
-    }
-}
-
 
 // MENU EVENTS
 
@@ -443,8 +467,8 @@ void MainWindow::on_actionNight_vision_triggered()
 
 void MainWindow::on_actionNouvel_objet_triggered()
 {
-    ObjectForm newObjectWindow(nullptr, m_db, 0);
-    newObjectWindow.show();
+    ObjectForm *newObjectWindow = new ObjectForm(nullptr, m_db, 0);
+    newObjectWindow->show();
 }
 
 
@@ -464,8 +488,34 @@ void MainWindow::on_actionSupprimer_un_objet_triggered()
     switch (confirmMessageBox.exec())
     {
     case QMessageBox::Yes:
-        // todo
+    {
+        tableSelectionChanged();
+
+        QString idToDelete = "\"";
+        QVectorIterator<unsigned int> i(m_selectedId);
+        while (i.hasNext())
+        {
+            idToDelete += QString::number(i.next()) += "\", \"";
+        }
+        idToDelete = idToDelete.left(idToDelete.lastIndexOf(QChar(',')));
+
+        m_db->open();
+
+        QSqlQuery query;
+        query.prepare("DELETE FROM `objects` WHERE `object_id` IN (" + idToDelete + ")");
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Critical, "Impossible de supprimer le(s) objet(s)", &query);
+            sqlError.printMessage();
+            return;
+        }
+
+        m_db->close();
+
+        updateObject();
+
         break;
+    }
     case QMessageBox::No:
         confirmMessageBox.close();
         break;
@@ -496,7 +546,7 @@ void MainWindow::on_actionAfficher_tous_les_objets_triggered()
 
 void MainWindow::on_actionAfficher_la_todo_list_triggered()
 {
-    updateTableSelection();
+
 }
 
 
@@ -522,6 +572,8 @@ void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos
 
     }
 }
+
+
 
 
 

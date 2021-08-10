@@ -64,7 +64,7 @@ public:
     ~MainWindow();
 
     void updateObject();
-    void updateTableSelection();
+    void tableSelectionChanged();
 
 private slots:
 

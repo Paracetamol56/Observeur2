@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Ressources/icons/icons8-add-property-96.png</file>
+        <file>Ressources/icons/icons8-change-theme-96.png</file>
+        <file>Ressources/icons/icons8-close-window-96.png</file>
+        <file>Ressources/icons/icons8-constellation-96.png</file>
+        <file>Ressources/icons/icons8-delete-document-96.png</file>
+        <file>Ressources/icons/icons8-edit-property-96.png</file>
+        <file>Ressources/icons/icons8-event-96.png</file>
+        <file>Ressources/icons/icons8-important-property-96.png</file>
+        <file>Ressources/icons/icons8-info-96.png</file>
+        <file>Ressources/icons/icons8-nebula-96.png</file>
+        <file>Ressources/icons/icons8-new-property-96.png</file>
+        <file>Ressources/icons/icons8-play-property-96.png</file>
+        <file>Ressources/icons/icons8-remove-property-96.png</file>
+        <file>Ressources/icons/icons8-search-property-96.png</file>
+        <file>Ressources/icons/icons8-settings-96.png</file>
+        <file>Ressources/icons/icons8-show-property-96.png</file>
+        <file>Ressources/icons/icons8-stop-property-96.png</file>
+        <file>Ressources/icons/icons8-todo-list-96.png</file>
+        <file>Ressources/icons/icons8-urgent-property-96.png</file>
+        <file>Ressources/icons/icons8-user-manual-96.png</file>
+    </qresource>
+</RCC>
