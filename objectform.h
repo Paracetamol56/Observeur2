@@ -18,6 +18,8 @@
 // UI elements
 #include <QString>
 #include <QStringList>
+#include <QTextBrowser>
+#include <QDialogButtonBox>
 
 // Error handling
 #include "errorhandler.h"
@@ -86,6 +88,7 @@ private slots:
     void on_SavePushButton_clicked();
     void on_OtherNameLineEdit_1_editingFinished();
     void on_TypeComboBox_currentTextChanged(const QString &arg1);
+    void on_PreviewPushButton_clicked();
 };
 
 #endif // OBJECTFORM_H

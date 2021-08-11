@@ -33,5 +33,6 @@
         <file>Ressources/icons/icons8-printer-error-96.png</file>
         <file>Ressources/icons/icons8-printer-maintenance-96.png</file>
         <file>Ressources/icons/icons8-lien-externe-96.png</file>
+        <file>Ressources/icons/icons8-markdown-96.png</file>
     </qresource>
 </RCC>

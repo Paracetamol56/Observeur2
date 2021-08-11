@@ -570,3 +570,22 @@ void ObjectForm::on_SavePushButton_clicked()
     }
 }
 
+
+void ObjectForm::on_PreviewPushButton_clicked()
+{
+    QDialog *markdownPreviewDialog = new QDialog(nullptr);
+    QVBoxLayout *mainLayout = new QVBoxLayout(markdownPreviewDialog);
+    QTextBrowser *textBrowser = new QTextBrowser(markdownPreviewDialog);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok);
+
+    textBrowser->setMarkdown(m_ui->DescriptionTextEdit->toPlainText());
+    mainLayout->addWidget(textBrowser);
+    mainLayout->addWidget(buttonBox);
+    markdownPreviewDialog->setLayout(mainLayout);
+    markdownPreviewDialog->setWindowIcon(QIcon(":/Ressources/icons/icons8-markdown-96.png"));
+    markdownPreviewDialog->setWindowTitle("Prévisualisation markdown");
+
+    connect(buttonBox, &QDialogButtonBox::accepted, markdownPreviewDialog, &QDialog::accept);
+
+    markdownPreviewDialog->exec();
+}

@@ -1,7 +1,9 @@
 #include "angleutilities.h"
 
 
-/// Constructor (from a double)
+// === Angle
+
+// Constructor (from a double)
 Angle::Angle(double totalDegree)
 {
     m_totalDegree = totalDegree;
@@ -120,6 +122,12 @@ Angle::Angle(QString strAngle)
     {
         e.printMessage();
     }
+}
+
+
+double Angle::getTotalRadian() const
+{
+    return (m_totalDegree * 180.0 / PI);
 }
 
 
@@ -335,6 +343,70 @@ void Angle::setHourSecond(double seconde)
     m_totalDegree -= 15 * getHourSecond() / 3600;
     m_totalDegree += 15 * seconde / 3600;
 }
+
+
+
+
+
+
+
+
+// === EquatorialPosition
+
+
+EquatorialPosition::EquatorialPosition(Angle rightAscension, Angle declination)
+    : m_rightAscension(rightAscension)
+    , m_declination(declination)
+{}
+
+
+Angle EquatorialPosition::getRightAscension() const
+{
+    return m_rightAscension;
+}
+
+
+Angle EquatorialPosition::getDeclination() const
+{
+    return m_declination;
+}
+
+
+void EquatorialPosition::setRightAscension(Angle rightAscension)
+{
+    m_rightAscension = rightAscension;
+}
+
+
+void EquatorialPosition::setDeclination(Angle declination)
+{
+    m_declination = declination;
+}
+
+
+Angle EquatorialPosition::getDistance(EquatorialPosition *other)
+{
+    // DISTANCE = arccos(sin(δ1)*sin(δ2)+ cos(δ1)*cos(δ2)*cos(α1 - α2))
+
+    return acos( sin( m_declination.getTotalRadian() ) * sin( other->getDeclination().getTotalRadian() ) + cos( m_declination.getTotalRadian() ) * cos( other->getDeclination().getTotalRadian() ) * cos( m_rightAscension.getTotalRadian() - other->getRightAscension().getTotalRadian() ) );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

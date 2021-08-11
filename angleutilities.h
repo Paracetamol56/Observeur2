@@ -5,6 +5,8 @@
 #include <QString>
 #include <math.h>
 
+#define PI 3.14159265358979323846264338327950288419716939937510582
+
 // Debug output
 #include <QDebug>
 
@@ -22,6 +24,7 @@ public:
     Angle(bool isHour = false, int degree = 0, int minute = 0, double seconde = 0);
     Angle(QString strAngle = "");
 
+    double getTotalRadian() const;
     double getTotalDegree() const;
     double getTotalHour() const;
     void setTotalDegree(double totalDegree = 0.00);
@@ -51,21 +54,21 @@ public:
 };
 
 // Define a celestial position in equatorial coordinate system
-class Position
+class EquatorialPosition
 {
 private:
     Angle m_rightAscension;
     Angle m_declination;
 
 public:
-    Position(Angle rightAscension, Angle declination);
+    EquatorialPosition(Angle rightAscension, Angle declination);
 
     Angle getRightAscension() const;
     Angle getDeclination() const;
-    void setRightAscension(Angle);
-    void setDeclination(Angle);
+    void setRightAscension(Angle rightAscension);
+    void setDeclination(Angle declination);
 
-    Angle getDistance(Angle *other = nullptr);
+    Angle getDistance(EquatorialPosition *other = nullptr);
 };
 
 #endif // ANGLEUTILITIES_H
