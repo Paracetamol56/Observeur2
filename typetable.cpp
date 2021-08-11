@@ -2,12 +2,6 @@
 #include "ui_tabledialog.h"
 
 
-///
-/// Constructor
-/// \brief TypeTable::TypeTable
-/// \param parent
-/// \param db
-///
 TypeTable::TypeTable(QWidget *parent, QSqlDatabase *db)
     : TableDialog(parent, db)
 {
@@ -18,16 +12,10 @@ TypeTable::TypeTable(QWidget *parent, QSqlDatabase *db)
 }
 
 
-///
-/// Table filler function
-/// \brief TypeTable::tablePopulate
-///
 void TypeTable::tablePopulate()
 {
-    // Open the database connection
     m_db->open();
 
-    // Query container object
     QSqlQuery query;
 
     // Set the query
@@ -62,7 +50,5 @@ void TypeTable::tablePopulate()
     m_ui->tableView->resizeColumnToContents(0);
     m_ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-
-    // Close the database connection
     m_db->close();
 }

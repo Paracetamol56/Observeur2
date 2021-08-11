@@ -21,6 +21,7 @@ SOURCES += \
     errorhandler.cpp \
     main.cpp \
     mainwindow.cpp \
+    objectdialog.cpp \
     objectform.cpp \
     objecttable.cpp \
     tabledialod.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     constellationtable.h \
     errorhandler.h \
     mainwindow.h \
+    objectdialog.h \
     objectform.h \
     objecttable.h \
     tabledialog.h \
@@ -38,6 +40,7 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui \
+    objectdialog.ui \
     tabledialog.ui \
     objectform.ui
 

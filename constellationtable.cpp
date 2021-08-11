@@ -2,12 +2,6 @@
 #include "ui_tabledialog.h"
 
 
-///
-/// Constructor
-/// \brief ConstellationTable::ConstellationTable
-/// \param parent
-/// \param database
-///
 ConstellationTable::ConstellationTable(QWidget *parent, QSqlDatabase *database)
     : TableDialog(parent, database)
 {
@@ -18,16 +12,10 @@ ConstellationTable::ConstellationTable(QWidget *parent, QSqlDatabase *database)
 }
 
 
-///
-/// Table populate function
-/// \brief ConstellationTable::tablePopulate
-///
 void ConstellationTable::tablePopulate()
 {
-    // Open the database connection
     m_db->open();
 
-    // Query container object
     QSqlQuery query;
 
     // Set the query
@@ -64,6 +52,5 @@ void ConstellationTable::tablePopulate()
     m_ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     m_ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    // Close the database connection
     m_db->close();
 }

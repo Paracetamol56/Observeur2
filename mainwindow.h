@@ -30,6 +30,7 @@
 #include "typetable.h"
 #include "objecttable.h"
 #include "objectform.h"
+#include "objectdialog.h"
 
 // Error handling
 #include "errorhandler.h"
@@ -88,6 +89,8 @@ private slots:
     void on_actionAfficher_la_todo_list_triggered();
     void on_actionModifier_un_objet_triggered();
     void on_actionSupprimer_un_objet_triggered();
+    void on_actionTout_selectionner_triggered();
+    void on_actionAfficher_les_d_tails_de_l_objet_triggered();
 };
 
 #endif // MAINWINDOW_H

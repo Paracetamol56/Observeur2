@@ -2,12 +2,6 @@
 #include "ui_tabledialog.h"
 
 
-///
-/// Constructor
-/// \brief ObjectTable::ObjectTable
-/// \param parent
-/// \param db
-///
 ObjectTable::ObjectTable(QWidget *parent, QSqlDatabase *db)
     : TableDialog(parent, db)
 {
@@ -18,16 +12,10 @@ ObjectTable::ObjectTable(QWidget *parent, QSqlDatabase *db)
 }
 
 
-///
-/// Table filler function
-/// \brief ObjectTable::tablePopulate
-///
 void ObjectTable::tablePopulate()
 {
-    // Open the database connection
     m_db->open();
 
-    // Query container object
     QSqlQuery query;
 
     // Set the query
@@ -59,6 +47,5 @@ void ObjectTable::tablePopulate()
     m_ui->tableView->resizeColumnToContents(0);
     m_ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    // Close the database connection
     m_db->close();
 }
