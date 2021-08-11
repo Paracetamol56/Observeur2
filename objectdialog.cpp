@@ -10,6 +10,8 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
 {
     m_ui->setupUi(this);
 
+    setWindowIcon(QIcon(":/Ressources/icons/icons8-show-property-96.png"));
+
     m_db->open();
 
     QSqlQuery query;
@@ -61,151 +63,156 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
     query.next();
 
     // Name
-    m_ui->nameLineEdit->setText(query.value(1).toString());
+    {
+    QLineEdit *nameEdit = new QLineEdit(query.value(1).toString(), this);
+    nameEdit->setReadOnly(true);
+    m_ui->formLayout->addRow("Nom", nameEdit);
+    }
 
     // Messier
     if (query.value(2).toString() != "")
-        m_ui->messierLineEdit->setText(query.value(2).toString());
-    else
     {
-        m_ui->messierLabel->hide();
-        m_ui->messierLineEdit->hide();
-        m_ui->messierPushButton->hide();
+        QHBoxLayout *messierLayout = new QHBoxLayout();
+        m_messierEdit = new QLineEdit(query.value(2).toString(), this);
+        m_messierEdit->setReadOnly(true);
+        QPushButton *messierPushButton = new QPushButton(this);
+        messierPushButton->setText("Simbad");
+        messierPushButton->setIcon(QIcon(":/Ressources/icons/icons8-lien-externe-96.png"));
+        connect(messierPushButton, SIGNAL(clicked()), this, SLOT(on_messierPushButton_clicked()));
+        messierLayout->addWidget(m_messierEdit);
+        messierLayout->addWidget(messierPushButton);
+        m_ui->formLayout->addRow("Messier", messierLayout);
     }
 
     // NGC
     if (query.value(3).toString() != "")
-        m_ui->ngcLineEdit->setText(query.value(3).toString());
-    else
     {
-        m_ui->ngcLabel->hide();
-        m_ui->ngcLineEdit->hide();
-        m_ui->ngcPushButton->hide();
+        QHBoxLayout *ngcLayout = new QHBoxLayout();
+        m_ngcEdit = new QLineEdit(query.value(3).toString(), this);
+        m_ngcEdit->setReadOnly(true);
+        QPushButton *ngcPushButton = new QPushButton(this);
+        ngcPushButton->setText("Simbad");
+        ngcPushButton->setIcon(QIcon(":/Ressources/icons/icons8-lien-externe-96.png"));
+        connect(ngcPushButton, SIGNAL(clicked()), this, SLOT(on_ngcPushButton_clicked()));
+        ngcLayout->addWidget(m_ngcEdit);
+        ngcLayout->addWidget(ngcPushButton);
+        m_ui->formLayout->addRow("NGC", ngcLayout);
     }
 
     // Other name(s)
     if (query.value(4).toString() != "")
     {
-        m_ui->othernameLineEdit_1->setText(query.value(4).toString());
+        QLineEdit *othernameEdit_1 = new QLineEdit(query.value(4).toString(), this);
+        othernameEdit_1->setReadOnly(true);
+        m_ui->formLayout->addRow("Autre nom", othernameEdit_1);
         if (query.value(5).toString() != "")
-            m_ui->othernameLineEdit_2->setText(query.value(5).toString());
-        else
-            m_ui->othernameLineEdit_2->hide();
-    }
-    else
-    {
-        m_ui->otherNameLabel->hide();
-        m_ui->othernameLineEdit_1->hide();
-        m_ui->othernameLineEdit_2->hide();
+        {
+            QLineEdit *othernameEdit_2 = new QLineEdit(query.value(5).toString(), this);
+            othernameEdit_2->setReadOnly(true);
+            m_ui->formLayout->addRow("", othernameEdit_2);
+        }
     }
 
     // Type
     if (query.value(6).toString() != "")
-        m_ui->typeLineEdit->setText(query.value(6).toString());
-    else
     {
-        m_ui->typeLabel->hide();
-        m_ui->typeLineEdit->hide();
+        QLineEdit *typeEdit = new QLineEdit(query.value(6).toString(), this);
+        typeEdit->setReadOnly(true);
+        m_ui->formLayout->addRow("Type", typeEdit);
     }
 
     // Constellation
     if (query.value(7).toString() != "")
-        m_ui->constellationLineEdit->setText(query.value(7).toString());
-    else
     {
-        m_ui->constellationLabel->hide();
-        m_ui->constellationLineEdit->hide();
+        QLineEdit *constellationEdit = new QLineEdit(query.value(7).toString(), this);
+        constellationEdit->setReadOnly(true);
+        m_ui->formLayout->addRow("Constellation", constellationEdit);
     }
 
     // Apparent magnitude(s)
     if (query.value(8).toString() != "")
     {
-        m_ui->apparentMagnitudeLineEdit_1->setText(query.value(8).toString());
+        QLineEdit *magnitudeEdit_1 = new QLineEdit(query.value(8).toString(), this);
+        magnitudeEdit_1->setReadOnly(true);
+        m_ui->formLayout->addRow("Magnitude apparente", magnitudeEdit_1);
         if (query.value(9).toString() != "")
-            m_ui->apparentMagnitudeLineEdit_2->setText(query.value(9).toString());
-        else
-            m_ui->apparentMagnitudeLineEdit_2->hide();
-    }
-    else
-    {
-        m_ui->apparentMagnitudeLabel->hide();
-        m_ui->apparentMagnitudeLineEdit_1->hide();
-        m_ui->apparentMagnitudeLineEdit_2->hide();
+        {
+            QLineEdit *magnitudeEdit_2 = new QLineEdit(query.value(8).toString(), this);
+            magnitudeEdit_2->setReadOnly(true);
+            m_ui->formLayout->addRow("", magnitudeEdit_2);
+        }
     }
 
     // Distance
     if (query.value(17).toString() != "")
-        m_ui->DistanceLineEdit->setText(query.value(7).toString());
-    else
     {
-        m_ui->distanceLabel->hide();
-        m_ui->DistanceLineEdit->hide();
+        QLineEdit *distanceEdit = new QLineEdit(query.value(17).toString(), this);
+        distanceEdit->setReadOnly(true);
+        m_ui->formLayout->addRow("Distance", distanceEdit);
     }
 
     // Diameter
     if (query.value(18).toString() != "")
-        m_ui->diamterLineEdit->setText(query.value(18).toString());
-    else
     {
-        m_ui->diameterLabel->hide();
-        m_ui->diamterLineEdit->hide();
+        QLineEdit *diameterEdit = new QLineEdit(query.value(18).toString(), this);
+        diameterEdit->setReadOnly(true);
+        m_ui->formLayout->addRow("Diamètre", diameterEdit);
     }
 
     // Right ascension
     if (query.value(10).toString() != "")
-        m_ui->RightAscensionLineEdit->setText(query.value(10).toString());
-    else
     {
-        m_ui->rightAscentionLabel->hide();
-        m_ui->RightAscensionLineEdit->hide();
+        QLineEdit *rightAscensionEdit = new QLineEdit(query.value(10).toString(), this);
+        rightAscensionEdit->setReadOnly(true);
+        m_ui->formLayout->addRow("Ascention droite", rightAscensionEdit);
     }
 
     // Declination
     if (query.value(11).toString() != "")
-        m_ui->declinationLineEdit->setText(query.value(11).toString());
-    else
     {
-        m_ui->declinationLabel->hide();
-        m_ui->declinationLineEdit->hide();
+        QLineEdit *declinationEdit = new QLineEdit(query.value(11).toString(), this);
+        declinationEdit->setReadOnly(true);
+        m_ui->formLayout->addRow("Déclinaison", declinationEdit);
     }
 
-    // Shymap 1
+    // Skymap 1
     if (query.value(14).toString() != "")
-        m_ui->skymap1LineEdit->setText(query.value(14).toString());
-    else
     {
-        m_ui->map1Label->hide();
-        m_ui->skymap1LineEdit->hide();
+        QLineEdit *skymap1Edit = new QLineEdit(query.value(14).toString(), this);
+        skymap1Edit->setReadOnly(true);
+        m_ui->formLayout->addRow("Carte niveau 1", skymap1Edit);
     }
 
-    // Shymap 2
+    // Skymap 2
     if (query.value(15).toString() != "")
-        m_ui->skymap2LineEdit->setText(query.value(15).toString());
-    else
     {
-        m_ui->map2Label->hide();
-        m_ui->skymap2LineEdit->hide();
+        QLineEdit *skymap2Edit = new QLineEdit(query.value(15).toString(), this);
+        skymap2Edit->setReadOnly(true);
+        m_ui->formLayout->addRow("Carte niveau 2", skymap2Edit);
     }
 
-    // Shymap 3
+    // Skymap 3
     if (query.value(16).toString() != "")
-        m_ui->skymap3LineEdit->setText(query.value(16).toString());
-    else
     {
-        m_ui->map3Label->hide();
-        m_ui->skymap3LineEdit->hide();
+        QLineEdit *skymap3Edit = new QLineEdit(query.value(16).toString(), this);
+        skymap3Edit->setReadOnly(true);
+        m_ui->formLayout->addRow("Carte niveau 3", skymap3Edit);
     }
 
     // Note
-    m_ui->noteLineEdit->setText(query.value(13).toString() + "/10");
+    {
+        QLineEdit *noteEdit = new QLineEdit(query.value(13).toString() + "/10", this);
+        noteEdit->setReadOnly(true);
+        m_ui->formLayout->addRow("Note", noteEdit);
+    }
 
     // Appreciation
     if (query.value(12).toString() != "")
-        m_ui->appreciationTextBrowser->setMarkdown(query.value(12).toString());
-    else
     {
-        m_ui->map3Label->hide();
-        m_ui->skymap3LineEdit->hide();
+        QTextBrowser *appreciationEdit = new QTextBrowser(this);
+        appreciationEdit->setReadOnly(true);
+        appreciationEdit->setMarkdown(query.value(12).toString());
+        m_ui->formLayout->addRow("Appreciation", appreciationEdit);
     }
 
     m_db->close();
@@ -219,10 +226,20 @@ ObjectDialog::~ObjectDialog()
 
 void ObjectDialog::on_messierPushButton_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://simbad.u-strasbg.fr/simbad/sim-basic?Ident=m" + m_ui->messierLineEdit->text() + "&submit=SIMBAD+search"));
+    QDesktopServices::openUrl(QUrl("https://simbad.u-strasbg.fr/simbad/sim-basic?Ident=m" + m_messierEdit->text() + "&submit=SIMBAD+search"));
 }
 
 void ObjectDialog::on_ngcPushButton_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://simbad.u-strasbg.fr/simbad/sim-basic?Ident=ngc" + m_ui->ngcLineEdit->text() + "&submit=SIMBAD+search"));
+    QDesktopServices::openUrl(QUrl("https://simbad.u-strasbg.fr/simbad/sim-basic?Ident=ngc" + m_ngcEdit->text() + "&submit=SIMBAD+search"));
+}
+
+void ObjectDialog::on_pushButton_clicked()
+{
+    this->close();
+}
+
+void ObjectDialog::on_pushButton_2_clicked()
+{
+    //todo
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>913</width>
-    <height>692</height>
+    <height>696</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,303 +17,65 @@
    <iconset resource="ressources.qrc">
     <normaloff>:/Ressources/icons/icons8-show-property-96.png</normaloff>:/Ressources/icons/icons8-show-property-96.png</iconset>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
    <item>
-    <layout class="QFormLayout" name="formLayout">
-     <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::ExpandingFieldsGrow</enum>
-     </property>
-     <property name="rowWrapPolicy">
-      <enum>QFormLayout::DontWrapRows</enum>
-     </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="nameLabel">
-       <property name="text">
-        <string>Nom commun</string>
-       </property>
-      </widget>
+    <layout class="QHBoxLayout" name="mainHorizontalLayout">
+     <item>
+      <layout class="QFormLayout" name="formLayout"/>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="nameLineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="messierLabel">
-       <property name="text">
-        <string>Messier</string>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
        </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="ngcLabel">
-       <property name="text">
-        <string>NGC</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLineEdit" name="ngcLineEdit">
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="ngcPushButton">
-         <property name="text">
-          <string>Simbad</string>
-         </property>
-         <property name="icon">
-          <iconset resource="ressources.qrc">
-           <normaloff>:/Ressources/icons/icons8-lien-externe-96.png</normaloff>:/Ressources/icons/icons8-lien-externe-96.png</iconset>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="otherNameLabel">
-       <property name="text">
-        <string>Autre noms</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="othernameLineEdit_1">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="typeLabel">
-       <property name="text">
-        <string>Type</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="typeLineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="constellationLabel">
-       <property name="text">
-        <string>Constellation</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="QLineEdit" name="constellationLineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="apparentMagnitudeLabel">
-       <property name="text">
-        <string>Magnitude apparente</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QLineEdit" name="apparentMagnitudeLineEdit_1">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="distanceLabel">
-       <property name="text">
-        <string>Distance</string>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="1">
-      <widget class="QLineEdit" name="DistanceLineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="0">
-      <widget class="QLabel" name="diameterLabel">
-       <property name="text">
-        <string>Diamtètre</string>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="1">
-      <widget class="QLineEdit" name="diamterLineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="11" column="0">
-      <widget class="QLabel" name="rightAscentionLabel">
-       <property name="text">
-        <string>Ascention droite</string>
-       </property>
-      </widget>
-     </item>
-     <item row="11" column="1">
-      <widget class="QLineEdit" name="RightAscensionLineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="0">
-      <widget class="QLabel" name="declinationLabel">
-       <property name="text">
-        <string>Déclinaison</string>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="1">
-      <widget class="QLineEdit" name="declinationLineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="13" column="0">
-      <widget class="QLabel" name="map1Label">
-       <property name="text">
-        <string>Carte niveau 1</string>
-       </property>
-      </widget>
-     </item>
-     <item row="13" column="1">
-      <widget class="QLineEdit" name="skymap1LineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="14" column="0">
-      <widget class="QLabel" name="map2Label">
-       <property name="text">
-        <string>Carte niveau 2</string>
-       </property>
-      </widget>
-     </item>
-     <item row="14" column="1">
-      <widget class="QLineEdit" name="skymap2LineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="15" column="0">
-      <widget class="QLabel" name="map3Label">
-       <property name="text">
-        <string>Carte niveau 3</string>
-       </property>
-      </widget>
-     </item>
-     <item row="15" column="1">
-      <widget class="QLineEdit" name="skymap3LineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="16" column="0">
-      <widget class="QLabel" name="noteLabel">
-       <property name="text">
-        <string>Note</string>
-       </property>
-      </widget>
-     </item>
-     <item row="16" column="1">
-      <widget class="QLineEdit" name="noteLineEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="17" column="0">
-      <widget class="QLabel" name="appreciationLabel">
-       <property name="text">
-        <string>Appreciation</string>
-       </property>
-      </widget>
-     </item>
-     <item row="17" column="1">
-      <widget class="QTextBrowser" name="appreciationTextBrowser">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="othernameLineEdit_2">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
-      <widget class="QLineEdit" name="apparentMagnitudeLineEdit_2">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QLineEdit" name="messierLineEdit">
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="messierPushButton">
-         <property name="text">
-          <string>Simbad</string>
-         </property>
-         <property name="icon">
-          <iconset resource="ressources.qrc">
-           <normaloff>:/Ressources/icons/icons8-lien-externe-96.png</normaloff>:/Ressources/icons/icons8-lien-externe-96.png</iconset>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      </spacer>
      </item>
     </layout>
    </item>
    <item>
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>Modifier</string>
+       </property>
+       <property name="icon">
+        <iconset resource="ressources.qrc">
+         <normaloff>:/Ressources/icons/icons8-edit-property-96.png</normaloff>:/Ressources/icons/icons8-edit-property-96.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Fermer</string>
+       </property>
+       <property name="icon">
+        <iconset resource="ressources.qrc">
+         <normaloff>:/Ressources/icons/icons8-close-window-96.png</normaloff>:/Ressources/icons/icons8-close-window-96.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

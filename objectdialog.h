@@ -20,6 +20,11 @@
 
 // UI elements
 #include <QDesktopServices>
+#include <QLineEdit>
+#include <QLabel>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QTextBrowser>
 
 namespace Ui {
 class ObjectDialog;
@@ -34,12 +39,18 @@ private:
     QSqlDatabase *m_db = nullptr;
     int m_id = 0;
 
+    // Form
+    QLineEdit *m_messierEdit = nullptr;
+    QLineEdit *m_ngcEdit = nullptr;
+
 public:
     explicit ObjectDialog(QWidget *parent = nullptr, QSqlDatabase *database = nullptr, const unsigned int objectId = 0);
     ~ObjectDialog();
 private slots:
     void on_messierPushButton_clicked();
     void on_ngcPushButton_clicked();
+    void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
 };
 
 #endif // OBJECTDIALOG_H
