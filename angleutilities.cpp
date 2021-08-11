@@ -17,7 +17,7 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
     {
         if (isHour == true)
         {
-            if (degree < -360 || degree > 360)
+            if (degree < 0 || degree >= 24)
                 throw Error(ErrorPriority::Warning, "Entrée incorrect pour construire cette angle,\ndegré en dehors de l'intervalle");
 
             if (minute < 0 || minute >= 60)
@@ -28,8 +28,8 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
         }
         else
         {
-            if (degree < 0 || 24 >= 360)
-                throw Error(ErrorPriority::Warning, "Entrée incorrect pour construire cette angle,\ndegré en dehors de l'intervalle");
+            if (degree <= -360 || degree >= 360)
+                throw Error(ErrorPriority::Warning, "Entrée incorrect pour construire cette angle,\nheure en dehors de l'intervalle");
 
             if (minute < 0 || minute >= 60)
                 throw Error(ErrorPriority::Warning, "Entrée incorrect pour construire cette angle,\nminute en dehors de l'intervalle");
@@ -127,7 +127,7 @@ Angle::Angle(QString strAngle)
 
 double Angle::getTotalRadian() const
 {
-    return (m_totalDegree * 180.0 / PI);
+    return (m_totalDegree * PI / 180.00);
 }
 
 
@@ -345,6 +345,60 @@ void Angle::setHourSecond(double seconde)
 }
 
 
+bool Angle::operator<(const Angle& other) const
+{
+    if (m_totalDegree < other.getTotalDegree())
+        return true;
+    else
+        return false;
+}
+
+
+bool Angle::operator>(const Angle& other) const
+{
+    if (m_totalDegree > other.getTotalDegree())
+        return true;
+    else
+        return false;
+}
+
+
+bool Angle::operator<=(const Angle& other) const
+{
+    if (m_totalDegree <= other.getTotalDegree())
+        return true;
+    else
+        return false;
+}
+
+
+bool Angle::operator>=(const Angle& other) const
+{
+    if (m_totalDegree >= other.getTotalDegree())
+        return true;
+    else
+        return false;
+}
+
+
+bool Angle::operator==(const Angle& other) const
+{
+    if (m_totalDegree == other.getTotalDegree())
+        return true;
+    else
+        return false;
+}
+
+
+bool Angle::operator!=(const Angle& other) const
+{
+    if (m_totalDegree != other.getTotalDegree())
+        return true;
+    else
+        return false;
+}
+
+
 
 
 
@@ -388,7 +442,14 @@ Angle EquatorialPosition::getDistance(EquatorialPosition *other)
 {
     // DISTANCE = arccos(sin(δ1)*sin(δ2)+ cos(δ1)*cos(δ2)*cos(α1 - α2))
 
-    return acos( sin( m_declination.getTotalRadian() ) * sin( other->getDeclination().getTotalRadian() ) + cos( m_declination.getTotalRadian() ) * cos( other->getDeclination().getTotalRadian() ) * cos( m_rightAscension.getTotalRadian() - other->getRightAscension().getTotalRadian() ) );
+    double distanceRad = acos(
+                sin( m_declination.getTotalRadian() )
+                * sin( other->getDeclination().getTotalRadian() )
+                + cos( m_declination.getTotalRadian() )
+                * cos( other->getDeclination().getTotalRadian() )
+                * cos( m_rightAscension.getTotalRadian() - other->getRightAscension().getTotalRadian() ));
+
+    return Angle( distanceRad * 180.00 / PI);
 }
 
 

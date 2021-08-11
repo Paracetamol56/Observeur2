@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 06 août 2021 à 11:52
+-- Généré le : mer. 11 août 2021 à 14:58
 -- Version du serveur :  10.4.18-MariaDB
 -- Version de PHP : 8.0.3
 
@@ -185,8 +185,8 @@ CREATE TABLE `objects` (
   `object_constellation` int(11) UNSIGNED DEFAULT NULL,
   `object_apparent_magnitude` float DEFAULT NULL,
   `object_secondary_magnitude` float DEFAULT NULL,
-  `object_right_ascension` varchar(12) NOT NULL,
-  `object_declination` varchar(12) NOT NULL,
+  `object_right_ascension` varchar(13) NOT NULL,
+  `object_declination` varchar(13) NOT NULL,
   `object_appreciation` text DEFAULT NULL,
   `object_note` int(2) UNSIGNED DEFAULT NULL,
   `object_skymap1_id` int(10) UNSIGNED NOT NULL,
@@ -201,9 +201,9 @@ CREATE TABLE `objects` (
 --
 
 INSERT INTO `objects` (`object_id`, `object_name`, `object_messier`, `object_ngc`, `object_othername1`, `object_othername2`, `object_category`, `object_constellation`, `object_apparent_magnitude`, `object_secondary_magnitude`, `object_right_ascension`, `object_declination`, `object_appreciation`, `object_note`, `object_skymap1_id`, `object_skymap2_id`, `object_skymap3_id`, `object_distance`, `object_diameter`) VALUES
-(1, 'Nébuleuse de l\'haltère', 27, 6853, 'Dumbbell', 'Nébuleuse du trognon de pomme', 16, 66, 7.4, NULL, '19h59m36.34s', '22°43′16.1″', 'Large et plutôt lumineux,\r\npas mal à faire en public.', 8, 1, 1, 10, 1360, 2.88),
-(2, 'Amas d\'Hercule', 13, 6205, NULL, NULL, 6, 40, 5.8, NULL, '6h41m41.44s', '36°27\'36.9\"', 'Très dense, lumineux et bien défini', 9, 1, 1, 10, 22180, 145),
-(3, 'Nébuleuse d\'Orion', 42, 1976, NULL, NULL, 17, 58, 3.7, NULL, '05h35m16.5s', '-05°23′23\"', 'Coeur très lumineux et facile à trouver', 9, 1, 1, 14, 1344, 24);
+(1, 'Nébuleuse de l\'haltère', 27, 6853, 'Dumbbell', 'Nébuleuse du trognon de pomme', 16, 66, 7.4, NULL, '19h59m36.34s', '22°43′16.10″', 'Large et plutôt lumineux,\r\npas mal à faire en public.', 8, 1, 1, 10, 1360, 2.88),
+(2, 'Amas d\'Hercule', 13, 6205, NULL, NULL, 6, 40, 5.8, NULL, '06h41m41.44s', '36°27\'36.90\"', 'Très dense, lumineux et bien défini', 9, 1, 1, 10, 22180, 145),
+(3, 'Nébuleuse d\'Orion', 42, 1976, NULL, NULL, 17, 58, 3.7, NULL, '05h35m16.50s', '-05°23′23.00\"', 'Coeur très lumineux et facile à trouver', 9, 1, 1, 14, 1344, 24);
 
 -- --------------------------------------------------------
 
@@ -214,8 +214,8 @@ INSERT INTO `objects` (`object_id`, `object_name`, `object_messier`, `object_ngc
 CREATE TABLE `skymap1` (
   `skymap1_id` int(10) UNSIGNED NOT NULL,
   `skymap1_number` int(10) UNSIGNED NOT NULL,
-  `skymap1_right_ascension` varchar(12) NOT NULL,
-  `skymap1_declination` varchar(12) NOT NULL
+  `skymap1_right_ascension` varchar(13) NOT NULL,
+  `skymap1_declination` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -223,7 +223,7 @@ CREATE TABLE `skymap1` (
 --
 
 INSERT INTO `skymap1` (`skymap1_id`, `skymap1_number`, `skymap1_right_ascension`, `skymap1_declination`) VALUES
-(1, 1, '0', '0');
+(1, 1, '00h00m00.00s', '00°00\'00.00\"');
 
 -- --------------------------------------------------------
 
@@ -234,8 +234,8 @@ INSERT INTO `skymap1` (`skymap1_id`, `skymap1_number`, `skymap1_right_ascension`
 CREATE TABLE `skymap2` (
   `skymap2_id` int(10) UNSIGNED NOT NULL,
   `skymap2_number` int(10) UNSIGNED NOT NULL,
-  `skymap2_right_ascension` varchar(12) NOT NULL,
-  `skymap2_declination` varchar(12) NOT NULL
+  `skymap2_right_ascension` varchar(13) NOT NULL,
+  `skymap2_declination` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -243,7 +243,7 @@ CREATE TABLE `skymap2` (
 --
 
 INSERT INTO `skymap2` (`skymap2_id`, `skymap2_number`, `skymap2_right_ascension`, `skymap2_declination`) VALUES
-(1, 1, '0', '0');
+(1, 1, '00h00m00.00s', '00°00\'00.00\"');
 
 -- --------------------------------------------------------
 
@@ -254,8 +254,8 @@ INSERT INTO `skymap2` (`skymap2_id`, `skymap2_number`, `skymap2_right_ascension`
 CREATE TABLE `skymap3` (
   `skymap3_id` int(10) UNSIGNED NOT NULL,
   `skymap3_number` int(10) UNSIGNED NOT NULL,
-  `skymap3_right_ascension` varchar(12) NOT NULL,
-  `skymap3_declination` varchar(12) NOT NULL
+  `skymap3_right_ascension` varchar(13) NOT NULL,
+  `skymap3_declination` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -263,36 +263,36 @@ CREATE TABLE `skymap3` (
 --
 
 INSERT INTO `skymap3` (`skymap3_id`, `skymap3_number`, `skymap3_right_ascension`, `skymap3_declination`) VALUES
-(1, 1, '00h00m00s', '+72°30\'00\"'),
-(2, 2, '06h00m00s', '+72°30\'00\"'),
-(3, 3, '12h00m00s', '+72°30\'00\"'),
-(4, 4, '18h00m00s', '+72°30\'00\"'),
-(5, 5, '01h42m51s', '+36°15\'00\"'),
-(6, 6, '05h08m34s', '+36°15\'00\"'),
-(7, 7, '08h34m17s', '+36°15\'00\"'),
-(8, 8, '12h00m00s', '+36°15\'00\"'),
-(9, 9, '15h25m43s', '+36°15\'00\"'),
-(10, 10, '18h51m26s', '+36°15\'00\"'),
-(11, 11, '22h17m09s', '+36°15\'00\"'),
-(12, 12, '00h00m00s', '+00°00\'00\"'),
-(13, 13, '03h00m00s', '+00°00\'00\"'),
-(14, 14, '06h00m00s', '+00°00\'00\"'),
-(15, 15, '09h00m00s', '+00°00\'00\"'),
-(16, 16, '12h00m00s', '+00°00\'00\"'),
-(17, 17, '15h00m00s', '+00°00\'00\"'),
-(18, 18, '18h00m00s', '+00°00\'00\"'),
-(19, 19, '21h00m00s', '+00°00\'00\"'),
-(20, 20, '01h42m51s', '-36°15\'00\"'),
-(21, 21, '5h8m34s', '-36°15\'00\"'),
-(22, 22, '8h34m17s', '-36°15\'00\"'),
-(23, 23, '12h00m00s', '-36°15\'00\"'),
-(24, 24, '15h00m00s', '-36°15\'00\"'),
-(25, 25, '18h51m26s', '-36°15\'00\"'),
-(26, 26, '22h17m09s', '-36°15\'00\"'),
-(27, 27, '00h00m00s', '-72°30\'00\"'),
-(28, 28, '06h00m00s', '-72°30\'00\"'),
-(29, 29, '12h00m00s', '-72°30\'00\"'),
-(30, 30, '18h00m00s', '-72°30\'00\"');
+(1, 1, '00h00m00.00s', '+72°30\'00.00\"'),
+(2, 2, '06h00m00.00s', '+72°30\'00.00\"'),
+(3, 3, '12h00m00.00s', '+72°30\'00.00\"'),
+(4, 4, '18h00m00.00s', '+72°30\'00.00\"'),
+(5, 5, '01h42m51.00s', '+36°15\'00.00\"'),
+(6, 6, '05h08m34.00s', '+36°15\'00.00\"'),
+(7, 7, '08h34m17.00s', '+36°15\'00.00\"'),
+(8, 8, '12h00m00.00s', '+36°15\'00.00\"'),
+(9, 9, '15h25m43.00s', '+36°15\'00.00\"'),
+(10, 10, '18h51m26.00s', '+36°15\'00.00\"'),
+(11, 11, '22h17m09.00s', '+36°15\'00.00\"'),
+(12, 12, '00h00m00.00s', '+00°00\'00.00\"'),
+(13, 13, '03h00m00.00s', '+00°00\'00.00\"'),
+(14, 14, '06h00m00.00s', '+00°00\'00.00\"'),
+(15, 15, '09h00m00.00s', '+00°00\'00.00\"'),
+(16, 16, '12h00m00.00s', '+00°00\'00.00\"'),
+(17, 17, '15h00m00.00s', '+00°00\'00.00\"'),
+(18, 18, '18h00m00.00s', '+00°00\'00.00\"'),
+(19, 19, '21h00m00.00s', '+00°00\'00.00\"'),
+(20, 20, '01h42m51.00s', '-36°15\'00.00\"'),
+(21, 21, '05h08m34.00s', '-36°15\'00.00\"'),
+(22, 22, '08h34m17.00s', '-36°15\'00.00\"'),
+(23, 23, '12h00m00.00s', '-36°15\'00.00\"'),
+(24, 24, '15h00m00.00s', '-36°15\'00.00\"'),
+(25, 25, '18h51m26.00s', '-36°15\'00.00\"'),
+(26, 26, '22h17m09.00s', '-36°15\'00.00\"'),
+(27, 27, '00h00m00.00s', '-72°30\'00.00\"'),
+(28, 28, '06h00m00.00s', '-72°30\'00.00\"'),
+(29, 29, '12h00m00.00s', '-72°30\'00.00\"'),
+(30, 30, '18h00m00.00s', '-72°30\'00.00\"');
 
 --
 -- Index pour les tables déchargées
@@ -359,7 +359,7 @@ ALTER TABLE `constellations`
 -- AUTO_INCREMENT pour la table `objects`
 --
 ALTER TABLE `objects`
-  MODIFY `object_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `object_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `skymap1`

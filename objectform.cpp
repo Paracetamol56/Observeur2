@@ -10,12 +10,10 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 {
     m_ui->setupUi(this);
 
-    // Open the database connection
     m_db->open();
 
     // Get data from database to fill the comboboxes
 
-    // Query container object
     QSqlQuery query;
 
     // === Type query
@@ -56,7 +54,6 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
     if (m_objectId != 0)
     {
-        // Set the window title
         setWindowTitle("Modifier un objet");
 
         // Set the query
@@ -470,6 +467,65 @@ void ObjectForm::on_NoteHorizontalSlider_valueChanged(int value)
 }
 
 
+void ObjectForm::on_AutoComputePushButton_clicked()
+{
+    EquatorialPosition objectPosition(
+                Angle(true, m_ui->RAHourSpinBox->value(), m_ui->RAMinuteSpinBox->value(), m_ui->RASecondDoubleSpinBox->value()),
+                Angle(false, m_ui->DecDegreeSpinBox->value(), m_ui->DecMinuteSpinBox->value(), m_ui->DecSecondDoubleSpinBox->value()));
+
+    Angle minDistance = Angle(359.99);
+    int minId = 1;
+
+    m_db->open();
+
+    QSqlQuery query;
+
+    // Set the query
+    query.prepare("SELECT `skymap3_number`, `skymap3_right_ascension`, `skymap3_declination` FROM `skymap3` WHERE 1");
+
+    if (query.exec() == false)
+    {
+        SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les cartes", &query);
+        sqlError.printMessage();
+    }
+
+    while(query.next())
+    {
+        EquatorialPosition mapPosition(Angle(query.value(1).toString()), Angle(query.value(2).toString()));
+        Angle distance = objectPosition.getDistance(&mapPosition);
+        if (distance < minDistance)
+        {
+            minDistance = distance;
+            minId = query.value(0).toInt();
+        }
+    }
+
+    m_ui->Map3SpinBox->setValue(minId);
+
+    m_db->close();
+}
+
+
+void ObjectForm::on_PreviewPushButton_clicked()
+{
+    QDialog *markdownPreviewDialog = new QDialog(nullptr);
+    QVBoxLayout *mainLayout = new QVBoxLayout(markdownPreviewDialog);
+    QTextBrowser *textBrowser = new QTextBrowser(markdownPreviewDialog);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok);
+
+    textBrowser->setMarkdown(m_ui->DescriptionTextEdit->toPlainText());
+    mainLayout->addWidget(textBrowser);
+    mainLayout->addWidget(buttonBox);
+    markdownPreviewDialog->setLayout(mainLayout);
+    markdownPreviewDialog->setWindowIcon(QIcon(":/Ressources/icons/icons8-markdown-96.png"));
+    markdownPreviewDialog->setWindowTitle("Prévisualisation markdown");
+
+    connect(buttonBox, &QDialogButtonBox::accepted, markdownPreviewDialog, &QDialog::accept);
+
+    markdownPreviewDialog->exec();
+}
+
+
 void ObjectForm::on_CancelPushButton_clicked()
 {
     close();
@@ -568,24 +624,4 @@ void ObjectForm::on_SavePushButton_clicked()
     {
         e.printMessage();
     }
-}
-
-
-void ObjectForm::on_PreviewPushButton_clicked()
-{
-    QDialog *markdownPreviewDialog = new QDialog(nullptr);
-    QVBoxLayout *mainLayout = new QVBoxLayout(markdownPreviewDialog);
-    QTextBrowser *textBrowser = new QTextBrowser(markdownPreviewDialog);
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok);
-
-    textBrowser->setMarkdown(m_ui->DescriptionTextEdit->toPlainText());
-    mainLayout->addWidget(textBrowser);
-    mainLayout->addWidget(buttonBox);
-    markdownPreviewDialog->setLayout(mainLayout);
-    markdownPreviewDialog->setWindowIcon(QIcon(":/Ressources/icons/icons8-markdown-96.png"));
-    markdownPreviewDialog->setWindowTitle("Prévisualisation markdown");
-
-    connect(buttonBox, &QDialogButtonBox::accepted, markdownPreviewDialog, &QDialog::accept);
-
-    markdownPreviewDialog->exec();
 }

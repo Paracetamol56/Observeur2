@@ -89,6 +89,7 @@ private slots:
     void on_OtherNameLineEdit_1_editingFinished();
     void on_TypeComboBox_currentTextChanged(const QString &arg1);
     void on_PreviewPushButton_clicked();
+    void on_AutoComputePushButton_clicked();
 };
 
 #endif // OBJECTFORM_H

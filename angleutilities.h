@@ -51,6 +51,15 @@ public:
     void setHour(int hour = 0);
     void setHourMinute(int minute = 0);
     void setHourSecond(double seconde = 0.00);
+
+    // Comparaison operators
+    bool operator<(const Angle& other) const;
+    bool operator>(const Angle& other) const;
+    bool operator<=(const Angle& other) const;
+    bool operator>=(const Angle& other) const;
+    bool operator==(const Angle& other) const;
+    bool operator!=(const Angle& other) const;
+
 };
 
 // Define a celestial position in equatorial coordinate system
