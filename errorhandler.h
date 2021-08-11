@@ -74,10 +74,10 @@ struct FileError
 };
 
 
-struct FileMissingError
+struct MissingFileError
     : FileError
 {
-    FileMissingError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", QFile *file = nullptr);
+    MissingFileError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", QFile *file = nullptr);
     virtual void printMessage() override;
 };
 

@@ -127,12 +127,12 @@ void FileError::printMessage()
 }
 
 
-FileMissingError::FileMissingError(ErrorPriority prioryty, QString message, QFile *file)
+MissingFileError::MissingFileError(ErrorPriority prioryty, QString message, QFile *file)
     : FileError(prioryty, message, file)
 {}
 
 
-void FileMissingError::printMessage()
+void MissingFileError::printMessage()
 {
     QMessageBox errorMessage;
     setMessageBoxPriority(&errorMessage);

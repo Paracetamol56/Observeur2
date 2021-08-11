@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget* parent)
     else
     {
         // Display a message box if the database file is not found
-        FileMissingError errorMessage(ErrorPriority::Critical, "Aucun fichier \"data.sqlite\" trouvé");
+        MissingFileError errorMessage(ErrorPriority::Critical, "Aucun fichier \"data.sqlite\" trouvé");
         errorMessage.printMessage();
     }
 
@@ -442,7 +442,7 @@ void MainWindow::on_actionLight_triggered()
     QFile qssFile(":/qdarkstyle/light/Ressources/light/light.qss");
 
     if (qssFile.exists() == false)   {
-        FileMissingError errorMessage(ErrorPriority::Critical, "Le fichier de style est introuvable", &qssFile);
+        MissingFileError errorMessage(ErrorPriority::Critical, "Le fichier de style est introuvable", &qssFile);
         errorMessage.printMessage();
     }
     else   {
@@ -458,7 +458,7 @@ void MainWindow::on_actionDark_triggered()
     QFile qssFile(":/qdarkstyle/dark/Ressources/dark/dark.qss");
 
     if (qssFile.exists() == false)   {
-        FileMissingError errorMessage(ErrorPriority::Critical, "Le fichier de style est introuvable", &qssFile);
+        MissingFileError errorMessage(ErrorPriority::Critical, "Le fichier de style est introuvable", &qssFile);
         errorMessage.printMessage();
     }
     else   {
