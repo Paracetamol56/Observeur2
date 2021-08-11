@@ -24,7 +24,8 @@
 // Error handling
 #include "errorhandler.h"
 
-#include "angleutilities.h"
+#include "angleutilities/angle.h"
+#include "angleutilities/equatorialposition.h"
 
 
 namespace Ui

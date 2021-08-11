@@ -16,7 +16,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    angleutilities.cpp \
+    angleutilities/angle.cpp \
+    angleutilities/equatorialposition.cpp \
+    angleutilities/horizontalposition.cpp \
     constellationtable.cpp \
     errorhandler.cpp \
     main.cpp \
@@ -28,7 +30,9 @@ SOURCES += \
     typetable.cpp
 
 HEADERS += \
-    angleutilities.h \
+    angleutilities/angle.h \
+    angleutilities/equatorialposition.h \
+    angleutilities/horizontalposition.h \
     constellationtable.h \
     errorhandler.h \
     mainwindow.h \

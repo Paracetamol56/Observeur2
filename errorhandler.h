@@ -20,7 +20,7 @@
 #include <QMessageBox>
 #include <QApplication>
 
-#include "angleutilities.h"
+
 
 enum class ErrorPriority
 {

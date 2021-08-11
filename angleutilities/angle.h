@@ -1,5 +1,5 @@
-#ifndef ANGLEUTILITIES_H
-#define ANGLEUTILITIES_H
+#ifndef ANGLE_H
+#define ANGLE_H
 
 // Utilities
 #include <QString>
@@ -53,31 +53,12 @@ public:
     void setHourSecond(double seconde = 0.00);
 
     // Comparaison operators
-    bool operator<(const Angle& other) const;
-    bool operator>(const Angle& other) const;
-    bool operator<=(const Angle& other) const;
-    bool operator>=(const Angle& other) const;
-    bool operator==(const Angle& other) const;
-    bool operator!=(const Angle& other) const;
-
+    bool operator<(const Angle &other) const;
+    bool operator>(const Angle &other) const;
+    bool operator<=(const Angle &other) const;
+    bool operator>=(const Angle &other) const;
+    bool operator==(const Angle &other) const;
+    bool operator!=(const Angle &other) const;
 };
 
-// Define a celestial position in equatorial coordinate system
-class EquatorialPosition
-{
-private:
-    Angle m_rightAscension;
-    Angle m_declination;
-
-public:
-    EquatorialPosition(Angle rightAscension, Angle declination);
-
-    Angle getRightAscension() const;
-    Angle getDeclination() const;
-    void setRightAscension(Angle rightAscension);
-    void setDeclination(Angle declination);
-
-    Angle getDistance(EquatorialPosition *other = nullptr);
-};
-
-#endif // ANGLEUTILITIES_H
+#endif // ANGLE_H

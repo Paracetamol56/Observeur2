@@ -1,14 +1,10 @@
-#include "angleutilities.h"
-
-
-// === Angle
+#include "angle.h"
 
 // Constructor (from a double)
 Angle::Angle(double totalDegree)
 {
     m_totalDegree = totalDegree;
 }
-
 
 // Constructor (from three values and a bool to choose between hour angle and degree angle)
 Angle::Angle(bool isHour, int degree, int minute, double seconde)
@@ -40,11 +36,11 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
 
         if (isHour == true)
         {
-            m_totalDegree = ( degree * 15 ) + ( minute / 60 ) + ( seconde / 3600 );
+            m_totalDegree = (degree * 15) + (minute / 60) + (seconde / 3600);
         }
         else
         {
-            m_totalDegree = degree + ( minute / 60 ) + ( seconde / 3600 );
+            m_totalDegree = degree + (minute / 60) + (seconde / 3600);
         }
     }
     catch (Error e)
@@ -52,7 +48,6 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
         e.printMessage();
     }
 }
-
 
 // Constructor (from a string, eg: "00h00m00.00s" or "00°00'00.00"")
 Angle::Angle(QString strAngle)
@@ -124,18 +119,15 @@ Angle::Angle(QString strAngle)
     }
 }
 
-
 double Angle::getTotalRadian() const
 {
     return (m_totalDegree * PI / 180.00);
 }
 
-
 double Angle::getTotalDegree() const
 {
     return m_totalDegree;
 }
-
 
 double Angle::getTotalHour() const
 {
@@ -149,7 +141,6 @@ double Angle::getTotalHour() const
     }
 }
 
-
 void Angle::setTotalDegree(double totalDegree)
 {
     if (totalDegree <= -360.00 || totalDegree >= 360.00)
@@ -160,7 +151,6 @@ void Angle::setTotalDegree(double totalDegree)
 
     m_totalDegree = totalDegree;
 }
-
 
 void Angle::setTotalHour(double totalHour)
 {
@@ -173,13 +163,11 @@ void Angle::setTotalHour(double totalHour)
     m_totalDegree = totalHour * 15;
 }
 
-
 // Return Degree part from degree angle
 int Angle::getDegree() const
 {
     return std::trunc(m_totalDegree);
 }
-
 
 // Return Minute part from degree angle
 int Angle::getDegreeMinute() const
@@ -187,27 +175,19 @@ int Angle::getDegreeMinute() const
     return std::abs(std::trunc((m_totalDegree - getDegree()) * 60));
 }
 
-
 // Return Second part from degree angle
 double Angle::getDegreeSecond() const
 {
     return ((std::abs((m_totalDegree - getDegree()) * 60) - getDegreeMinute()) * 60);
 }
 
-
 // Return Degree angle in the form of string eg: "00°00'00.00""
 QString Angle::getDegreeAngle() const
 {
     QString strAngle =
-            QString::number(getDegree()).rightJustified(2, '0')
-            + QChar(176)
-            + QString::number(getDegreeMinute()).rightJustified(2, '0')
-            + QChar(39)
-            + QString::number(getDegreeSecond(), 'f', 2).rightJustified(5, '0')
-            + QChar(34);
+        QString::number(getDegree()).rightJustified(2, '0') + QChar(176) + QString::number(getDegreeMinute()).rightJustified(2, '0') + QChar(39) + QString::number(getDegreeSecond(), 'f', 2).rightJustified(5, '0') + QChar(34);
     return strAngle;
 }
-
 
 void Angle::setDegree(int degree)
 {
@@ -220,7 +200,6 @@ void Angle::setDegree(int degree)
     m_totalDegree -= getDegree();
     m_totalDegree += degree;
 }
-
 
 void Angle::setDegreeMinute(int minute)
 {
@@ -242,7 +221,6 @@ void Angle::setDegreeMinute(int minute)
     }
 }
 
-
 void Angle::setDegreeSecond(double second)
 {
     if (second < 0.00 || second >= 60.00)
@@ -263,7 +241,6 @@ void Angle::setDegreeSecond(double second)
     }
 }
 
-
 // Return Hour part from hour angle
 int Angle::getHour() const
 {
@@ -277,13 +254,11 @@ int Angle::getHour() const
     }
 }
 
-
 // Return Minute part from hour angle
 int Angle::getHourMinute() const
 {
     return std::abs(std::trunc((getTotalHour() - std::trunc(getTotalHour())) * 60));
 }
-
 
 // Return Second part from hour angle
 double Angle::getHourSecond() const
@@ -291,20 +266,13 @@ double Angle::getHourSecond() const
     return (std::abs((getTotalHour() - std::trunc(getTotalHour())) * 60) - getHourMinute()) * 60;
 }
 
-
 // Return Hour angle in the form of string eg: "00h00m00.00s"
 QString Angle::getHourAngle() const
 {
     QString strAngle =
-            QString::number(getHour()).rightJustified(2, '0')
-            + "h"
-            + QString::number(getHourMinute()).rightJustified(2, '0')
-            + "m"
-            + QString::number(getHourSecond(), 'f', 2).rightJustified(5, '0')
-            + "s";
+        QString::number(getHour()).rightJustified(2, '0') + "h" + QString::number(getHourMinute()).rightJustified(2, '0') + "m" + QString::number(getHourSecond(), 'f', 2).rightJustified(5, '0') + "s";
     return strAngle;
 }
-
 
 void Angle::setHour(int hour)
 {
@@ -318,7 +286,6 @@ void Angle::setHour(int hour)
     m_totalDegree += 15 * hour;
 }
 
-
 void Angle::setHourMinute(int minute)
 {
     if (minute < 0 || minute >= 60)
@@ -330,7 +297,6 @@ void Angle::setHourMinute(int minute)
     m_totalDegree -= 15 * (double)getHourMinute() / 60.00;
     m_totalDegree += 15 * (double)minute / 60.00;
 }
-
 
 void Angle::setHourSecond(double seconde)
 {
@@ -344,8 +310,7 @@ void Angle::setHourSecond(double seconde)
     m_totalDegree += 15 * seconde / 3600;
 }
 
-
-bool Angle::operator<(const Angle& other) const
+bool Angle::operator<(const Angle &other) const
 {
     if (m_totalDegree < other.getTotalDegree())
         return true;
@@ -353,8 +318,7 @@ bool Angle::operator<(const Angle& other) const
         return false;
 }
 
-
-bool Angle::operator>(const Angle& other) const
+bool Angle::operator>(const Angle &other) const
 {
     if (m_totalDegree > other.getTotalDegree())
         return true;
@@ -362,8 +326,7 @@ bool Angle::operator>(const Angle& other) const
         return false;
 }
 
-
-bool Angle::operator<=(const Angle& other) const
+bool Angle::operator<=(const Angle &other) const
 {
     if (m_totalDegree <= other.getTotalDegree())
         return true;
@@ -371,8 +334,7 @@ bool Angle::operator<=(const Angle& other) const
         return false;
 }
 
-
-bool Angle::operator>=(const Angle& other) const
+bool Angle::operator>=(const Angle &other) const
 {
     if (m_totalDegree >= other.getTotalDegree())
         return true;
@@ -380,8 +342,7 @@ bool Angle::operator>=(const Angle& other) const
         return false;
 }
 
-
-bool Angle::operator==(const Angle& other) const
+bool Angle::operator==(const Angle &other) const
 {
     if (m_totalDegree == other.getTotalDegree())
         return true;
@@ -389,145 +350,10 @@ bool Angle::operator==(const Angle& other) const
         return false;
 }
 
-
-bool Angle::operator!=(const Angle& other) const
+bool Angle::operator!=(const Angle &other) const
 {
     if (m_totalDegree != other.getTotalDegree())
         return true;
     else
         return false;
 }
-
-
-
-
-
-
-
-
-// === EquatorialPosition
-
-
-EquatorialPosition::EquatorialPosition(Angle rightAscension, Angle declination)
-    : m_rightAscension(rightAscension)
-    , m_declination(declination)
-{}
-
-
-Angle EquatorialPosition::getRightAscension() const
-{
-    return m_rightAscension;
-}
-
-
-Angle EquatorialPosition::getDeclination() const
-{
-    return m_declination;
-}
-
-
-void EquatorialPosition::setRightAscension(Angle rightAscension)
-{
-    m_rightAscension = rightAscension;
-}
-
-
-void EquatorialPosition::setDeclination(Angle declination)
-{
-    m_declination = declination;
-}
-
-
-Angle EquatorialPosition::getDistance(EquatorialPosition *other)
-{
-    // DISTANCE = arccos(sin(δ1)*sin(δ2)+ cos(δ1)*cos(δ2)*cos(α1 - α2))
-
-    double distanceRad = acos(
-                sin( m_declination.getTotalRadian() )
-                * sin( other->getDeclination().getTotalRadian() )
-                + cos( m_declination.getTotalRadian() )
-                * cos( other->getDeclination().getTotalRadian() )
-                * cos( m_rightAscension.getTotalRadian() - other->getRightAscension().getTotalRadian() ));
-
-    return Angle( distanceRad * 180.00 / PI);
-}
-
-
-
-
-
-
-
-
-// === HorizontalPosition
-
-HorizontalPosition::HorizontalPosition(Angle azimuth, Angle altitude)
-    : m_azimuth(azimuth)
-    , m_altitude(altitude)
-{}
-
-
-Angle HorizontalPosition::getAzimuth() const
-{
-    return m_azimuth;
-}
-
-
-Angle HorizontalPosition::getAltitude() const
-{
-    return m_altitude;
-}
-
-
-void HorizontalPosition::setAzimuth(Angle azimuth)
-{
-    m_azimuth = azimuth;
-}
-
-
-void HorizontalPosition::setAltitude(Angle altitude)
-{
-    m_altitude = altitude;
-}
-
-
-Angle HorizontalPosition::getDistance(HorizontalPosition *other)
-{
-    // DISTANCE = arccos(sin(δ1)*sin(δ2)+ cos(δ1)*cos(δ2)*cos(α1 - α2))
-
-    double distanceRad = acos(
-                sin( m_altitude.getTotalRadian() )
-                * sin( other->getAltitude().getTotalRadian() )
-                + cos( m_altitude.getTotalRadian() )
-                * cos( other->getAltitude().getTotalRadian() )
-                * cos( m_azimuth.getTotalRadian() - other->getAzimuth().getTotalRadian() ));
-
-    return Angle( distanceRad * 180.00 / PI);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
