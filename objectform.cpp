@@ -469,38 +469,53 @@ void ObjectForm::on_NoteHorizontalSlider_valueChanged(int value)
 
 void ObjectForm::on_AutoComputePushButton_clicked()
 {
-    EquatorialPosition objectPosition(
-                Angle(true, m_ui->RAHourSpinBox->value(), m_ui->RAMinuteSpinBox->value(), m_ui->RASecondDoubleSpinBox->value()),
-                Angle(false, m_ui->DecDegreeSpinBox->value(), m_ui->DecMinuteSpinBox->value(), m_ui->DecSecondDoubleSpinBox->value()));
-
-    Angle minDistance = Angle(359.99);
-    int minId = 1;
-
     m_db->open();
 
-    QSqlQuery query;
-
-    // Set the query
-    query.prepare("SELECT `skymap3_number`, `skymap3_right_ascension`, `skymap3_declination` FROM `skymap3` WHERE 1");
-
-    if (query.exec() == false)
+    for (int iMapSet = 1; iMapSet < 4; ++iMapSet)
     {
-        SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les cartes", &query);
-        sqlError.printMessage();
-    }
+        EquatorialPosition objectPosition(
+                    Angle(true, m_ui->RAHourSpinBox->value(), m_ui->RAMinuteSpinBox->value(), m_ui->RASecondDoubleSpinBox->value()),
+                    Angle(false, m_ui->DecDegreeSpinBox->value(), m_ui->DecMinuteSpinBox->value(), m_ui->DecSecondDoubleSpinBox->value()));
 
-    while(query.next())
-    {
-        EquatorialPosition mapPosition(Angle(query.value(1).toString()), Angle(query.value(2).toString()));
-        Angle distance = objectPosition.getDistance(&mapPosition);
-        if (distance < minDistance)
+        Angle minDistance = Angle(359.99);
+        int minId = 1;
+
+        QSqlQuery query;
+
+        // Set the query
+        query.prepare("SELECT `skymap" + QString::number(iMapSet) + "_number`, `skymap" + QString::number(iMapSet) + "_right_ascension`, `skymap" + QString::number(iMapSet) + "_declination` FROM `skymap" + QString::number(iMapSet) + "` WHERE 1");
+
+        if (query.exec() == false)
         {
-            minDistance = distance;
-            minId = query.value(0).toInt();
+            SqlError sqlError(ErrorPriority::Critical, "Impossible de selectionner les cartes (table : `skymap" + QString::number(iMapSet) + "`)", &query);
+            sqlError.printMessage();
+        }
+
+        while(query.next())
+        {
+            EquatorialPosition mapPosition(Angle(query.value(1).toString()), Angle(query.value(2).toString()));
+            Angle distance = objectPosition.getDistance(&mapPosition);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                minId = query.value(0).toInt();
+            }
+        }
+
+        switch (iMapSet) {
+        case 1:
+            m_ui->Map1SpinBox->setValue(minId);
+            break;
+        case 2:
+            m_ui->Map2SpinBox->setValue(minId);
+            break;
+        case 3:
+            m_ui->Map3SpinBox->setValue(minId);
+            break;
+        default:
+            break;
         }
     }
-
-    m_ui->Map3SpinBox->setValue(minId);
 
     m_db->close();
 }
