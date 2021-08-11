@@ -216,6 +216,41 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
     }
 
     m_db->close();
+
+    chart = new QtCharts::QChart();
+
+    QtCharts::QBarSet *set0 = new QBarSet("Masse d'aire");
+    QtCharts::QBarSet *set1 = new QBarSet("Elévation");
+    *set0 << 1 << 2 << 3 << 4 << 5 << 6 << 6 << 5 << 4 << 3 << 2 << 1;
+    *set1 << 6 << 5 << 4 << 3 << 2 << 1 << 1 << 2 << 3 << 4 << 5 << 6;
+    QtCharts::QBarSeries *series = new QBarSeries();
+    series->append(set0);
+    series->append(set1);
+
+    chart->addSeries(series);
+    chart->setTitle("Graphe de visibilité");
+    chart->setAnimationOptions(QtCharts::QChart::SeriesAnimations);
+
+    QStringList categories;
+    categories << "Janvier" << "Février" << "Mars" << "Avril" << "Mai" << "Juin" << "Juillet" << "Août" << "Septembre" << "Octobre" << "Novembre" << "Décembre";
+    QtCharts::QBarCategoryAxis *axisX = new QtCharts::QBarCategoryAxis();
+    axisX->append(categories);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+
+    QtCharts::QValueAxis *axisY = new QtCharts::QValueAxis();
+    axisY->setRange(0,15);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
+
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
+    QtCharts::QChartView *chartView = new QtCharts::QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    chartView = new QtCharts::QChartView(chart);
+    m_ui->mainHorizontalLayout->addWidget(chartView);
 }
 
 

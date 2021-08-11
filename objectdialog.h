@@ -25,6 +25,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QTextBrowser>
+#include <QtCharts>
 
 namespace Ui {
 class ObjectDialog;
@@ -42,6 +43,10 @@ private:
     // Form
     QLineEdit *m_messierEdit = nullptr;
     QLineEdit *m_ngcEdit = nullptr;
+
+    // Graph
+    QtCharts::QChartView *chartView = nullptr;
+    QtCharts::QChart *chart = nullptr;
 
 public:
     explicit ObjectDialog(QWidget *parent = nullptr, QSqlDatabase *database = nullptr, const unsigned int objectId = 0);
