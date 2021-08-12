@@ -182,7 +182,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     }
     else
     {
-        query.prepare("SELECT COUNT(object_id) FROM objects");
+        query.prepare("SELECT MAX(object_id) FROM objects");
 
         if (query.exec() == false)
         {
@@ -398,9 +398,70 @@ bool ObjectForm::CheckInput()
     // Apperent magnitude (secondary)
     m_secondApparentMagnitude = testSecondApparentMagnitude; // <<-- NULL if undefined
     // Diameter
-    m_diameter = m_ui->DiametreDoubleSpinBox->value();
+    switch (m_ui->DiametreComboBox->currentIndex())
+    {
+    case 0:
+        // "km"
+        m_diameter = m_ui->DiametreDoubleSpinBox->value() / 9460730472580800;
+        break;
+    case 1:
+        // "ua"
+        m_diameter = m_ui->DiametreDoubleSpinBox->value() / 63241;
+        break;
+    case 2:
+        // "al"
+        m_diameter = m_ui->DiametreDoubleSpinBox->value();
+        break;
+    case 3:
+        // "pc"
+        m_diameter = m_ui->DiametreDoubleSpinBox->value() * 3.26;
+        break;
+    case 4:
+        // "kpc"
+        m_diameter = m_ui->DiametreDoubleSpinBox->value() * 3260;
+        break;
+    case 5:
+        // "Mpc"
+        m_diameter = m_ui->DiametreDoubleSpinBox->value() * 3260000;
+        break;
+    case 6:
+        // "Gpc"
+        m_diameter = m_ui->DiametreDoubleSpinBox->value() * 3260000000;
+        break;
+    }
+
     // Distance
-    m_distance = m_ui->DistanceDoubleSpinBox->value();
+    switch (m_ui->DistanceComboBox->currentIndex())
+    {
+    case 0:
+        // "km"
+        m_distance = m_ui->DistanceDoubleSpinBox->value() / 9460730472580800;
+        break;
+    case 1:
+        // "ua"
+        m_distance = m_ui->DistanceDoubleSpinBox->value() / 63241;
+        break;
+    case 2:
+        // "al"
+        m_distance = m_ui->DistanceDoubleSpinBox->value();
+        break;
+    case 3:
+        // "pc"
+        m_distance = m_ui->DistanceDoubleSpinBox->value() * 3.26;
+        break;
+    case 4:
+        // "kpc"
+        m_distance = m_ui->DistanceDoubleSpinBox->value() * 3260;
+        break;
+    case 5:
+        // "Mpc"
+        m_distance = m_ui->DistanceDoubleSpinBox->value() * 3260000;
+        break;
+    case 6:
+        // "Gpc"
+        m_distance = m_ui->DistanceDoubleSpinBox->value() * 3260000000;
+        break;
+    }
 
     // === Position section
     // Right ascension

@@ -195,12 +195,15 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox">
+             <widget class="QComboBox" name="DistanceComboBox">
               <property name="minimumSize">
                <size>
                 <width>97</width>
                 <height>0</height>
                </size>
+              </property>
+              <property name="currentIndex">
+               <number>2</number>
               </property>
               <item>
                <property name="text">
@@ -257,12 +260,15 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_2">
+             <widget class="QComboBox" name="DiametreComboBox">
               <property name="minimumSize">
                <size>
                 <width>97</width>
                 <height>0</height>
                </size>
+              </property>
+              <property name="currentIndex">
+               <number>2</number>
               </property>
               <item>
                <property name="text">
