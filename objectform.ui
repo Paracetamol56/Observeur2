@@ -130,6 +130,9 @@
           </item>
           <item row="7" column="1">
            <widget class="QDoubleSpinBox" name="ApparentMagnitudeDoubleSpinBox_1">
+            <property name="locale">
+             <locale language="English" country="UnitedStates"/>
+            </property>
             <property name="minimum">
              <double>-30.000000000000000</double>
             </property>
@@ -149,6 +152,9 @@
            <widget class="QDoubleSpinBox" name="ApparentMagnitudeDoubleSpinBox_2">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="locale">
+             <locale language="English" country="UnitedStates"/>
             </property>
             <property name="minimum">
              <double>-30.000000000000000</double>

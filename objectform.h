@@ -42,6 +42,7 @@ private:
     Ui::ObjectForm *m_ui;
     QSqlDatabase *m_db;
 
+    bool m_newObject = true;
     int m_objectId = 0;
 
     // Input values
@@ -91,6 +92,10 @@ private slots:
     void on_TypeComboBox_currentTextChanged(const QString &arg1);
     void on_PreviewPushButton_clicked();
     void on_AutoComputePushButton_clicked();
+
+signals:
+
+    void newValuesSaved();
 };
 
 #endif // OBJECTFORM_H

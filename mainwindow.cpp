@@ -92,6 +92,9 @@ MainWindow::MainWindow(QWidget* parent)
 
         // Display all the objects
         updateObject();
+
+        // Initiate selection
+        tableSelectionChanged();
     }
     else
     {
@@ -101,7 +104,7 @@ MainWindow::MainWindow(QWidget* parent)
     }
 
     // Connections
-    connect(m_ui->objectTableView, SIGNAL(tableSelectionChanged()), this, SLOT(on_tableViewSelection()));
+    connect(m_ui->objectTableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::tableSelectionChanged);
 }
 
 
@@ -191,9 +194,17 @@ void MainWindow::updateObject()
     m_ui->objectTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     m_db->close();
+
+    // Clear selection
+    m_ui->objectTableView->clearSelection();
+    tableSelectionChanged();
+
+    // Reconnect the "selectionChanged" signal
+    connect(m_ui->objectTableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::tableSelectionChanged);
 }
 
 
+// Is triggered when the object table selection change
 void MainWindow::tableSelectionChanged()
 {
     QItemSelectionModel *selectionModel = m_ui->objectTableView->selectionModel();
@@ -229,6 +240,8 @@ void MainWindow::tableSelectionChanged()
             return;
         }
 
+        m_selectedId.clear();
+
         while(query.next())
         {
             m_selectedId.push_back(query.value(0).toInt());
@@ -236,26 +249,30 @@ void MainWindow::tableSelectionChanged()
 
         m_db->close();
     }
+    else
+    {
+        m_selectedId = {};
+    }
 
     // Update the menu
-    if (m_selectedId.empty() == true)
+    if (m_selectedId.empty())
     {
-        m_ui->menuEdition->actions().at(1)->setEnabled(false);
-        m_ui->menuEdition->actions().at(2)->setEnabled(false);
+        m_ui->menuEdition->actions().at(1)->setEnabled(false); // "Modifier un objet"
+        m_ui->menuEdition->actions().at(2)->setEnabled(false); // "Supprimer un objet"
     }
     else
     {
         if (m_selectedId.count() == 1)
         {
-            m_ui->menuEdition->actions().at(1)->setEnabled(true);
+            m_ui->menuEdition->actions().at(1)->setEnabled(true); // "Modifier un objet"
             m_ui->menuEdition->actions().at(2)->setText("Supprimer les objets");
-            m_ui->menuEdition->actions().at(2)->setEnabled(true);
+            m_ui->menuEdition->actions().at(2)->setEnabled(true); // "Supprimer les objets"
         }
         else
         {
-            m_ui->menuEdition->actions().at(1)->setEnabled(false);
+            m_ui->menuEdition->actions().at(1)->setEnabled(false); // "Modifier un objet"
             m_ui->menuEdition->actions().at(2)->setText("Supprimer l'objets");
-            m_ui->menuEdition->actions().at(2)->setEnabled(true);
+            m_ui->menuEdition->actions().at(2)->setEnabled(true); // "Supprimer un objet"
         }
     }
 }
@@ -515,13 +532,25 @@ void MainWindow::on_actionTout_selectionner_triggered()
 void MainWindow::on_actionNouvel_objet_triggered()
 {
     ObjectForm *newObjectWindow = new ObjectForm(nullptr, m_db, 0);
+    connect(newObjectWindow, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
     newObjectWindow->show();
 }
 
 
 void MainWindow::on_actionModifier_un_objet_triggered()
 {
+    if (m_selectedId.count() == 1)
+    {
+        ObjectForm *modifyObjectWindow = new ObjectForm(nullptr, m_db, m_selectedId.first());
+        connect(modifyObjectWindow, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
+        modifyObjectWindow->show();
+    }
+}
 
+
+void MainWindow::on_newValuesSaved()
+{
+    updateObject();
 }
 
 

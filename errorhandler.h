@@ -19,6 +19,9 @@
 #include <QStringList>
 #include <QMessageBox>
 #include <QApplication>
+#include <QIcon>
+
+#include "angleutilities/angle.h"
 
 
 
