@@ -180,9 +180,12 @@
            </widget>
           </item>
           <item row="9" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout">
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
             <item>
              <widget class="QDoubleSpinBox" name="DistanceDoubleSpinBox">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
               <property name="decimals">
                <number>2</number>
               </property>
@@ -245,9 +248,12 @@
            </layout>
           </item>
           <item row="10" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0">
             <item>
              <widget class="QDoubleSpinBox" name="DiametreDoubleSpinBox">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
               <property name="decimals">
                <number>2</number>
               </property>
@@ -357,6 +363,9 @@
             </item>
             <item>
              <widget class="QDoubleSpinBox" name="RASecondDoubleSpinBox">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
               <property name="maximum">
                <double>59.990000000000002</double>
               </property>
@@ -413,6 +422,9 @@
             </item>
             <item>
              <widget class="QDoubleSpinBox" name="DecSecondDoubleSpinBox">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
               <property name="maximum">
                <double>59.990000000000002</double>
               </property>
