@@ -332,6 +332,7 @@
      <string>Fichier</string>
     </property>
     <addaction name="actionQuitter"/>
+    <addaction name="actionParam_tre"/>
    </widget>
    <widget class="QMenu" name="menuAide">
     <property name="title">
@@ -551,6 +552,15 @@
    </property>
    <property name="text">
     <string>Afficher les détails de l'objet</string>
+   </property>
+  </action>
+  <action name="actionParam_tre">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-settings-96.png</normaloff>:/Ressources/icons/icons8-settings-96.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paramètre</string>
    </property>
   </action>
  </widget>

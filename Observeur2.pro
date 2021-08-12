@@ -20,6 +20,7 @@ SOURCES += \
     angleutilities/equatorialposition.cpp \
     angleutilities/horizontalposition.cpp \
     dialogs/objectdialog.cpp \
+    dialogs/settingdialog.cpp \
     tables/constellationtable.cpp \
     tables/objecttable.cpp \
     tables/tabledialog.cpp \
@@ -34,6 +35,7 @@ HEADERS += \
     angleutilities/equatorialposition.h \
     angleutilities/horizontalposition.h \
     dialogs/objectdialog.h \
+    dialogs/settingdialog.h \
     tables/constellationtable.h \
     tables/objecttable.h \
     tables/tabledialog.h \
@@ -46,6 +48,7 @@ HEADERS += \
 FORMS += \
     mainwindow.ui \
     dialogs/objectdialog.ui \
+    dialogs/settingdialog.ui \
     tables/tabledialog.ui \
     objectform.ui
 

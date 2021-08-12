@@ -9,6 +9,25 @@ MainWindow::MainWindow(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    QSettings settings;
+
+    if (settings.contains("theme"))
+    {
+        if (settings.value("theme").toString() == "dark")
+        {
+            on_actionDark_triggered();
+        }
+        else if (settings.value("theme").toString() == "light")
+        {
+            on_actionLight_triggered();
+        }
+    }
+    else
+    {
+        SettingDialog settingDialog(nullptr);
+        settingDialog.exec();
+    }
+
     on_actionDark_triggered();
 
     // Initiate database
@@ -424,6 +443,13 @@ void MainWindow::on_actionQuitter_triggered()
 }
 
 
+void MainWindow::on_actionParam_tre_triggered()
+{
+    SettingDialog settingDialog(nullptr);
+    settingDialog.exec();
+}
+
+
 void MainWindow::on_actionA_propos_triggered()
 {
     QMessageBox aboutMessageBox;
@@ -439,11 +465,15 @@ void MainWindow::on_actionLight_triggered()
 {
     QFile qssFile(":/qdarkstyle/light/Ressources/light/light.qss");
 
-    if (qssFile.exists() == false)   {
+    if (qssFile.exists() == false)
+    {
         MissingFileError errorMessage(ErrorPriority::Critical, "Le fichier de style est introuvable", &qssFile);
         errorMessage.printMessage();
     }
-    else   {
+    else
+    {
+        QSettings settings;
+        settings.setValue("theme", "light");
         qssFile.open(QFile::ReadOnly | QFile::Text);
         QTextStream ts(&qssFile);
         qApp->setStyleSheet(ts.readAll());
@@ -455,11 +485,15 @@ void MainWindow::on_actionDark_triggered()
 {
     QFile qssFile(":/qdarkstyle/dark/Ressources/dark/dark.qss");
 
-    if (qssFile.exists() == false)   {
+    if (qssFile.exists() == false)
+    {
         MissingFileError errorMessage(ErrorPriority::Critical, "Le fichier de style est introuvable", &qssFile);
         errorMessage.printMessage();
     }
-    else   {
+    else
+    {
+        QSettings settings;
+        settings.setValue("theme", "dark");
         qssFile.open(QFile::ReadOnly | QFile::Text);
         QTextStream ts(&qssFile);
         qApp->setStyleSheet(ts.readAll());
@@ -595,6 +629,8 @@ void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos
 
     }
 }
+
+
 
 
 

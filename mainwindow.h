@@ -24,6 +24,7 @@
 #include <QMessageBox>
 #include <QListView>
 #include <QListWidgetItem>
+#include <QSettings>
 
 // Other windows
 #include "tables/constellationtable.h"
@@ -31,6 +32,7 @@
 #include "tables/objecttable.h"
 #include "objectform.h"
 #include "dialogs/objectdialog.h"
+#include "dialogs/settingdialog.h"
 
 // Error handling
 #include "errorhandler.h"
@@ -91,6 +93,7 @@ private slots:
     void on_actionSupprimer_un_objet_triggered();
     void on_actionTout_selectionner_triggered();
     void on_actionAfficher_les_d_tails_de_l_objet_triggered();
+    void on_actionParam_tre_triggered();
 };
 
 #endif // MAINWINDOW_H
