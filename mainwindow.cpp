@@ -28,8 +28,6 @@ MainWindow::MainWindow(QWidget* parent)
         settingDialog.exec();
     }
 
-    on_actionDark_triggered();
-
     // Initiate database
 
     *m_db = QSqlDatabase::addDatabase("QSQLITE");
