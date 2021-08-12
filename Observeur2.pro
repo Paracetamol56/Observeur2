@@ -19,33 +19,34 @@ SOURCES += \
     angleutilities/angle.cpp \
     angleutilities/equatorialposition.cpp \
     angleutilities/horizontalposition.cpp \
-    constellationtable.cpp \
+    dialogs/objectdialog.cpp \
+    tables/constellationtable.cpp \
+    tables/objecttable.cpp \
+    tables/tabledialog.cpp \
+    tables/typetable.cpp \
     errorhandler.cpp \
     main.cpp \
     mainwindow.cpp \
-    objectdialog.cpp \
-    objectform.cpp \
-    objecttable.cpp \
-    tabledialod.cpp \
-    typetable.cpp
+    objectform.cpp
 
 HEADERS += \
     angleutilities/angle.h \
     angleutilities/equatorialposition.h \
     angleutilities/horizontalposition.h \
-    constellationtable.h \
+    dialogs/objectdialog.h \
+    tables/constellationtable.h \
+    tables/objecttable.h \
+    tables/tabledialog.h \
+    tables/typetable.h \
     errorhandler.h \
+    main.h \
     mainwindow.h \
-    objectdialog.h \
-    objectform.h \
-    objecttable.h \
-    tabledialog.h \
-    typetable.h
+    objectform.h
 
 FORMS += \
     mainwindow.ui \
-    objectdialog.ui \
-    tabledialog.ui \
+    dialogs/objectdialog.ui \
+    tables/tabledialog.ui \
     objectform.ui
 
 RESOURCES += \

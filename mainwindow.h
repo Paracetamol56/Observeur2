@@ -26,11 +26,11 @@
 #include <QListWidgetItem>
 
 // Other windows
-#include "constellationtable.h"
-#include "typetable.h"
-#include "objecttable.h"
+#include "tables/constellationtable.h"
+#include "tables/typetable.h"
+#include "tables/objecttable.h"
 #include "objectform.h"
-#include "objectdialog.h"
+#include "dialogs/objectdialog.h"
 
 // Error handling
 #include "errorhandler.h"

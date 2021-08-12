@@ -32,7 +32,7 @@ public:
 
     Angle getDistance(EquatorialPosition *other = nullptr);
 
-    HorizontalPosition toHorizontalPosition();
+    HorizontalPosition toHorizontalPosition(double julianDay = 0.00, Angle latitude = Angle(0.00), Angle longitude = Angle(0.00));
 };
 
 #endif // EQUATORIALPOSITION_H

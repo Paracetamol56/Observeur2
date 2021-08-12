@@ -179,8 +179,6 @@ void MainWindow::updateObject()
 
 void MainWindow::tableSelectionChanged()
 {
-    qDebug() << "update !!!!!";
-
     QItemSelectionModel *selectionModel = m_ui->objectTableView->selectionModel();
 
     if (selectionModel->hasSelection())

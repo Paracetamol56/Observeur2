@@ -6,7 +6,9 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
     : QDialog(parent)
     , m_ui(new Ui::ObjectDialog)
     , m_db(database)
-    ,m_id(objectId)
+    , m_id(objectId)
+    , m_rightAscension(0.00)
+    , m_declination(0.00)
 {
     m_ui->setupUi(this);
 
@@ -162,6 +164,7 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
     // Right ascension
     if (query.value(10).toString() != "")
     {
+        m_rightAscension = Angle(query.value(10).toString());
         QLineEdit *rightAscensionEdit = new QLineEdit(query.value(10).toString(), this);
         rightAscensionEdit->setReadOnly(true);
         m_ui->formLayout->addRow("Ascention droite", rightAscensionEdit);
@@ -170,6 +173,7 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
     // Declination
     if (query.value(11).toString() != "")
     {
+        m_declination = Angle(query.value(11).toString());
         QLineEdit *declinationEdit = new QLineEdit(query.value(11).toString(), this);
         declinationEdit->setReadOnly(true);
         m_ui->formLayout->addRow("Déclinaison", declinationEdit);
@@ -217,7 +221,62 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
 
     m_db->close();
 
-    chart = new QtCharts::QChart();
+    computeGraph();
+}
+
+
+ObjectDialog::~ObjectDialog()
+{
+    delete m_ui;
+}
+
+
+void ObjectDialog::on_messierPushButton_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://simbad.u-strasbg.fr/simbad/sim-basic?Ident=m" + m_messierEdit->text() + "&submit=SIMBAD+search"));
+}
+
+
+void ObjectDialog::on_ngcPushButton_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://simbad.u-strasbg.fr/simbad/sim-basic?Ident=ngc" + m_ngcEdit->text() + "&submit=SIMBAD+search"));
+}
+
+
+void ObjectDialog::on_pushButton_clicked()
+{
+    this->close();
+}
+
+
+void ObjectDialog::on_pushButton_2_clicked()
+{
+    //todo
+}
+
+
+void ObjectDialog::computeGraph()
+{
+    // Julian days to compute
+    /*
+    Jan 2451558.50000
+    Feb 2451589.50000
+    Mar 2451618.50000
+    Avr 2451649.50000
+    Mai 2451679.50000
+    Jun 2451710.50000
+    Jul 2451740.50000
+    Aug 2451771.50000
+    Sep 2451802.50000
+    Oct 2451832.50000
+    Nov 2451863.50000
+    Dec 2451893.50000
+    */
+
+    EquatorialPosition test(0.00, 0.00);
+    test.toHorizontalPosition(0.00, 0.00, 0.00);
+
+    m_chart = new QtCharts::QChart();
 
     QtCharts::QBarSet *set0 = new QBarSet("Masse d'aire");
     QtCharts::QBarSet *set1 = new QBarSet("Elévation");
@@ -227,54 +286,28 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
     series->append(set0);
     series->append(set1);
 
-    chart->addSeries(series);
-    chart->setTitle("Graphe de visibilité");
-    chart->setAnimationOptions(QtCharts::QChart::SeriesAnimations);
+    m_chart->addSeries(series);
+    m_chart->setTitle("Graphe de visibilité");
+    m_chart->setAnimationOptions(QtCharts::QChart::SeriesAnimations);
 
     QStringList categories;
     categories << "Janvier" << "Février" << "Mars" << "Avril" << "Mai" << "Juin" << "Juillet" << "Août" << "Septembre" << "Octobre" << "Novembre" << "Décembre";
     QtCharts::QBarCategoryAxis *axisX = new QtCharts::QBarCategoryAxis();
     axisX->append(categories);
-    chart->addAxis(axisX, Qt::AlignBottom);
+    m_chart->addAxis(axisX, Qt::AlignBottom);
     series->attachAxis(axisX);
 
     QtCharts::QValueAxis *axisY = new QtCharts::QValueAxis();
     axisY->setRange(0,15);
-    chart->addAxis(axisY, Qt::AlignLeft);
+    m_chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
-    chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(Qt::AlignBottom);
+    m_chart->legend()->setVisible(true);
+    m_chart->legend()->setAlignment(Qt::AlignBottom);
 
-    QtCharts::QChartView *chartView = new QtCharts::QChartView(chart);
+    QtCharts::QChartView *chartView = new QtCharts::QChartView(m_chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    chartView = new QtCharts::QChartView(chart);
+    m_chartView = new QtCharts::QChartView(m_chart);
     m_ui->mainHorizontalLayout->addWidget(chartView);
-}
-
-
-ObjectDialog::~ObjectDialog()
-{
-    delete m_ui;
-}
-
-void ObjectDialog::on_messierPushButton_clicked()
-{
-    QDesktopServices::openUrl(QUrl("https://simbad.u-strasbg.fr/simbad/sim-basic?Ident=m" + m_messierEdit->text() + "&submit=SIMBAD+search"));
-}
-
-void ObjectDialog::on_ngcPushButton_clicked()
-{
-    QDesktopServices::openUrl(QUrl("https://simbad.u-strasbg.fr/simbad/sim-basic?Ident=ngc" + m_ngcEdit->text() + "&submit=SIMBAD+search"));
-}
-
-void ObjectDialog::on_pushButton_clicked()
-{
-    this->close();
-}
-
-void ObjectDialog::on_pushButton_2_clicked()
-{
-    //todo
 }
