@@ -21,7 +21,7 @@ double Date::toJulianDay()
     // Julian day part
     int julianDayDay  = int(365.25*(m_year+4716)) + int(30.6001*(m_month+1)) + (int)(m_day) + B - 1524.5;
     // Julian time part
-    double julianDayTime = 0.5 + m_hour / 24 + m_minute / 1440 + m_second / 86400;
+    double julianDayTime = 0.5 + (double)m_hour / 24.00 + (double)m_minute / 1440.00 + (double)m_second / 86400.00;
 
     // Adjust day and time if needed
     if( julianDayTime >= 1 )
@@ -48,8 +48,8 @@ double Date::toGMST()
     double julianDay0 = date0.toJulianDay();
 
     double timeT0 = (std::trunc(julianDay0) - 2451545.0 + (julianDay0 - std::trunc(julianDay0))) / 36525;
-    double timeT0Squared = timeT0*timeT0;
-    double timeT0Cubed = timeT0Squared*timeT0;
+    double timeT0Squared = timeT0 * timeT0;
+    double timeT0Cubed = timeT0Squared * timeT0;
 
     // Sideral time at midnight
     double theta0 = 100.46061837 + (36000.770053608*timeT0) + (0.000387933*timeT0Squared) - (timeT0Cubed/38710000);

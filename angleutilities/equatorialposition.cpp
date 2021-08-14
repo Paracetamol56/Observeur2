@@ -55,26 +55,26 @@ HorizontalPosition EquatorialPosition::toHorizontalPosition(unsigned int day, un
     Angle latitude(0.00);
     Angle longitude(0.00);
 
-    if (settings.contains("position"))
+    settings.beginGroup("position");
+    if (settings.contains("latitude") && settings.contains("longitude"))
     {
-        settings.beginGroup("position");
-        latitude = Angle(settings.value("latitude").toString());
+        latitude = Angle(settings.value("latitude").toDouble());
         if (settings.value("latitudeDirection").toString() == "S")
         {
             latitude.setTotalDegree(0.00 - latitude.getTotalDegree());
         }
 
-        longitude = Angle(settings.value("longitude").toString());
+        longitude = Angle(settings.value("longitude").toDouble());
         if (settings.value("longitudeDirection") == "O")
         {
             longitude.setTotalDegree(360.00 - longitude.getTotalDegree());
         }
-        settings.endGroup();
     }
     else
     {
         //todo : error
     }
+    settings.endGroup();
 
     // Create date object
     Date date(day, month, year, hour, minute, second);
