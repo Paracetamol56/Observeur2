@@ -36,11 +36,11 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
 
         if (isHour == true)
         {
-            m_totalDegree = (degree * 15) + (minute / 60) + (seconde / 3600);
+            m_totalDegree = (degree * 15) + ((double)minute / 60) + (seconde / 3600);
         }
         else
         {
-            m_totalDegree = degree + (minute / 60) + (seconde / 3600);
+            m_totalDegree = degree + ((double)minute / 60.0) + (seconde / 3600.0);
         }
     }
     catch (Error e)

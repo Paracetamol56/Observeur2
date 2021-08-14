@@ -153,18 +153,18 @@ void MainWindow::updateObject()
                 "objects.`object_apparent_magnitude` AS `Magnitude apparente`, "
                 "objects.`object_appreciation` AS `Appreciation`, "
                 "objects.`object_note` AS `Note /10`, "
-                //"skymap1.`skymap1_number` AS `Carte (N1)`, "
-                //"skymap2.`skymap2_number` AS `Carte (N2)`, "
+                "skymap1.`skymap1_number` AS `Carte (N1)`, "
+                "skymap2.`skymap2_number` AS `Carte (N2)`, "
                 "skymap3.`skymap3_number` AS `Carte (N3)` "
                 "FROM objects "
                 "INNER JOIN categories "
                 "ON categories.`category_id` = objects.`object_category` "
                 "INNER JOIN constellations "
                 "ON constellations.`constellation_id` = objects.`object_constellation` "
-                //"INNER JOIN skymap1 "
-                //"ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
-                //"INNER JOIN skymap2 "
-                //"ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
+                "INNER JOIN skymap1 "
+                "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
+                "INNER JOIN skymap2 "
+                "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
                 "INNER JOIN skymap3 "
                 "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
                 "WHERE constellations.`constellation_name` IN ("+ constellationFilterString + ") "
@@ -259,6 +259,7 @@ void MainWindow::tableSelectionChanged()
     {
         m_ui->menuEdition->actions().at(1)->setEnabled(false); // "Modifier un objet"
         m_ui->menuEdition->actions().at(2)->setEnabled(false); // "Supprimer un objet"
+        m_ui->menuAffichage->actions().at(3)->setEnabled(false); // "Afficher les détaills de l'objets"
     }
     else
     {
@@ -267,12 +268,14 @@ void MainWindow::tableSelectionChanged()
             m_ui->menuEdition->actions().at(1)->setEnabled(true); // "Modifier un objet"
             m_ui->menuEdition->actions().at(2)->setText("Supprimer les objets");
             m_ui->menuEdition->actions().at(2)->setEnabled(true); // "Supprimer les objets"
+            m_ui->menuAffichage->actions().at(3)->setEnabled(true); // "Afficher les détaills de l'objets"
         }
         else
         {
             m_ui->menuEdition->actions().at(1)->setEnabled(false); // "Modifier un objet"
             m_ui->menuEdition->actions().at(2)->setText("Supprimer l'objets");
             m_ui->menuEdition->actions().at(2)->setEnabled(true); // "Supprimer un objet"
+            m_ui->menuAffichage->actions().at(3)->setEnabled(false); // "Afficher les détaills de l'objets"
         }
     }
 }

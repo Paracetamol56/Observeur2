@@ -6,6 +6,7 @@
 #include <math.h>
 #include "angleutilities/angle.h"
 #include "angleutilities/horizontalposition.h"
+#include "angleutilities/date.h"
 
 #define PI 3.14159265358979323846264338327950288419716939937510582
 
@@ -14,6 +15,8 @@
 
 // Error handling
 #include "errorhandler.h"
+
+#include <QSettings>
 
 // Define a celestial position in equatorial coordinate system
 class EquatorialPosition
@@ -32,7 +35,7 @@ public:
 
     Angle getDistance(EquatorialPosition *other = nullptr);
 
-    HorizontalPosition toHorizontalPosition(double julianDay = 0.00, Angle latitude = Angle(0.00), Angle longitude = Angle(0.00));
+    HorizontalPosition toHorizontalPosition(unsigned int day, unsigned int month, unsigned int year, unsigned int hour, unsigned int minute, unsigned int second);
 };
 
 #endif // EQUATORIALPOSITION_H

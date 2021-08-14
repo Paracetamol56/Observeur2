@@ -27,8 +27,10 @@
 #include <QTextBrowser>
 #include <QtCharts>
 
-#include <angleutilities/angle.h>
-#include <angleutilities/equatorialposition.h>
+#include "angleutilities/angle.h"
+#include "angleutilities/equatorialposition.h"
+#include "objectform.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class ObjectDialog;
@@ -64,8 +66,8 @@ public:
 private slots:
     void on_messierPushButton_clicked();
     void on_ngcPushButton_clicked();
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
+    void on_ModifyPushButton_clicked();
+    void on_CloseushButton_clicked();
 };
 
 #endif // OBJECTDIALOG_H

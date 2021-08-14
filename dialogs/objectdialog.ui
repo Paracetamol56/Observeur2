@@ -14,7 +14,7 @@
    <string>Dialog</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="ressources.qrc">
+   <iconset resource="../ressources.qrc">
     <normaloff>:/Ressources/icons/icons8-show-property-96.png</normaloff>:/Ressources/icons/icons8-show-property-96.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
@@ -41,23 +41,23 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="ModifyPushButton">
        <property name="text">
         <string>Modifier</string>
        </property>
        <property name="icon">
-        <iconset resource="ressources.qrc">
+        <iconset resource="../ressources.qrc">
          <normaloff>:/Ressources/icons/icons8-edit-property-96.png</normaloff>:/Ressources/icons/icons8-edit-property-96.png</iconset>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="CloseushButton">
        <property name="text">
         <string>Fermer</string>
        </property>
        <property name="icon">
-        <iconset resource="ressources.qrc">
+        <iconset resource="../ressources.qrc">
          <normaloff>:/Ressources/icons/icons8-close-window-96.png</normaloff>:/Ressources/icons/icons8-close-window-96.png</iconset>
        </property>
       </widget>
@@ -67,7 +67,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="ressources.qrc"/>
+  <include location="../ressources.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -36,9 +36,9 @@ SettingDialog::SettingDialog(QWidget *parent)
 
         // Latitude
         Angle longitude(settings.value("longitude").toDouble());
-        m_ui->LonDegreeSpinBox->setValue(latitude.getDegree());
-        m_ui->LonMinuteSpinBox->setValue(latitude.getDegreeMinute());
-        m_ui->LonSecondDoubleSpinBox->setValue(latitude.getDegreeSecond());
+        m_ui->LonDegreeSpinBox->setValue(longitude.getDegree());
+        m_ui->LonMinuteSpinBox->setValue(longitude.getDegreeMinute());
+        m_ui->LonSecondDoubleSpinBox->setValue(longitude.getDegreeSecond());
         m_ui->LonComboBox->setCurrentText(settings.value("longitudeDirection").toString());
 
         // Altitude
@@ -69,7 +69,7 @@ void SettingDialog::on_SavePushButton_clicked()
 
     if (m_ui->DarkRadioButton->isChecked())
     {
-        QFile qssFile(":/qdarkstyle/light/Ressources/dark/dark.qss");
+        QFile qssFile(":/qdarkstyle/dark/Ressources/dark/dark.qss");
 
         if (qssFile.exists() == false)
         {

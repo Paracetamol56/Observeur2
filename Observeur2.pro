@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     angleutilities/angle.cpp \
+    angleutilities/date.cpp \
     angleutilities/equatorialposition.cpp \
     angleutilities/horizontalposition.cpp \
     dialogs/objectdialog.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
     angleutilities/angle.h \
+    angleutilities/date.h \
     angleutilities/equatorialposition.h \
     angleutilities/horizontalposition.h \
     dialogs/objectdialog.h \

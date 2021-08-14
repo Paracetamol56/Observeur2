@@ -243,15 +243,16 @@ void ObjectDialog::on_ngcPushButton_clicked()
 }
 
 
-void ObjectDialog::on_pushButton_clicked()
+void ObjectDialog::on_ModifyPushButton_clicked()
 {
-    this->close();
+    ObjectForm *modifyObjectWindow = new ObjectForm(nullptr, m_db, m_id);
+    modifyObjectWindow->show();
+    close();
 }
 
-
-void ObjectDialog::on_pushButton_2_clicked()
+void ObjectDialog::on_CloseushButton_clicked()
 {
-    //todo
+    this->close();
 }
 
 
@@ -273,20 +274,25 @@ void ObjectDialog::computeGraph()
     Dec 2451893.50000
     */
 
-    EquatorialPosition test(0.00, 0.00);
-    test.toHorizontalPosition(0.00, 0.00, 0.00);
-
-    m_chart = new QtCharts::QChart();
+    EquatorialPosition test("18h37m56.00s", "38°47'08\".00");
+    HorizontalPosition hpTest = test.toHorizontalPosition(14, 8, 2021, 21, 0, 0);
+    qDebug() << "Azi : " << hpTest.getAzimuth().getDegreeAngle();
+    qDebug() << "Alt : " << hpTest.getAltitude().getDegreeAngle();
 
     QtCharts::QBarSet *set0 = new QBarSet("Masse d'aire");
-    QtCharts::QBarSet *set1 = new QBarSet("Elévation");
+    QtCharts::QBarSet *set1 = new QBarSet("Elévation (°)");
     *set0 << 1 << 2 << 3 << 4 << 5 << 6 << 6 << 5 << 4 << 3 << 2 << 1;
-    *set1 << 6 << 5 << 4 << 3 << 2 << 1 << 1 << 2 << 3 << 4 << 5 << 6;
-    QtCharts::QBarSeries *series = new QBarSeries();
-    series->append(set0);
-    series->append(set1);
+    *set1 << 60 << 50 << 40 << 30 << 20 << 10 << 10 << 20 << 30 << 40 << 50 << 60;
 
-    m_chart->addSeries(series);
+    QtCharts::QBarSeries *serie0 = new QBarSeries();
+    serie0->append(set0);
+
+    QtCharts::QBarSeries *serie1 = new QBarSeries();
+    serie1->append(set1);
+
+    m_chart = new QChart();
+    m_chart->addSeries(serie0);
+    m_chart->addSeries(serie1);
     m_chart->setTitle("Graphe de visibilité");
     m_chart->setAnimationOptions(QtCharts::QChart::SeriesAnimations);
 
@@ -295,19 +301,26 @@ void ObjectDialog::computeGraph()
     QtCharts::QBarCategoryAxis *axisX = new QtCharts::QBarCategoryAxis();
     axisX->append(categories);
     m_chart->addAxis(axisX, Qt::AlignBottom);
-    series->attachAxis(axisX);
+    serie0->attachAxis(axisX);
+    serie1->attachAxis(axisX);
 
-    QtCharts::QValueAxis *axisY = new QtCharts::QValueAxis();
-    axisY->setRange(0,15);
-    m_chart->addAxis(axisY, Qt::AlignLeft);
-    series->attachAxis(axisY);
+    QtCharts::QValueAxis *axisY0 = new QtCharts::QValueAxis();
+    axisY0->setRange(0, 10);
+    m_chart->addAxis(axisY0, Qt::AlignLeft);
+    serie0->attachAxis(axisY0);
+
+    QtCharts::QValueAxis *axisY1 = new QtCharts::QValueAxis();
+    axisY1->setRange(0, 90);
+    m_chart->addAxis(axisY1, Qt::AlignRight);
+    serie1->attachAxis(axisY1);
 
     m_chart->legend()->setVisible(true);
     m_chart->legend()->setAlignment(Qt::AlignBottom);
 
-    QtCharts::QChartView *chartView = new QtCharts::QChartView(m_chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
+    m_chartView = new QtCharts::QChartView(m_chart);
+    m_chartView->setRenderHint(QPainter::Antialiasing);
 
     m_chartView = new QtCharts::QChartView(m_chart);
-    m_ui->mainHorizontalLayout->addWidget(chartView);
+    m_ui->mainHorizontalLayout->addWidget(m_chartView);
 }
+
