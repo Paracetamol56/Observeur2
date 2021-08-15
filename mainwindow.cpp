@@ -616,6 +616,13 @@ void MainWindow::on_actionSupprimer_un_objet_triggered()
 }
 
 
+void MainWindow::on_actionEditer_les_cartes_triggered()
+{
+    MapsTable *mapsTable = new MapsTable(nullptr, m_db);
+    mapsTable->show();
+}
+
+
 void MainWindow::on_actionAfficher_toute_les_constellations_triggered()
 {
     ConstellationTable constellationTableDIalog(nullptr, m_db);
@@ -665,6 +672,9 @@ void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos
 
     }
 }
+
+
+
 
 
 

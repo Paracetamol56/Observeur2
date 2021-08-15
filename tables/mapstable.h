@@ -1,22 +1,39 @@
 #ifndef MAPSTABLE_H
 #define MAPSTABLE_H
 
-#include <QWidget>
+// Dialog
+#include <QDialog>
+
+// SQL Database
+#include <QSqlDatabase>
+#include <QSql>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QSqlQueryModel>
+#include <QSortFilterProxyModel>
+
+// Debug output
+#include <QDebug>
+
+// UI elements
+
 
 namespace Ui {
-class mapsTable;
+    class mapsTable;
 }
 
-class mapsTable : public QWidget
+class MapsTable : public QWidget
 {
     Q_OBJECT
 
-public:
-    explicit mapsTable(QWidget *parent = nullptr);
-    ~mapsTable();
-
 private:
     Ui::mapsTable *ui;
+
+    QSqlDatabase *m_db = nullptr;
+
+public:
+    explicit MapsTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
+    ~MapsTable();
 };
 
 #endif // MAPSTABLE_H

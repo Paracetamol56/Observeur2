@@ -41,5 +41,8 @@
         <file>Ressources/icons/icons8-vision-96.png</file>
         <file>Ressources/icons/icons8-carte-96.png</file>
         <file>Ressources/icons/icons8-edition-de-la-carte-96.png</file>
+        <file>Ressources/icons/icons8-add-row-96.png</file>
+        <file>Ressources/icons/icons8-delete-row-96.png</file>
+        <file>Ressources/icons/icons8-save-96.png</file>
     </qresource>
 </RCC>

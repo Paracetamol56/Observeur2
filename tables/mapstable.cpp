@@ -1,14 +1,15 @@
 #include "mapstable.h"
 #include "ui_mapstable.h"
 
-mapsTable::mapsTable(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::mapsTable)
+MapsTable::MapsTable(QWidget *parent, QSqlDatabase *db)
+    : QWidget(parent)
+    , ui(new Ui::mapsTable)
+    , m_db(db)
 {
     ui->setupUi(this);
 }
 
-mapsTable::~mapsTable()
+MapsTable::~MapsTable()
 {
     delete ui;
 }

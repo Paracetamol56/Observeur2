@@ -30,6 +30,7 @@
 #include "tables/constellationtable.h"
 #include "tables/typetable.h"
 #include "tables/objecttable.h"
+#include "tables/mapstable.h"
 #include "objectform.h"
 #include "dialogs/objectdialog.h"
 #include "dialogs/settingdialog.h"
@@ -96,6 +97,7 @@ private slots:
     void on_actionParam_tre_triggered();
     void on_newValuesSaved();
     void on_actionAide_en_ligne_triggered();
+    void on_actionEditer_les_cartes_triggered();
 };
 
 #endif // MAINWINDOW_H

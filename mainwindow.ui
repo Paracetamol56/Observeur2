@@ -372,8 +372,8 @@
     <addaction name="actionNouvel_objet"/>
     <addaction name="actionModifier_un_objet"/>
     <addaction name="actionSupprimer_un_objet"/>
-    <addaction name="separator"/>
     <addaction name="actionTout_selectionner"/>
+    <addaction name="actionEditer_les_cartes"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuEdition"/>
@@ -549,6 +549,15 @@
    </property>
    <property name="text">
     <string>Paramètre</string>
+   </property>
+  </action>
+  <action name="actionEditer_les_cartes">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-edition-de-la-carte-96.png</normaloff>:/Ressources/icons/icons8-edition-de-la-carte-96.png</iconset>
+   </property>
+   <property name="text">
+    <string>Editer les cartes</string>
    </property>
   </action>
  </widget>
