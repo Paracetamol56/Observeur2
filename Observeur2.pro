@@ -22,7 +22,7 @@ SOURCES += \
     angleutilities/horizontalposition.cpp \
     dialogs/objectdialog.cpp \
     dialogs/settingdialog.cpp \
-    mapstable.cpp \
+    tables/mapstable.cpp \
     tables/constellationtable.cpp \
     tables/objecttable.cpp \
     tables/tabledialog.cpp \
@@ -39,7 +39,7 @@ HEADERS += \
     angleutilities/horizontalposition.h \
     dialogs/objectdialog.h \
     dialogs/settingdialog.h \
-    mapstable.h \
+    tables/mapstable.h \
     tables/constellationtable.h \
     tables/objecttable.h \
     tables/tabledialog.h \
@@ -53,7 +53,7 @@ FORMS += \
     mainwindow.ui \
     dialogs/objectdialog.ui \
     dialogs/settingdialog.ui \
-    mapstable.ui \
+    tables/mapstable.ui \
     tables/tabledialog.ui \
     objectform.ui
 
