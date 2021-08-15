@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mapsTable</class>
+ <widget class="QWidget" name="mapsTable">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Editer les cartes</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="ressources.qrc">
+    <normaloff>:/Ressources/icons/icons8-édition-de-la-carte-96.png</normaloff>:/Ressources/icons/icons8-édition-de-la-carte-96.png</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_4">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
+   <property name="topMargin">
+    <number>9</number>
+   </property>
+   <property name="rightMargin">
+    <number>9</number>
+   </property>
+   <property name="bottomMargin">
+    <number>9</number>
+   </property>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab1">
+      <attribute name="title">
+       <string>Cartes 1</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QTableView" name="tableView"/>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QGroupBox" name="nameGroupBox">
+           <property name="title">
+            <string>Carte</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="nameLabel">
+              <property name="text">
+               <string>Numero</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="nameSpinBox"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="raGroupBox">
+           <property name="title">
+            <string>Ascension droite</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,1,0,1,0">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSpinBox" name="raDegreeSpinBox"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="raHourLabel">
+              <property name="text">
+               <string>°</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="raMinuteSpinBox"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="raMinuteLabel">
+              <property name="text">
+               <string>m</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="raSecondDoubleSpinBox"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="raSecondLabel">
+              <property name="text">
+               <string>s</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="decGroupBox">
+           <property name="title">
+            <string>Déclinaison</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,0,1,0,1,0">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSpinBox" name="decDegreeSpinBox"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="decDegreeLabel">
+              <property name="text">
+               <string>°</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="decMinuteSpinBox"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="decMinuteLabel">
+              <property name="text">
+               <string>'</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="decSecondDoubleSpinBox"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="decSecondLabel">
+              <property name="text">
+               <string>&quot;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_14">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="text">
+            <string>Ajouter une ligne</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_5">
+           <property name="text">
+            <string>Supprimer une ligne</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="text">
+            <string>Enregistrer</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab2">
+      <attribute name="title">
+       <string>Cartes 2</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QTableView" name="tableView_2"/>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QGroupBox" name="nameGroupBox_2">
+           <property name="title">
+            <string>Carte</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,1">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="nameLabel_2">
+              <property name="text">
+               <string>Numero</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="nameSpinBox_2"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="raGroupBox_2">
+           <property name="title">
+            <string>Ascension droite</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,0,1,0,1,0">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSpinBox" name="raDegreeSpinBox_2"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="raHourLabel_2">
+              <property name="text">
+               <string>°</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="raMinuteSpinBox_2"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="raMinuteLabel_2">
+              <property name="text">
+               <string>m</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="raSecondDoubleSpinBox_2"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="raSecondLabel_2">
+              <property name="text">
+               <string>s</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="decGroupBox_2">
+           <property name="title">
+            <string>Déclinaison</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,0,1,0,1,0">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSpinBox" name="decDegreeSpinBox_2"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="decDegreeLabel_2">
+              <property name="text">
+               <string>°</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="decMinuteSpinBox_2"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="decMinuteLabel_2">
+              <property name="text">
+               <string>'</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="decSecondDoubleSpinBox_2"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="decSecondLabel_2">
+              <property name="text">
+               <string>&quot;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab3">
+      <attribute name="title">
+       <string>Cartes 3</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QTableView" name="tableView_3"/>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <item>
+          <widget class="QGroupBox" name="nameGroupBox_3">
+           <property name="title">
+            <string>Carte</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="0,1">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="nameLabel_3">
+              <property name="text">
+               <string>Numero</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="nameSpinBox_3"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="raGroupBox_3">
+           <property name="title">
+            <string>Ascension droite</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,0,1,0,1,0">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSpinBox" name="raDegreeSpinBox_3"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="raHourLabel_3">
+              <property name="text">
+               <string>°</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="raMinuteSpinBox_3"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="raMinuteLabel_3">
+              <property name="text">
+               <string>m</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="raSecondDoubleSpinBox_3"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="raSecondLabel_3">
+              <property name="text">
+               <string>s</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="decGroupBox_3">
+           <property name="title">
+            <string>Déclinaison</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1,0,1,0,1,0">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSpinBox" name="decDegreeSpinBox_3"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="decDegreeLabel_3">
+              <property name="text">
+               <string>°</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="decMinuteSpinBox_3"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="decMinuteLabel_3">
+              <property name="text">
+               <string>'</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="decSecondDoubleSpinBox_3"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="decSecondLabel_3">
+              <property name="text">
+               <string>&quot;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_15">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>Enregistrer et quitter</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Quitter</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

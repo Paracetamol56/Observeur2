@@ -52,7 +52,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="CloseushButton">
+      <widget class="QPushButton" name="ClosePushButton">
        <property name="text">
         <string>Fermer</string>
        </property>

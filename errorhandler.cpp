@@ -122,10 +122,13 @@ void FileError::printMessage()
 {
     QMessageBox errorMessage;
     setMessageBoxPriority(&errorMessage);
-    errorMessage.setIconPixmap(QPixmap("://Ressources/icons/errors/icons8-supprimer-le-fichier-96.png"));
+    errorMessage.setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-supprimer-la-base-de-donnees-96.png"));
     errorMessage.setText("FileError");
     errorMessage.setInformativeText(m_message);
-    errorMessage.setDetailedText(QString("FILE PATH : \n" + QFileInfo(*m_file).path()));
+    if (m_file)
+    {
+        errorMessage.setDetailedText(QString("FILE PATH : \n" + QFileInfo(*m_file).path()));
+    }
     messageBoxExec(&errorMessage);
 }
 
@@ -139,10 +142,13 @@ void MissingFileError::printMessage()
 {
     QMessageBox errorMessage;
     setMessageBoxPriority(&errorMessage);
-    errorMessage.setIconPixmap(QPixmap("://Ressources/icons/errors/icons8-supprimer-le-fichier-96.png"));
+    errorMessage.setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-supprimer-la-base-de-donnees-96.png"));
     errorMessage.setText("FileMissingError");
     errorMessage.setInformativeText(m_message);
-    errorMessage.setDetailedText(QString("FILE PATH : \n" + QFileInfo(*m_file).path()));
+    if (m_file)
+    {
+        errorMessage.setDetailedText(QString("FILE PATH : \n" + QFileInfo(*m_file).path()));
+    }
     messageBoxExec(&errorMessage);
 }
 
@@ -158,7 +164,7 @@ void SqlError::printMessage()
 {
     QMessageBox errorMessage;
     setMessageBoxPriority(&errorMessage);
-    errorMessage.setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-supprimer-la-base-de-données-96.png"));
+    errorMessage.setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-supprimer-la-base-de-donnees-96.png"));
     errorMessage.setText("SqlError");
     errorMessage.setInformativeText(m_message);
     errorMessage.setDetailedText("SQL ERROR : \n" + m_sqlQuery->lastError().text() + "\n\nON QUERY : \n" + m_sqlQuery->lastQuery());
@@ -177,7 +183,7 @@ void AngleError::printMessage()
 {
     QMessageBox errorMessage;
     setMessageBoxPriority(&errorMessage);
-    errorMessage.setIconPixmap(QPixmap("://Ressources/icons/errors/icons8-degrés-96.png"));
+    errorMessage.setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-degres-96.png"));
     errorMessage.setText("AngleError");
     errorMessage.setInformativeText(m_message);
     messageBoxExec(&errorMessage);
@@ -193,7 +199,7 @@ void InvalidAngleString::printMessage()
 {
     QMessageBox errorMessage;
     setMessageBoxPriority(&errorMessage);
-    errorMessage.setIconPixmap(QPixmap("://Ressources/icons/errors/icons8-degrés-96.png"));
+    errorMessage.setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-degres-96.png"));
     errorMessage.setText("InvalidAngleString");
     errorMessage.setInformativeText(m_message);
     messageBoxExec(&errorMessage);
@@ -209,7 +215,7 @@ void InvalidAngleInput::printMessage()
 {
     QMessageBox errorMessage;
     setMessageBoxPriority(&errorMessage);
-    errorMessage.setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-degrés-96.png"));
+    errorMessage.setIconPixmap(QPixmap(":/Ressources/icons/errors/icons8-degres-96.png"));
     errorMessage.setText("InvalidAngleInput");
     errorMessage.setInformativeText(m_message);
     errorMessage.setDetailedText("ANGLE : \n" + QString::number(m_angle->getTotalDegree()) + "°");

@@ -1,4 +1,4 @@
-QT       += core gui sql charts
+QT += core gui sql charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,6 +22,7 @@ SOURCES += \
     angleutilities/horizontalposition.cpp \
     dialogs/objectdialog.cpp \
     dialogs/settingdialog.cpp \
+    mapstable.cpp \
     tables/constellationtable.cpp \
     tables/objecttable.cpp \
     tables/tabledialog.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     angleutilities/horizontalposition.h \
     dialogs/objectdialog.h \
     dialogs/settingdialog.h \
+    mapstable.h \
     tables/constellationtable.h \
     tables/objecttable.h \
     tables/tabledialog.h \
@@ -51,6 +53,7 @@ FORMS += \
     mainwindow.ui \
     dialogs/objectdialog.ui \
     dialogs/settingdialog.ui \
+    mapstable.ui \
     tables/tabledialog.ui \
     objectform.ui
 

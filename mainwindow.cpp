@@ -99,7 +99,7 @@ MainWindow::MainWindow(QWidget* parent)
     else
     {
         // Display a message box if the database file is not found
-        MissingFileError errorMessage(ErrorPriority::Critical, "Aucun fichier \"data.sqlite\" trouvé");
+        MissingFileError errorMessage(ErrorPriority::Critical, "Aucun fichier \"data.sqlite\" trouvé", new QFile(dbPath));
         errorMessage.printMessage();
     }
 
@@ -468,6 +468,12 @@ void MainWindow::on_actionParam_tre_triggered()
 }
 
 
+void MainWindow::on_actionAide_en_ligne_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Paracetamol56/Observeur2"));
+}
+
+
 void MainWindow::on_actionA_propos_triggered()
 {
     QMessageBox aboutMessageBox;
@@ -560,7 +566,7 @@ void MainWindow::on_newValuesSaved()
 void MainWindow::on_actionAfficher_les_d_tails_de_l_objet_triggered()
 {
     tableSelectionChanged();
-    ObjectDialog objectDialog(nullptr, m_db, m_selectedId.first());
+    ObjectDialog objectDialog(this, m_db, m_selectedId.first());
     objectDialog.exec();
 }
 
@@ -659,6 +665,9 @@ void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos
 
     }
 }
+
+
+
 
 
 

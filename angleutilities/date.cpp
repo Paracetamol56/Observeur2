@@ -47,7 +47,7 @@ double Date::toGMST()
     date0.m_second = 0;
     double julianDay0 = date0.toJulianDay();
 
-    double timeT0 = (std::trunc(julianDay0) - 2451545.0 + (julianDay0 - std::trunc(julianDay0))) / 36525;
+    double timeT0 = (trunc(julianDay0) - 2451545.0 + (julianDay0 - trunc(julianDay0))) / 36525;
     double timeT0Squared = timeT0 * timeT0;
     double timeT0Cubed = timeT0Squared * timeT0;
 

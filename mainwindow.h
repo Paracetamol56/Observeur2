@@ -95,6 +95,7 @@ private slots:
     void on_actionAfficher_les_d_tails_de_l_objet_triggered();
     void on_actionParam_tre_triggered();
     void on_newValuesSaved();
+    void on_actionAide_en_ligne_triggered();
 };
 
 #endif // MAINWINDOW_H

@@ -25,6 +25,8 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QTextBrowser>
+
+// QtCharts
 #include <QtCharts>
 
 #include "angleutilities/angle.h"
@@ -54,8 +56,8 @@ private:
     QLineEdit *m_ngcEdit = nullptr;
 
     // Graph
-    QtCharts::QChartView *m_chartView = nullptr;
-    QtCharts::QChart *m_chart = nullptr;
+    QChartView *m_chartView = nullptr;
+    QChart *m_chart = nullptr;
 
 public:
     explicit ObjectDialog(QWidget *parent = nullptr, QSqlDatabase *database = nullptr, const unsigned int objectId = 0);
@@ -67,7 +69,7 @@ private slots:
     void on_messierPushButton_clicked();
     void on_ngcPushButton_clicked();
     void on_ModifyPushButton_clicked();
-    void on_CloseushButton_clicked();
+    void on_ClosePushButton_clicked();
 };
 
 #endif // OBJECTDIALOG_H
