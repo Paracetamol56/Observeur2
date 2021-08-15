@@ -84,7 +84,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="nameSpinBox"/>
+             <widget class="QSpinBox" name="nameSpinBox">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>999</number>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -108,17 +115,28 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QSpinBox" name="raDegreeSpinBox"/>
-            </item>
-            <item>
-             <widget class="QLabel" name="raHourLabel">
-              <property name="text">
-               <string>°</string>
+             <widget class="QSpinBox" name="raDegreeSpinBox">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>23</number>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="raMinuteSpinBox"/>
+             <widget class="QLabel" name="raHourLabel">
+              <property name="text">
+               <string>h</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="raMinuteSpinBox">
+              <property name="maximum">
+               <number>59</number>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="raMinuteLabel">
@@ -128,7 +146,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="raSecondDoubleSpinBox"/>
+             <widget class="QDoubleSpinBox" name="raSecondDoubleSpinBox">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="raSecondLabel">
@@ -159,7 +181,14 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QSpinBox" name="decDegreeSpinBox"/>
+             <widget class="QSpinBox" name="decDegreeSpinBox">
+              <property name="minimum">
+               <number>-90</number>
+              </property>
+              <property name="maximum">
+               <number>90</number>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="decDegreeLabel">
@@ -169,7 +198,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="decMinuteSpinBox"/>
+             <widget class="QSpinBox" name="decMinuteSpinBox">
+              <property name="maximum">
+               <number>59</number>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="decMinuteLabel">
@@ -179,7 +212,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="decSecondDoubleSpinBox"/>
+             <widget class="QDoubleSpinBox" name="decSecondDoubleSpinBox">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="maximum">
+               <double>59.990000000000002</double>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="decSecondLabel">
@@ -230,17 +270,6 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QPushButton" name="savePushButton_1">
-           <property name="text">
-            <string>Enregistrer</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../ressources.qrc">
-             <normaloff>:/Ressources/icons/icons8-save-96.png</normaloff>:/Ressources/icons/icons8-save-96.png</iconset>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
       </layout>
@@ -288,7 +317,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="nameSpinBox_2"/>
+             <widget class="QSpinBox" name="nameSpinBox_2">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>999</number>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -312,17 +348,25 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QSpinBox" name="raDegreeSpinBox_2"/>
-            </item>
-            <item>
-             <widget class="QLabel" name="raHourLabel_2">
-              <property name="text">
-               <string>°</string>
+             <widget class="QSpinBox" name="raDegreeSpinBox_2">
+              <property name="maximum">
+               <number>23</number>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="raMinuteSpinBox_2"/>
+             <widget class="QLabel" name="raHourLabel_2">
+              <property name="text">
+               <string>h</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="raMinuteSpinBox_2">
+              <property name="maximum">
+               <number>59</number>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="raMinuteLabel_2">
@@ -332,7 +376,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="raSecondDoubleSpinBox_2"/>
+             <widget class="QDoubleSpinBox" name="raSecondDoubleSpinBox_2">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="maximum">
+               <double>59.990000000000002</double>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="raSecondLabel_2">
@@ -363,7 +414,14 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QSpinBox" name="decDegreeSpinBox_2"/>
+             <widget class="QSpinBox" name="decDegreeSpinBox_2">
+              <property name="minimum">
+               <number>-90</number>
+              </property>
+              <property name="maximum">
+               <number>90</number>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="decDegreeLabel_2">
@@ -373,7 +431,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="decMinuteSpinBox_2"/>
+             <widget class="QSpinBox" name="decMinuteSpinBox_2">
+              <property name="maximum">
+               <number>59</number>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="decMinuteLabel_2">
@@ -383,7 +445,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="decSecondDoubleSpinBox_2"/>
+             <widget class="QDoubleSpinBox" name="decSecondDoubleSpinBox_2">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="maximum">
+               <double>59.990000000000002</double>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="decSecondLabel_2">
@@ -434,17 +503,6 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QPushButton" name="savePushButton_2">
-           <property name="text">
-            <string>Enregistrer</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../ressources.qrc">
-             <normaloff>:/Ressources/icons/icons8-save-96.png</normaloff>:/Ressources/icons/icons8-save-96.png</iconset>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
       </layout>
@@ -492,7 +550,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="nameSpinBox_3"/>
+             <widget class="QSpinBox" name="nameSpinBox_3">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>999</number>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -536,7 +601,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="raSecondDoubleSpinBox_3"/>
+             <widget class="QDoubleSpinBox" name="raSecondDoubleSpinBox_3">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="raSecondLabel_3">
@@ -567,7 +636,14 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QSpinBox" name="decDegreeSpinBox_3"/>
+             <widget class="QSpinBox" name="decDegreeSpinBox_3">
+              <property name="minimum">
+               <number>-90</number>
+              </property>
+              <property name="maximum">
+               <number>90</number>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="decDegreeLabel_3">
@@ -577,7 +653,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="decMinuteSpinBox_3"/>
+             <widget class="QSpinBox" name="decMinuteSpinBox_3">
+              <property name="maximum">
+               <number>59</number>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="decMinuteLabel_3">
@@ -587,7 +667,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="decSecondDoubleSpinBox_3"/>
+             <widget class="QDoubleSpinBox" name="decSecondDoubleSpinBox_3">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="maximum">
+               <double>59.990000000000002</double>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="decSecondLabel_3">
@@ -628,24 +715,13 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="savePushButton_4">
+          <widget class="QPushButton" name="removePushButton_3">
            <property name="text">
             <string>Supprimer une ligne</string>
            </property>
            <property name="icon">
             <iconset resource="../ressources.qrc">
              <normaloff>:/Ressources/icons/icons8-delete-row-96.png</normaloff>:/Ressources/icons/icons8-delete-row-96.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="savePushButton_3">
-           <property name="text">
-            <string>Enregistrer</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../ressources.qrc">
-             <normaloff>:/Ressources/icons/icons8-save-96.png</normaloff>:/Ressources/icons/icons8-save-96.png</iconset>
            </property>
           </widget>
          </item>
@@ -669,17 +745,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="SaveAndQuittPushButton">
-       <property name="text">
-        <string>Enregistrer et quitter</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../ressources.qrc">
-         <normaloff>:/Ressources/icons/icons8-save-96.png</normaloff>:/Ressources/icons/icons8-save-96.png</iconset>
-       </property>
-      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="quittPushButton">
