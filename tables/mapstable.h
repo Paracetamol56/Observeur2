@@ -15,6 +15,9 @@
 // Debug output
 #include <QDebug>
 
+// Error handling
+#include "errorhandler.h"
+
 // UI elements
 
 
@@ -27,9 +30,10 @@ class MapsTable : public QWidget
     Q_OBJECT
 
 private:
-    Ui::mapsTable *ui;
+    Ui::mapsTable *m_ui;
 
     QSqlDatabase *m_db = nullptr;
+
 
 public:
     explicit MapsTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);

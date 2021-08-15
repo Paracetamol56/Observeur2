@@ -776,7 +776,7 @@ void ObjectForm::on_SavePushButton_clicked()
             throw Error(ErrorPriority::Undefined, "La verification des entrés à échoué");
         }
     }
-    catch (Error e)
+    catch (Error &e)
     {
         e.printMessage();
     }

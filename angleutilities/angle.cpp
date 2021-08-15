@@ -43,7 +43,7 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
             m_totalDegree = degree + ((double)minute / 60.0) + (seconde / 3600.0);
         }
     }
-    catch (Error e)
+    catch (Error &e)
     {
         e.printMessage();
     }
@@ -113,7 +113,7 @@ Angle::Angle(QString strAngle)
             throw Error(ErrorPriority::Warning, "Chaine incorrect pour construire cette angle,\ntaille impossible");
         }
     }
-    catch (Error e)
+    catch (Error &e)
     {
         e.printMessage();
     }

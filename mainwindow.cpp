@@ -541,6 +541,7 @@ void MainWindow::on_actionTout_selectionner_triggered()
 void MainWindow::on_actionNouvel_objet_triggered()
 {
     ObjectForm *newObjectWindow = new ObjectForm(nullptr, m_db, 0);
+    newObjectWindow->setWindowFlag(Qt::Window);
     connect(newObjectWindow, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
     newObjectWindow->show();
 }
@@ -551,6 +552,7 @@ void MainWindow::on_actionModifier_un_objet_triggered()
     if (m_selectedId.count() == 1)
     {
         ObjectForm *modifyObjectWindow = new ObjectForm(nullptr, m_db, m_selectedId.first());
+        modifyObjectWindow->setWindowFlag(Qt::Window);
         connect(modifyObjectWindow, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
         modifyObjectWindow->show();
     }
@@ -618,7 +620,8 @@ void MainWindow::on_actionSupprimer_un_objet_triggered()
 
 void MainWindow::on_actionEditer_les_cartes_triggered()
 {
-    MapsTable *mapsTable = new MapsTable(nullptr, m_db);
+    MapsTable *mapsTable = new MapsTable(this, m_db);
+    mapsTable->setWindowFlag(Qt::Window);
     mapsTable->show();
 }
 
