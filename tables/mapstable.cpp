@@ -662,11 +662,60 @@ void MapsTable::on_removePushButton_3_clicked()
 }
 
 
+// Row modification
+
+// In table 1
+void MapsTable::on_modifyPushButton_clicked()
+{
+    // === Get the selected row ID
+    // Row to modify
+    const unsigned int selectedRowNumber = m_ui->tableView->model()->data(m_ui->tableView->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
+    // Get the ID in the database
+    m_db->open();
+    QSqlQuery query;
+    query.prepare
+    (
+        "SELECT `skymap1_id` "
+        "FROM `skymap1` "
+        "WHERE `skymap1_number` = :rowToModify;"
+    );
+    query.bindValue(":rowToModify", QString::number(selectedRowNumber));
+    if (query.exec() == false)
+    {
+        throw SqlError(ErrorPriority::Warning, "Impossible de récuperer l'ID de la ligne à modifier", &query);
+    }
+    query.first();
+    const unsigned int idToModify = query.value(0).toUInt();
+    m_db->close();
+
+    // === Show the modification dialog
+    MapModificationDialog modificationDialog(this, m_db, 1, idToModify);
+    modificationDialog.exec();
+}
+
+
+// In table 2
+void MapsTable::on_modifyPushButton_2_clicked()
+{
+
+}
+
+
+// In table 3
+void MapsTable::on_modifyPushButton_3_clicked()
+{
+
+}
+
+
 // Quitt the window
 void MapsTable::on_quittPushButton_clicked()
 {
     close();
 }
+
+
+
 
 
 

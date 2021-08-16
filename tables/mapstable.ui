@@ -101,7 +101,7 @@
            <property name="title">
             <string>Ascension droite</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,1,0,1,0">
+           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="8,1,8,1,8,1">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -167,7 +167,7 @@
            <property name="title">
             <string>Déclinaison</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,0,1,0,1,0">
+           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="8,1,8,1,8,1">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -247,6 +247,17 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="modifyPushButton">
+           <property name="text">
+            <string>Modifier une ligne</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../ressources.qrc">
+             <normaloff>:/Ressources/icons/icons8-edit-row-96.png</normaloff>:/Ressources/icons/icons8-edit-row-96.png</iconset>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="addPushButton_1">
@@ -334,7 +345,7 @@
            <property name="title">
             <string>Ascension droite</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,0,1,0,1,0">
+           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="8,1,8,1,8,1">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -400,7 +411,7 @@
            <property name="title">
             <string>Déclinaison</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,0,1,0,1,0">
+           <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="8,1,8,1,8,1">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -480,6 +491,17 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="modifyPushButton_2">
+           <property name="text">
+            <string>Modifier une ligne</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../ressources.qrc">
+             <normaloff>:/Ressources/icons/icons8-edit-row-96.png</normaloff>:/Ressources/icons/icons8-edit-row-96.png</iconset>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="addPushButton_2">
@@ -567,7 +589,7 @@
            <property name="title">
             <string>Ascension droite</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,0,1,0,1,0">
+           <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="8,1,8,1,8,1">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -586,7 +608,7 @@
             <item>
              <widget class="QLabel" name="raHourLabel_3">
               <property name="text">
-               <string>°</string>
+               <string>h</string>
               </property>
              </widget>
             </item>
@@ -622,7 +644,7 @@
            <property name="title">
             <string>Déclinaison</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1,0,1,0,1,0">
+           <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="8,1,8,1,8,1">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -702,6 +724,17 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="modifyPushButton_3">
+           <property name="text">
+            <string>Modifier une ligne</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../ressources.qrc">
+             <normaloff>:/Ressources/icons/icons8-edit-row-96.png</normaloff>:/Ressources/icons/icons8-edit-row-96.png</iconset>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="addPushButton_3">
