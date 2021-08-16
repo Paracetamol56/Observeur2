@@ -127,7 +127,7 @@ void MapsTable::updateTable3()
 bool MapsTable::checkInput(const unsigned int table, const unsigned int number)
 {
     // Table validity verification
-    if (table > 4 || table == 0)
+    if (table > 3 || table == 0)
     {
         throw InputError(ErrorPriority::Warning, QString("L'index de la table à modifier est impossible : " + QString::number(table)));
         return false;
@@ -137,14 +137,18 @@ bool MapsTable::checkInput(const unsigned int table, const unsigned int number)
 
     // Number verification
     {
+        m_db->open();
+
         QSqlQuery query;
-        query.prepare("SELECT `" + tableName + "_id` FROM " + tableName + "WHERE `"+ tableName + "_number` = " + QString::number(number) + ";");
+        query.prepare(QString("SELECT `" + tableName + "_id` FROM `" + tableName + "` WHERE `"+ tableName + "_number` = " + QString::number(number) + ";"));
         query.exec();
         if (query.next())
         {
             throw InputError(ErrorPriority::Warning, "Ce numero de carte est déjà enregistré dans la base de données");
             return false;
         }
+
+        m_db->close();
     }
 
     // Right ascension verification
@@ -171,6 +175,12 @@ void MapsTable::on_addPushButton_1_clicked()
 
             QString rightAscension = tmpRightAscension.getHourAngle();
             QString declination = tmpDeclination.getDegreeAngle();
+
+            qDebug() << tmpRightAscension.getHourAngle();
+            qDebug() << tmpRightAscension.getHour();
+            qDebug() << tmpRightAscension.getHourMinute();
+            qDebug() << tmpRightAscension.getHourSecond();
+            qDebug() << tmpRightAscension.getTotalHour();
 
             // Insertion query
             m_db->open();
@@ -384,7 +394,11 @@ void MapsTable::on_removePushButton_1_clicked()
 
             QSqlQuery query;
 
-            query.prepare("DELETE FROM `skymap1` WHERE `skymap1_number` = :rowToDelete;");
+            query.prepare
+            (
+                "DELETE map FROM `skymap1` map"
+                "WHERE NOT EXISTS(SELECT * FROM `objects` obj WHERE obj.`object_skymap1` = map.`skymap1_id`) AND map.`skymap1_number` = :rowToDelete;"
+            );
             query.bindValue(":rowToDelete", QString::number(selectedRowNumber));
 
             if (query.exec() == false)
@@ -417,7 +431,11 @@ void MapsTable::on_removePushButton_2_clicked()
 
             QSqlQuery query;
 
-            query.prepare("DELETE FROM `skymap2` WHERE `skymap2_number` = :rowToDelete;");
+            query.prepare
+            (
+                "DELETE map FROM `skymap2` map"
+                "WHERE NOT EXISTS(SELECT * FROM `objects` obj WHERE obj.`object_skymap2` = map.`skymap2_id`) AND map.`skymap2_number` = :rowToDelete;"
+            );
             query.bindValue(":rowToDelete", QString::number(selectedRowNumber));
 
             if (query.exec() == false)
@@ -450,7 +468,11 @@ void MapsTable::on_removePushButton_3_clicked()
 
             QSqlQuery query;
 
-            query.prepare("DELETE FROM `skymap1` WHERE `skymap3_number` = :rowToDelete;");
+            query.prepare
+            (
+                "DELETE map FROM `skymap3` map"
+                "WHERE NOT EXISTS(SELECT * FROM `objects` obj WHERE obj.`object_skymap3` = map.`skymap3_id`) AND map.`skymap3_number` = :rowToDelete;"
+            );
             query.bindValue(":rowToDelete", QString::number(selectedRowNumber));
 
             if (query.exec() == false)
