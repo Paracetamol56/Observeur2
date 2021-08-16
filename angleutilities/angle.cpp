@@ -36,7 +36,7 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
 
         if (isHour == true)
         {
-            m_totalDegree = (degree * 15) + ((double)minute / 60) + (seconde / 3600);
+            m_totalDegree = (degree * 15) + ((double)minute / 4) + (seconde / 240);
         }
         else
         {
