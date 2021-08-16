@@ -60,6 +60,22 @@ void MapsTable::updateTable1()
     // Put the models into table views
     m_ui->tableView->setModel(model1);
 
+    query1.prepare(
+        "SELECT "
+        "MAX(`skymap1_number`) "
+        "FROM skymap1 "
+        "WHERE 1;"
+    );
+
+    if (query1.exec() == false)
+    {
+        throw SqlError(ErrorPriority::Critical, "Impossible de selectionner les carte 1", &query1);
+    }
+
+    // Put the max value + 1 in the number spinbox
+    query1.first();
+    m_ui->nameSpinBox->setValue(query1.value(0).toInt() + 1);
+
     m_db->close();
 }
 
@@ -81,7 +97,7 @@ void MapsTable::updateTable2()
 
     if (query2.exec() == false)
     {
-        throw SqlError(ErrorPriority::Critical, "Impossible de selectionner les carte 1", &query2);
+        throw SqlError(ErrorPriority::Critical, "Impossible de selectionner les carte 2", &query2);
     }
 
     // Setup query models to hold the data
@@ -89,6 +105,22 @@ void MapsTable::updateTable2()
     model2->setQuery(query2);
     // Put the models into table views
     m_ui->tableView_2->setModel(model2);
+
+    query2.prepare(
+        "SELECT "
+        "MAX(`skymap2_number`) "
+        "FROM skymap2 "
+        "WHERE 1;"
+    );
+
+    if (query2.exec() == false)
+    {
+        throw SqlError(ErrorPriority::Critical, "Impossible de selectionner les carte 2", &query2);
+    }
+
+    // Put the max value + 1 in the number spinbox
+    query2.first();
+    m_ui->nameSpinBox->setValue(query2.value(0).toInt() + 1);
 
     m_db->close();
 }
@@ -110,7 +142,7 @@ void MapsTable::updateTable3()
 
     if (query3.exec() == false)
     {
-        throw SqlError(ErrorPriority::Critical, "Impossible de selectionner les carte 1", &query3);
+        throw SqlError(ErrorPriority::Critical, "Impossible de selectionner les carte 3", &query3);
     }
 
     // Setup query models to hold the data
@@ -119,17 +151,28 @@ void MapsTable::updateTable3()
     // Put the models into table views
     m_ui->tableView_3->setModel(model3);
 
+    query3.prepare(
+        "SELECT "
+        "MAX(`skymap3_number`) "
+        "FROM skymap3 "
+        "WHERE 1;"
+    );
+
+    if (query3.exec() == false)
+    {
+        throw SqlError(ErrorPriority::Critical, "Impossible de selectionner les carte 3", &query3);
+    }
+
+    // Put the max value + 1 in the number spinbox
+    query3.first();
+    m_ui->nameSpinBox_3->setValue(query3.value(0).toInt() + 1);
+
     m_db->close();
 }
 
 
 void MapsTable::resetInputs()
 {
-    // Add 1 to the number
-    m_ui->nameSpinBox->setValue(m_ui->nameSpinBox->value() + 1);
-    m_ui->nameSpinBox_2->setValue(m_ui->nameSpinBox_2->value() + 1);
-    m_ui->nameSpinBox_3->setValue(m_ui->nameSpinBox_3->value() + 1);
-
     // Right ascension
     // Hour
     m_ui->raDegreeSpinBox->setValue(0);
