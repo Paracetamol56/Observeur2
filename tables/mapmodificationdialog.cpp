@@ -30,12 +30,6 @@ MapModificationDialog::MapModificationDialog(QWidget *parent, QSqlDatabase *db, 
     }
     query.first();
 
-    qDebug() << query.lastQuery();
-
-    qDebug() << query.value(0).toUInt();
-    qDebug() << query.value(1).toString();
-    qDebug() << query.value(2).toString();
-
     m_ui->numberSpinBox->setValue(query.value(0).toUInt());
 
     Angle rightAscension(query.value(1).toString());
@@ -58,7 +52,40 @@ MapModificationDialog::~MapModificationDialog()
 
 void MapModificationDialog::on_SavePushButton_clicked()
 {
+    Angle rightAscension(
+        true,
+        m_ui->raHourSpinBox->value(),
+        m_ui->raMinuteSpinBox->value(),
+        m_ui->raSecondDoubleSpinBox->value());
+    Angle declination(
+        false,
+        m_ui->decDegreeSpinBox->value(),
+        m_ui->decMinuteSpinBox->value(),
+        m_ui->decSecondDoubleSpinBox->value());
 
+    m_db->open();
+
+    QSqlQuery query;
+    query.prepare(
+        "UPDATE `"
+        + m_tableString
+        + "` SET `"
+        + m_tableString + "_right_ascension` = :ra, `"
+        + m_tableString + "_declination` = :dec "
+        "WHERE `"
+        + m_tableString + "_id` = \"" + QString::number(m_idToModify) + "\";");
+    query.bindValue(":ra", rightAscension.getHourAngle());
+    query.bindValue(":dec", declination.getDegreeAngle());
+    if (query.exec() == false)
+    {
+        SqlError error(ErrorPriority::Warning, "Impossible de mettre à jour la carte avec l'ID : " + QString::number(m_idToModify), &query);
+        error.printMessage();
+        on_CancelPushButton_clicked();
+    }
+
+    m_db->close();
+
+    close();
 }
 
 
