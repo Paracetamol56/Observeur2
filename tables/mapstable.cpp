@@ -123,6 +123,43 @@ void MapsTable::updateTable3()
 }
 
 
+void MapsTable::resetInputs()
+{
+    // Add 1 to the number
+    m_ui->nameSpinBox->setValue(m_ui->nameSpinBox->value() + 1);
+    m_ui->nameSpinBox_2->setValue(m_ui->nameSpinBox_2->value() + 1);
+    m_ui->nameSpinBox_3->setValue(m_ui->nameSpinBox_3->value() + 1);
+
+    // Right ascension
+    // Hour
+    m_ui->raDegreeSpinBox->setValue(0);
+    m_ui->raDegreeSpinBox_2->setValue(0);
+    m_ui->raDegreeSpinBox_3->setValue(0);
+    // Minutes
+    m_ui->raMinuteSpinBox->setValue(0);
+    m_ui->raMinuteSpinBox_2->setValue(0);
+    m_ui->raMinuteSpinBox_3->setValue(0);
+    // Secondes
+    m_ui->raSecondDoubleSpinBox->setValue(0.00);
+    m_ui->raSecondDoubleSpinBox_2->setValue(0.00);
+    m_ui->raSecondDoubleSpinBox_3->setValue(0.00);
+
+    // Declination
+    // Hour
+    m_ui->decDegreeSpinBox->setValue(0);
+    m_ui->decDegreeSpinBox_2->setValue(0);
+    m_ui->decDegreeSpinBox_3->setValue(0);
+    // Minutes
+    m_ui->decMinuteSpinBox->setValue(0);
+    m_ui->decMinuteSpinBox_2->setValue(0);
+    m_ui->decMinuteSpinBox_3->setValue(0);
+    // Secondes
+    m_ui->decSecondDoubleSpinBox->setValue(0.00);
+    m_ui->decSecondDoubleSpinBox_2->setValue(0.00);
+    m_ui->decSecondDoubleSpinBox_3->setValue(0.00);
+}
+
+
 // Check the input for a new row
 bool MapsTable::checkInput(const unsigned int table, const unsigned int number)
 {
@@ -176,12 +213,6 @@ void MapsTable::on_addPushButton_1_clicked()
             QString rightAscension = tmpRightAscension.getHourAngle();
             QString declination = tmpDeclination.getDegreeAngle();
 
-            qDebug() << tmpRightAscension.getHourAngle();
-            qDebug() << tmpRightAscension.getHour();
-            qDebug() << tmpRightAscension.getHourMinute();
-            qDebug() << tmpRightAscension.getHourSecond();
-            qDebug() << tmpRightAscension.getTotalHour();
-
             // Insertion query
             m_db->open();
 
@@ -227,6 +258,7 @@ void MapsTable::on_addPushButton_1_clicked()
 
             m_db->close();
 
+            resetInputs();
             updateTable1();
         }
         else
@@ -300,6 +332,7 @@ void MapsTable::on_addPushButton_2_clicked()
 
             m_db->close();
 
+            resetInputs();
             updateTable1();
         }
     }
@@ -369,6 +402,7 @@ void MapsTable::on_addPushButton_3_clicked()
 
             m_db->close();
 
+            resetInputs();
             updateTable1();
         }
     }
@@ -388,7 +422,10 @@ void MapsTable::on_removePushButton_1_clicked()
     {
         try
         {
-            unsigned int selectedRowNumber = m_ui->tableView->model()->data(m_ui->tableView->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
+            // Row to delete
+            const unsigned int selectedRowNumber = m_ui->tableView->model()->data(m_ui->tableView->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
+            // Row count before deletion
+            const unsigned int countBeforeDeletion = m_ui->tableView->model()->rowCount();
 
             m_db->open();
 
@@ -396,10 +433,16 @@ void MapsTable::on_removePushButton_1_clicked()
 
             query.prepare
             (
-                "DELETE map FROM `skymap1` map"
-                "WHERE NOT EXISTS(SELECT * FROM `objects` obj WHERE obj.`object_skymap1` = map.`skymap1_id`) AND map.`skymap1_number` = :rowToDelete;"
+                "DELETE FROM `skymap1` "
+                "WHERE NOT EXISTS "
+                "("
+                "SELECT * "
+                "FROM `objects` "
+                "WHERE `object_skymap1_id` = `skymap1`.`skymap1_id`"
+                ") "
+                "AND `skymap1`.`skymap1_number` = :rowToDelete;"
             );
-            query.bindValue(":rowToDelete", QString::number(selectedRowNumber));
+            query.bindValue(":rowToDelete", selectedRowNumber);
 
             if (query.exec() == false)
             {
@@ -407,6 +450,12 @@ void MapsTable::on_removePushButton_1_clicked()
             }
 
             m_db->close();
+
+            // If the query deleted nothing
+            if ((unsigned int)m_ui->tableView->model()->rowCount() == countBeforeDeletion)
+            {
+                throw InputError(ErrorPriority::Warning, "Attention, vous essayez de supprimer une carte qui est attribué à au moins un objets.\ndésaffectez d'aborord cette carte à tous les objets");
+            }
 
             updateTable1();
         }
@@ -425,7 +474,10 @@ void MapsTable::on_removePushButton_2_clicked()
     {
         try
         {
-            unsigned int selectedRowNumber = m_ui->tableView_2->model()->data(m_ui->tableView_2->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
+            // Row to delete
+            const unsigned int selectedRowNumber = m_ui->tableView_2->model()->data(m_ui->tableView_2->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
+            // Row count before deletion
+            const unsigned int countBeforeDeletion = m_ui->tableView->model()->rowCount();
 
             m_db->open();
 
@@ -433,8 +485,14 @@ void MapsTable::on_removePushButton_2_clicked()
 
             query.prepare
             (
-                "DELETE map FROM `skymap2` map"
-                "WHERE NOT EXISTS(SELECT * FROM `objects` obj WHERE obj.`object_skymap2` = map.`skymap2_id`) AND map.`skymap2_number` = :rowToDelete;"
+                "DELETE FROM `skymap1` "
+                "WHERE NOT EXISTS "
+                "("
+                    "SELECT * "
+                    "FROM `objects` "
+                    "WHERE `object_skymap1_id` = `skymap1`.`skymap1_id`"
+                ") "
+                "AND `skymap1`.`skymap1_number` = :rowToDelete;"
             );
             query.bindValue(":rowToDelete", QString::number(selectedRowNumber));
 
@@ -444,6 +502,12 @@ void MapsTable::on_removePushButton_2_clicked()
             }
 
             m_db->close();
+
+            // If the query deleted nothing
+            if ((unsigned int)m_ui->tableView->model()->rowCount() == countBeforeDeletion)
+            {
+                throw InputError(ErrorPriority::Warning, "Attention, vous essayez de supprimer une carte qui est attribué à au moins un objets.\ndésaffectez d'aborord cette carte à tous les objets");
+            }
 
             updateTable2();
         }
@@ -462,7 +526,10 @@ void MapsTable::on_removePushButton_3_clicked()
     {
         try
         {
-            unsigned int selectedRowNumber = m_ui->tableView->model()->data(m_ui->tableView->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
+            // Row to delete
+            const unsigned int selectedRowNumber = m_ui->tableView->model()->data(m_ui->tableView->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
+            // Row count before deletion
+            const unsigned int countBeforeDeletion = m_ui->tableView->model()->rowCount();
 
             m_db->open();
 
@@ -470,8 +537,14 @@ void MapsTable::on_removePushButton_3_clicked()
 
             query.prepare
             (
-                "DELETE map FROM `skymap3` map"
-                "WHERE NOT EXISTS(SELECT * FROM `objects` obj WHERE obj.`object_skymap3` = map.`skymap3_id`) AND map.`skymap3_number` = :rowToDelete;"
+                "DELETE FROM `skymap1` "
+                "WHERE NOT EXISTS "
+                "("
+                    "SELECT * "
+                    "FROM `objects` "
+                    "WHERE `object_skymap1_id` = `skymap1`.`skymap1_id`"
+                ") "
+                "AND `skymap1`.`skymap1_number` = :rowToDelete;"
             );
             query.bindValue(":rowToDelete", QString::number(selectedRowNumber));
 
@@ -481,6 +554,12 @@ void MapsTable::on_removePushButton_3_clicked()
             }
 
             m_db->close();
+
+            // If the query deleted nothing
+            if ((unsigned int)m_ui->tableView->model()->rowCount() == countBeforeDeletion)
+            {
+                throw InputError(ErrorPriority::Warning, "Attention, vous essayez de supprimer une carte qui est attribué à au moins un objets.\ndésaffectez d'aborord cette carte à tous les objets");
+            }
 
             updateTable3();
         }

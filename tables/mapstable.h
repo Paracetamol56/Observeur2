@@ -41,6 +41,7 @@ private:
     void updateTable1();
     void updateTable2();
     void updateTable3();
+    void resetInputs();
 
 public:
     explicit MapsTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
