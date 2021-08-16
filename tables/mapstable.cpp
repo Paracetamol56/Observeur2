@@ -62,7 +62,7 @@ void MapsTable::updateTable1()
 
     query1.prepare(
         "SELECT "
-        "MAX(`skymap1_number`) "
+        "MAX(`skymap1_number` + 0) "
         "FROM skymap1 "
         "WHERE 1;"
     );
@@ -108,7 +108,7 @@ void MapsTable::updateTable2()
 
     query2.prepare(
         "SELECT "
-        "MAX(`skymap2_number`) "
+        "MAX(`skymap2_number` + 0) "
         "FROM skymap2 "
         "WHERE 1;"
     );
@@ -153,7 +153,7 @@ void MapsTable::updateTable3()
 
     query3.prepare(
         "SELECT "
-        "MAX(`skymap3_number`) "
+        "MAX(`skymap3_number` + 0) "
         "FROM skymap3 "
         "WHERE 1;"
     );
@@ -263,7 +263,7 @@ void MapsTable::on_addPushButton_1_clicked()
 
             query.prepare(
                 "SELECT "
-                "MAX(`skymap1_id`) "
+                "MAX(`skymap1_id` + 0) "
                 "FROM "
                 "`skymap1` "
                 "WHERE 1;"
@@ -274,6 +274,7 @@ void MapsTable::on_addPushButton_1_clicked()
                 throw SqlError(ErrorPriority::Warning, "Impossible de récuperer l'ID de la nouvelle ligne", &query);
             }
 
+            query.first();
             unsigned int skymapId = query.value(0).toUInt() + 1;
 
             query.prepare(
@@ -337,7 +338,7 @@ void MapsTable::on_addPushButton_2_clicked()
 
             query.prepare(
                 "SELECT "
-                "MAX(`skymap2_id`) "
+                "MAX(`skymap2_id` + 0) "
                 "FROM "
                 "`skymap2` "
                 "WHERE 1;"
@@ -348,6 +349,7 @@ void MapsTable::on_addPushButton_2_clicked()
                 throw SqlError(ErrorPriority::Warning, "Impossible de récuperer l'ID de la nouvelle ligne", &query);
             }
 
+            query.first();
             unsigned int skymapId = query.value(0).toUInt() + 1;
 
             query.prepare(
@@ -407,7 +409,7 @@ void MapsTable::on_addPushButton_3_clicked()
 
             query.prepare(
                 "SELECT "
-                "MAX(`skymap3_id`) "
+                "MAX(`skymap3_id` + 0) "
                 "FROM "
                 "`skymap3` "
                 "WHERE 1;"
@@ -418,6 +420,7 @@ void MapsTable::on_addPushButton_3_clicked()
                 throw SqlError(ErrorPriority::Warning, "Impossible de récuperer l'ID de la nouvelle ligne", &query);
             }
 
+            query.first();
             unsigned int skymapId = query.value(0).toUInt() + 1;
 
             query.prepare(
@@ -476,16 +479,31 @@ void MapsTable::on_removePushButton_1_clicked()
 
             query.prepare
             (
-                "DELETE FROM `skymap1` "
-                "WHERE NOT EXISTS "
-                "("
-                "SELECT * "
-                "FROM `objects` "
-                "WHERE `object_skymap1_id` = `skymap1`.`skymap1_id`"
-                ") "
-                "AND `skymap1`.`skymap1_number` = :rowToDelete;"
+                "SELECT `skymap1_id` "
+                "FROM `skymap1` "
+                "WHERE `skymap1_number` = :rowToDelete;"
             );
             query.bindValue(":rowToDelete", selectedRowNumber);
+            if (query.exec() == false)
+            {
+                throw SqlError(ErrorPriority::Warning, "Impossible de supprimer la ligne dans la base de donnée", &query);
+            }
+            query.first();
+            const unsigned int idToDelete = query.value(0).toUInt();
+
+            query.prepare
+            (
+                "DELETE FROM `skymap1` "
+                "WHERE "
+                "NOT EXISTS "
+                "("
+                    "SELECT * "
+                    "FROM `objects` "
+                    "WHERE `object_skymap1_id` = `skymap1`.`skymap1_id`"
+                ") "
+                "AND `skymap1`.`skymap1_id` = :rowToDelete;"
+            );
+            query.bindValue(":rowToDelete", idToDelete);
 
             if (query.exec() == false)
             {
@@ -494,13 +512,13 @@ void MapsTable::on_removePushButton_1_clicked()
 
             m_db->close();
 
+            updateTable1();
+
             // If the query deleted nothing
             if ((unsigned int)m_ui->tableView->model()->rowCount() == countBeforeDeletion)
             {
                 throw InputError(ErrorPriority::Warning, "Attention, vous essayez de supprimer une carte qui est attribué à au moins un objets.\ndésaffectez d'aborord cette carte à tous les objets");
             }
-
-            updateTable1();
         }
         catch (Error &e)
         {
@@ -528,16 +546,31 @@ void MapsTable::on_removePushButton_2_clicked()
 
             query.prepare
             (
-                "DELETE FROM `skymap1` "
-                "WHERE NOT EXISTS "
+                "SELECT `skymap2_id` "
+                "FROM `skymap2` "
+                "WHERE `skymap2_number` = :rowToDelete;"
+            );
+            query.bindValue(":rowToDelete", selectedRowNumber);
+            if (query.exec() == false)
+            {
+                throw SqlError(ErrorPriority::Warning, "Impossible de supprimer la ligne dans la base de donnée", &query);
+            }
+            query.next();
+            const unsigned int idToDelete = query.value(0).toUInt();
+
+            query.prepare
+            (
+                "DELETE FROM `skymap2` "
+                "WHERE "
+                "NOT EXISTS "
                 "("
                     "SELECT * "
                     "FROM `objects` "
-                    "WHERE `object_skymap1_id` = `skymap1`.`skymap1_id`"
+                    "WHERE `object_skymap2_id` = `skymap2`.`skymap2_id`"
                 ") "
-                "AND `skymap1`.`skymap1_number` = :rowToDelete;"
+                "AND `skymap2`.`skymap2_id` = :rowToDelete;"
             );
-            query.bindValue(":rowToDelete", QString::number(selectedRowNumber));
+            query.bindValue(":rowToDelete", idToDelete);
 
             if (query.exec() == false)
             {
@@ -546,13 +579,13 @@ void MapsTable::on_removePushButton_2_clicked()
 
             m_db->close();
 
+            updateTable2();
+
             // If the query deleted nothing
             if ((unsigned int)m_ui->tableView->model()->rowCount() == countBeforeDeletion)
             {
                 throw InputError(ErrorPriority::Warning, "Attention, vous essayez de supprimer une carte qui est attribué à au moins un objets.\ndésaffectez d'aborord cette carte à tous les objets");
             }
-
-            updateTable2();
         }
         catch (Error &e)
         {
@@ -580,16 +613,31 @@ void MapsTable::on_removePushButton_3_clicked()
 
             query.prepare
             (
-                "DELETE FROM `skymap1` "
-                "WHERE NOT EXISTS "
+                "SELECT `skymap3_id` "
+                "FROM `skymap3` "
+                "WHERE `skymap3_number` = :rowToDelete;"
+            );
+            query.bindValue(":rowToDelete", selectedRowNumber);
+            if (query.exec() == false)
+            {
+                throw SqlError(ErrorPriority::Warning, "Impossible de supprimer la ligne dans la base de donnée", &query);
+            }
+            query.next();
+            const unsigned int idToDelete = query.value(0).toUInt();
+
+            query.prepare
+            (
+                "DELETE FROM `skymap3` "
+                "WHERE "
+                "NOT EXISTS "
                 "("
                     "SELECT * "
                     "FROM `objects` "
-                    "WHERE `object_skymap1_id` = `skymap1`.`skymap1_id`"
+                    "WHERE `object_skymap3_id` = `skymap3`.`skymap3_id`"
                 ") "
-                "AND `skymap1`.`skymap1_number` = :rowToDelete;"
+                "AND `skymap3`.`skymap3_id` = :rowToDelete;"
             );
-            query.bindValue(":rowToDelete", QString::number(selectedRowNumber));
+            query.bindValue(":rowToDelete", idToDelete);
 
             if (query.exec() == false)
             {
@@ -598,13 +646,13 @@ void MapsTable::on_removePushButton_3_clicked()
 
             m_db->close();
 
+            updateTable3();
+
             // If the query deleted nothing
             if ((unsigned int)m_ui->tableView->model()->rowCount() == countBeforeDeletion)
             {
                 throw InputError(ErrorPriority::Warning, "Attention, vous essayez de supprimer une carte qui est attribué à au moins un objets.\ndésaffectez d'aborord cette carte à tous les objets");
             }
-
-            updateTable3();
         }
         catch (Error &e)
         {
