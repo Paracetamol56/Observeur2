@@ -86,6 +86,8 @@ void MapModificationDialog::on_SavePushButton_clicked()
     m_db->close();
 
     close();
+
+    emit newValuesSaved();
 }
 
 

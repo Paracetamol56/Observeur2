@@ -22,7 +22,7 @@
 #include <QString>
 
 #include "angleutilities/angle.h"
-#include "mapmodificationdialog.h"
+#include "tables/mapmodificationdialog.h"
 
 
 namespace Ui {
@@ -60,6 +60,7 @@ private slots:
     void on_modifyPushButton_clicked();
     void on_modifyPushButton_2_clicked();
     void on_modifyPushButton_3_clicked();
+    void on_newValuesSaved();
 };
 
 #endif // MAPSTABLE_H

@@ -689,22 +689,71 @@ void MapsTable::on_modifyPushButton_clicked()
     m_db->close();
 
     // === Show the modification dialog
-    MapModificationDialog modificationDialog(this, m_db, 1, idToModify);
-    modificationDialog.exec();
+    MapModificationDialog *modificationDialog = new MapModificationDialog(this, m_db, 1, idToModify);
+    connect(modificationDialog, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
+    modificationDialog->exec();
 }
 
 
 // In table 2
 void MapsTable::on_modifyPushButton_2_clicked()
 {
+    // === Get the selected row ID
+    // Row to modify
+    const unsigned int selectedRowNumber = m_ui->tableView_2->model()->data(m_ui->tableView_2->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
+    // Get the ID in the database
+    m_db->open();
+    QSqlQuery query;
+    query.prepare
+    (
+        "SELECT `skymap2_id` "
+        "FROM `skymap2` "
+        "WHERE `skymap2_number` = :rowToModify;"
+    );
+    query.bindValue(":rowToModify", QString::number(selectedRowNumber));
+    if (query.exec() == false)
+    {
+        throw SqlError(ErrorPriority::Warning, "Impossible de récuperer l'ID de la ligne à modifier", &query);
+    }
+    query.first();
+    const unsigned int idToModify = query.value(0).toUInt();
+    m_db->close();
 
+    // === Show the modification dialog
+    MapModificationDialog *modificationDialog = new MapModificationDialog(this, m_db, 2, idToModify);
+    connect(modificationDialog, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
+    modificationDialog->exec();
 }
 
 
 // In table 3
 void MapsTable::on_modifyPushButton_3_clicked()
 {
+    // === Get the selected row ID
+    // Row to modify
+    const unsigned int selectedRowNumber = m_ui->tableView_3->model()->data(m_ui->tableView_3->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
+    // Get the ID in the database
+    m_db->open();
+    QSqlQuery query;
+    query.prepare
+    (
+        "SELECT `skymap3_id` "
+        "FROM `skymap3` "
+        "WHERE `skymap3_number` = :rowToModify;"
+    );
+    query.bindValue(":rowToModify", QString::number(selectedRowNumber));
+    if (query.exec() == false)
+    {
+        throw SqlError(ErrorPriority::Warning, "Impossible de récuperer l'ID de la ligne à modifier", &query);
+    }
+    query.first();
+    const unsigned int idToModify = query.value(0).toUInt();
+    m_db->close();
 
+    // === Show the modification dialog
+    MapModificationDialog *modificationDialog = new MapModificationDialog(this, m_db, 3, idToModify);
+    connect(modificationDialog, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
+    modificationDialog->exec();
 }
 
 
@@ -715,7 +764,12 @@ void MapsTable::on_quittPushButton_clicked()
 }
 
 
-
+void MapsTable::on_newValuesSaved()
+{
+    updateTable1();
+    updateTable2();
+    updateTable3();
+}
 
 
 

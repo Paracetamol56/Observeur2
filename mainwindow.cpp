@@ -649,7 +649,7 @@ void MainWindow::on_actionAfficher_tous_les_objets_triggered()
 
 void MainWindow::on_actionAfficher_la_todo_list_triggered()
 {
-
+    // todo
 }
 
 
