@@ -24,70 +24,88 @@ void TableDialog::generatePdf()
 
     // Set the document HTML
     QString html =
+    "<!DOCTYPE html>"
     "<html>"
     "<head>"
     "    <meta charset=\"utf-8\">"
+    "    <style>"
+    "        body {"
+    "            font-family: sans-serif;"
+    "        }"
+    "        table {"
+    "            border-collapse: collapse;"
+    "            font-size: .8rem;"
+    "            margin-left: auto;"
+    "            margin-right: auto;"
+    "            table-layout: fixed;"
+    "            width: 100%;"
+    "        }"
+    "        th {"
+    "            border: 1px solid #021624;"
+    "            background-color: #A2CDEA;"
+    "            padding: 7px;"
+    "            text-align: center;"
+    "            font-size: .9rem;"
+    "            font-weight: bold;"
+    "        }"
+    "        td {"
+    "            border: 1px solid #021624;"
+    "            background-color: #C7DBE8;"
+    "            padding: 5px;"
+    "            margin: 0px;"
+    "            text-align: justify;"
+    "        }"
+    "        footer {"
+    "            position: absolute;"
+    "            bottom: 20px;"
+    "            text-align: center;"
+    "            margin-left: auto;"
+    "            margin-right: auto;"
+    "            left: 0;"
+    "            right: 0;"
+    "        }"
+    "    </style>"
     "</head>"
-    "<body>"
+    "<body style=\"font-family: sans-serif;\">"
     "    <table>"
-    //"        <thead>"
+    "        <thead>"
     "            <tr>";
 
     for (int i = 0; i < model->columnCount(); i++)
     {
-        html += QString("                <th>" + model->headerData(i, Qt::Horizontal).toString() + "</th>");
+        html += ("<th>" + model->headerData(i, Qt::Horizontal).toString() + "</th>");
     }
 
-    html =+
-    "            </tr>";
-    //"        </thead>"
-    //"        </tbody>";
+    html +=
+    "            </tr>"
+    "        </thead>"
+    "        </tbody>";
 
     for (int i = 0; i < model->rowCount(); i++)
     {
         html +=
-        "            <tr>";
+        "<tr>";
         for (int j = 0; j < model->columnCount(); j++)
         {
-            html += QString("                <td>" + model->index(i, j).data().toString() + "</td>");
+            html += QString("<td>" + model->index(i, j).data().toString() + "</td>");
         }
         html +=
-        "            </tr>";
+        "</tr>";
     }
     html +=
-    //"        </tbody>"
+    "        </tbody>"
     "    </table>"
     "    <footer>"
-    "        <p>Document générer par l'Observeur2 - Créé par Mathéo Galuba © 2021 - Tous droits réservés - Apache License 2.0</p>"
+    "        <p>Document générer par l'Observeur2 - Créé par Mathéo Galuba © 2021 - Tous droits réservés - Apache License 2.0"
+    "        </p>"
     "    </footer>"
     "</body>"
     "</html>";
 
-    QString style =
-    "body {"
-    "font-family: sans-serif;"
-    "}"
-    "table {"
-    "border: 2px solid #021624;"
-    "font-size: .8rem;"
-    "margin: auto;"
-    "}"
-    "td,"
-    "th {"
-    "border: 1px solid #021624;"
-    "padding: 5px;"
-    "margin: 0px"
-    "text-align: center;"
-    "background-color: #E8EDF1;"
-    "}"
-    "th {"
-    "background-color: #E8EDF1;"
-    "border: 1px solid #021624;"
-    "color: #eeeeee"
-    "}";
+    qDebug() << html;
 
     // Ask file location
-    QString filename = QFileDialog::getSaveFileName(0, QString::fromUtf8("Générer le PDF"), "D:/DOCUMENTS UTILISATEUR/Desktop/test.pdf", "*.pdf");
+    QString filename = QFileDialog::getSaveFileName(0, QString::fromUtf8("Générer le PDF"), "Document.pdf", "*.pdf");
 
     // Settup the printer
     QPrinter printer(QPrinter::HighResolution);
@@ -99,7 +117,6 @@ void TableDialog::generatePdf()
 
     // Print the document with the printer
     QTextDocument document;
-    document.setDefaultStyleSheet(style);
     document.setHtml(html);
     document.print(&printer);
 }
