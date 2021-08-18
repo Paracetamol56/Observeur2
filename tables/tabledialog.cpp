@@ -27,61 +27,67 @@ void TableDialog::generatePdf()
     "<html>"
     "<head>"
     "    <meta charset=\"utf-8\">"
-    "    <style>"
-    "        body {"
-    "            font-family: Helvetica, Arial,sans-serif;"
-    "        }"
-    "        table {"
-    "            border-collapse: collapse;"
-    "            border: 2px solid rgb(200, 200, 200);"
-    "            letter-spacing: 1px;"
-    "            font-family: sans-serif;"
-    "            font-size: .8rem;"
-    "        }"
-    "        td,"
-    "        th {"
-    "            border: 1px solid #3a3a3a;"
-    "            padding: 5px;"
-    "            text-align: center;"
-    "        }"
-    "        tr:nth-child(even) {"
-    "            background-color: #eeeeee;"
-    "        }"
-    "    </style>"
     "</head>"
-    "<body style=\"font-family: Helvetica,Arial,sans-serif;\">"
+    "<body>"
     "    <table>"
-    "        <tr>";
+    //"        <thead>"
+    "            <tr>";
 
     for (int i = 0; i < model->columnCount(); i++)
     {
-        html += QString("<th>" + model->headerData(i, Qt::Horizontal).toString() + "</th>");
+        html += QString("                <th>" + model->headerData(i, Qt::Horizontal).toString() + "</th>");
     }
 
     html =+
-    "        </tr>";
+    "            </tr>";
+    //"        </thead>"
+    //"        </tbody>";
 
     for (int i = 0; i < model->rowCount(); i++)
     {
         html +=
-        "        <tr>";
+        "            <tr>";
         for (int j = 0; j < model->columnCount(); j++)
         {
-            html += QString("<th>" + model->index(i, j).data().toString() + "</th>");
+            html += QString("                <td>" + model->index(i, j).data().toString() + "</td>");
         }
         html +=
-        "        </tr>";
+        "            </tr>";
     }
     html +=
+    //"        </tbody>"
     "    </table>"
-    "    <footer style=\"margin: auto;\">"
+    "    <footer>"
     "        <p>Document générer par l'Observeur2 - Créé par Mathéo Galuba © 2021 - Tous droits réservés - Apache License 2.0</p>"
     "    </footer>"
     "</body>"
     "</html>";
 
+    QString style =
+    "body {"
+    "font-family: sans-serif;"
+    "}"
+    "table {"
+    "border: 2px solid #021624;"
+    "font-size: .8rem;"
+    "margin: auto;"
+    "}"
+    "td,"
+    "th {"
+    "border: 1px solid #021624;"
+    "padding: 5px;"
+    "margin: 0px"
+    "text-align: center;"
+    "background-color: #E8EDF1;"
+    "}"
+    "th {"
+    "background-color: #E8EDF1;"
+    "border: 1px solid #021624;"
+    "color: #eeeeee"
+    "}";
+
     // Ask file location
-    QString filename = QFileDialog::getSaveFileName(0, QString::fromUtf8("Générer le PDF"), QCoreApplication::applicationDirPath(), ".pdf");
+    QString filename = QFileDialog::getSaveFileName(0, QString::fromUtf8("Générer le PDF"), "D:/DOCUMENTS UTILISATEUR/Desktop/test.pdf", "*.pdf");
 
     // Settup the printer
     QPrinter printer(QPrinter::HighResolution);
@@ -93,6 +99,7 @@ void TableDialog::generatePdf()
 
     // Print the document with the printer
     QTextDocument document;
+    document.setDefaultStyleSheet(style);
     document.setHtml(html);
     document.print(&printer);
 }
