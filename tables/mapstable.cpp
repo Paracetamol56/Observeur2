@@ -538,7 +538,7 @@ void MapsTable::on_removePushButton_2_clicked()
             // Row to delete
             const unsigned int selectedRowNumber = m_ui->tableView_2->model()->data(m_ui->tableView_2->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
             // Row count before deletion
-            const unsigned int countBeforeDeletion = m_ui->tableView->model()->rowCount();
+            const unsigned int countBeforeDeletion = m_ui->tableView_2->model()->rowCount();
 
             m_db->open();
 
@@ -582,7 +582,7 @@ void MapsTable::on_removePushButton_2_clicked()
             updateTable2();
 
             // If the query deleted nothing
-            if ((unsigned int)m_ui->tableView->model()->rowCount() == countBeforeDeletion)
+            if ((unsigned int)m_ui->tableView_2->model()->rowCount() == countBeforeDeletion)
             {
                 throw InputError(ErrorPriority::Warning, "Attention, vous essayez de supprimer une carte qui est attribué à au moins un objets.\ndésaffectez d'aborord cette carte à tous les objets");
             }
@@ -603,9 +603,9 @@ void MapsTable::on_removePushButton_3_clicked()
         try
         {
             // Row to delete
-            const unsigned int selectedRowNumber = m_ui->tableView->model()->data(m_ui->tableView->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
+            const unsigned int selectedRowNumber = m_ui->tableView_3->model()->data(m_ui->tableView_3->selectionModel()->selectedRows().first().siblingAtColumn(0)).toUInt();
             // Row count before deletion
-            const unsigned int countBeforeDeletion = m_ui->tableView->model()->rowCount();
+            const unsigned int countBeforeDeletion = m_ui->tableView_3->model()->rowCount();
 
             m_db->open();
 
@@ -649,7 +649,7 @@ void MapsTable::on_removePushButton_3_clicked()
             updateTable3();
 
             // If the query deleted nothing
-            if ((unsigned int)m_ui->tableView->model()->rowCount() == countBeforeDeletion)
+            if ((unsigned int)m_ui->tableView_3->model()->rowCount() == countBeforeDeletion)
             {
                 throw InputError(ErrorPriority::Warning, "Attention, vous essayez de supprimer une carte qui est attribué à au moins un objets.\ndésaffectez d'aborord cette carte à tous les objets");
             }
