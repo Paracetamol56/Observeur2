@@ -321,7 +321,7 @@ void MapsTable::on_addPushButton_1_clicked()
 void MapsTable::on_addPushButton_2_clicked()
 {
     try {
-        unsigned int number = m_ui->nameSpinBox->value();
+        unsigned int number = m_ui->nameSpinBox_2->value();
 
         if (checkInput(2, number))
         {
@@ -378,7 +378,7 @@ void MapsTable::on_addPushButton_2_clicked()
             m_db->close();
 
             resetInputs();
-            updateTable1();
+            updateTable2();
         }
     }
     catch (Error &e)
@@ -392,7 +392,7 @@ void MapsTable::on_addPushButton_2_clicked()
 void MapsTable::on_addPushButton_3_clicked()
 {
     try {
-        unsigned int number = m_ui->nameSpinBox->value();
+        unsigned int number = m_ui->nameSpinBox_3->value();
 
         if (checkInput(3, number))
         {
@@ -449,7 +449,7 @@ void MapsTable::on_addPushButton_3_clicked()
             m_db->close();
 
             resetInputs();
-            updateTable1();
+            updateTable3();
         }
     }
     catch (Error &e)
