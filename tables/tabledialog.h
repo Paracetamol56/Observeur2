@@ -15,7 +15,12 @@
 // Debug output
 #include <QDebug>
 
-// UI elements
+// PDF elements
+#include <QFileDialog>
+#include <QPrinter>
+#include <QPainter>
+#include <QTextDocument>
+
 
 namespace Ui {
 class TableDialog;
@@ -30,6 +35,7 @@ protected:
 
     Ui::TableDialog *m_ui;
     QSqlDatabase *m_db;
+    void generatePdf();
 
 public:
 
