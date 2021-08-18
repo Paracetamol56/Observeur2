@@ -679,12 +679,12 @@ void MapsTable::on_modifyPushButton_clicked()
         "FROM `skymap1` "
         "WHERE `skymap1_number` = :rowToModify;"
     );
-    query.bindValue(":rowToModify", QString::number(selectedRowNumber));
+    query.bindValue(":rowToModify", selectedRowNumber);
     if (query.exec() == false)
     {
         throw SqlError(ErrorPriority::Warning, "Impossible de récuperer l'ID de la ligne à modifier", &query);
     }
-    query.first();
+    query.next();
     const unsigned int idToModify = query.value(0).toUInt();
     m_db->close();
 
@@ -710,12 +710,12 @@ void MapsTable::on_modifyPushButton_2_clicked()
         "FROM `skymap2` "
         "WHERE `skymap2_number` = :rowToModify;"
     );
-    query.bindValue(":rowToModify", QString::number(selectedRowNumber));
+    query.bindValue(":rowToModify", selectedRowNumber);
     if (query.exec() == false)
     {
         throw SqlError(ErrorPriority::Warning, "Impossible de récuperer l'ID de la ligne à modifier", &query);
     }
-    query.first();
+    query.next();
     const unsigned int idToModify = query.value(0).toUInt();
     m_db->close();
 
@@ -741,12 +741,12 @@ void MapsTable::on_modifyPushButton_3_clicked()
         "FROM `skymap3` "
         "WHERE `skymap3_number` = :rowToModify;"
     );
-    query.bindValue(":rowToModify", QString::number(selectedRowNumber));
+    query.bindValue(":rowToModify", selectedRowNumber);
     if (query.exec() == false)
     {
         throw SqlError(ErrorPriority::Warning, "Impossible de récuperer l'ID de la ligne à modifier", &query);
     }
-    query.first();
+    query.next();
     const unsigned int idToModify = query.value(0).toUInt();
     m_db->close();
 
@@ -772,5 +772,58 @@ void MapsTable::on_newValuesSaved()
 }
 
 
+// === Right click implementation
 
+// In table 1
+void MapsTable::on_tableView_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu *contextMenu = new QMenu(this);
+
+    QAction *modifyAction = new QAction(tr("Modifier"), this);
+    QAction *deleteAction = new QAction(tr("Supprimer"), this);
+
+    connect(modifyAction, SIGNAL(triggered()), this, SLOT(on_modifyPushButton_clicked()));
+    connect(deleteAction, SIGNAL(triggered()), this, SLOT(on_removePushButton_1_clicked()));
+
+    contextMenu->addAction(modifyAction);
+    contextMenu->addAction(deleteAction);
+
+    contextMenu->popup(m_ui->tableView->viewport()->mapToGlobal(pos));
+}
+
+
+// In table 2
+void MapsTable::on_tableView_2_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu contextMenu;
+
+    QAction *modifyAction = new QAction(tr("Modifier"), this);
+    QAction *deleteAction = new QAction(tr("Supprimer"), this);
+
+    connect(modifyAction, SIGNAL(triggered()), this, SLOT(on_modifyPushButton_2_clicked()));
+    connect(deleteAction, SIGNAL(triggered()), this, SLOT(on_removePushButton_2_clicked()));
+
+    contextMenu.addAction(modifyAction);
+    contextMenu.addAction(deleteAction);
+
+    contextMenu.popup(m_ui->tableView->viewport()->mapToGlobal(pos));
+}
+
+
+// In table 3
+void MapsTable::on_tableView_3_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu contextMenu;
+
+    QAction *modifyAction = new QAction(tr("Modifier"), this);
+    QAction *deleteAction = new QAction(tr("Supprimer"), this);
+
+    connect(modifyAction, SIGNAL(triggered()), this, SLOT(on_modifyPushButton_3_clicked()));
+    connect(deleteAction, SIGNAL(triggered()), this, SLOT(on_removePushButton_3_clicked()));
+
+    contextMenu.addAction(modifyAction);
+    contextMenu.addAction(deleteAction);
+
+    contextMenu.popup(m_ui->tableView->viewport()->mapToGlobal(pos));
+}
 

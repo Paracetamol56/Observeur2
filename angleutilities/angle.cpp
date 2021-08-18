@@ -36,7 +36,7 @@ Angle::Angle(bool isHour, int degree, int minute, double seconde)
 
         if (isHour == true)
         {
-            m_totalDegree = (degree * 15) + ((double)minute / 4) + (seconde / 240);
+            m_totalDegree = (degree * 15) + ((double)minute / 4) + (seconde / 240.00);
         }
         else
         {
@@ -54,7 +54,7 @@ Angle::Angle(QString strAngle)
 {
     try
     {
-        if (strAngle.count() >= 12 && strAngle.count() < 14)
+        if (strAngle.count() >= 12 && strAngle.count() <= 13)
         {
             bool isHour = false;
             size_t indexD = 0, indexM = 0;

@@ -21,14 +21,14 @@ MapModificationDialog::MapModificationDialog(QWidget *parent, QSqlDatabase *db, 
         "FROM `"
         + m_tableString +
         "` WHERE `"
-        + m_tableString + "_id` = \"" + QString::number(m_idToModify) + "\";");
+        + m_tableString + "_id` = " + QString::number(m_idToModify) + ";");
     if (query.exec() == false)
     {
         SqlError error(ErrorPriority::Warning, "Impossible de selectionner la carte à modifier avec l'ID : " + QString::number(m_idToModify), &query);
         error.printMessage();
         on_CancelPushButton_clicked();
     }
-    query.first();
+    query.next();
 
     m_ui->numberSpinBox->setValue(query.value(0).toUInt());
 
@@ -73,7 +73,7 @@ void MapModificationDialog::on_SavePushButton_clicked()
         + m_tableString + "_right_ascension` = :ra, `"
         + m_tableString + "_declination` = :dec "
         "WHERE `"
-        + m_tableString + "_id` = \"" + QString::number(m_idToModify) + "\";");
+        + m_tableString + "_id` = " + QString::number(m_idToModify) + ";");
     query.bindValue(":ra", rightAscension.getHourAngle());
     query.bindValue(":dec", declination.getDegreeAngle());
     if (query.exec() == false)

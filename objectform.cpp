@@ -692,9 +692,9 @@ void ObjectForm::on_SavePushButton_clicked()
                 query.bindValue(":diameter", QString::number(m_diameter));
                 query.bindValue(":rightAscension", m_rightAscension.getHourAngle());
                 query.bindValue(":declination", m_declination.getDegreeAngle());
-                query.bindValue(":skyMap1", QString::number(m_skyMap1));
-                query.bindValue(":skyMap2", QString::number(m_skyMap2));
-                query.bindValue(":skyMap3", QString::number(m_skyMap3));
+                query.bindValue(":skyMap1", m_skyMap1);
+                query.bindValue(":skyMap2", m_skyMap2);
+                query.bindValue(":skyMap3", m_skyMap3);
                 query.bindValue(":description", m_description);
                 query.bindValue(":note", QString::number(m_note));
 
@@ -751,9 +751,9 @@ void ObjectForm::on_SavePushButton_clicked()
                 query.bindValue(":diameter", QString::number(m_diameter));
                 query.bindValue(":rightAscension", m_rightAscension.getHourAngle());
                 query.bindValue(":declination", m_declination.getDegreeAngle());
-                query.bindValue(":skyMap1", QString::number(m_skyMap1));
-                query.bindValue(":skyMap2", QString::number(m_skyMap2));
-                query.bindValue(":skyMap3", QString::number(m_skyMap3));
+                query.bindValue(":skyMap1", m_skyMap1);
+                query.bindValue(":skyMap2", m_skyMap2);
+                query.bindValue(":skyMap3", m_skyMap3);
                 query.bindValue(":description", m_description);
                 query.bindValue(":note", QString::number(m_note));
                 query.bindValue(":objectId", QString::number(m_objectId));

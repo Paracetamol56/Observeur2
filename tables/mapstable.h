@@ -20,6 +20,7 @@
 
 // UI elements
 #include <QString>
+#include <QMenu>
 
 #include "angleutilities/angle.h"
 #include "tables/mapmodificationdialog.h"
@@ -61,6 +62,9 @@ private slots:
     void on_modifyPushButton_2_clicked();
     void on_modifyPushButton_3_clicked();
     void on_newValuesSaved();
+    void on_tableView_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_2_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_3_customContextMenuRequested(const QPoint &pos);
 };
 
 #endif // MAPSTABLE_H

@@ -672,7 +672,6 @@ void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos
     if (setAction != 0)
     {
         qDebug() << index;
-
     }
 }
 
