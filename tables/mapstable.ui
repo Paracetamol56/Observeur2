@@ -249,17 +249,6 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="modifyPushButton">
-           <property name="text">
-            <string>Modifier une ligne</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../ressources.qrc">
-             <normaloff>:/Ressources/icons/icons8-edit-row-96.png</normaloff>:/Ressources/icons/icons8-edit-row-96.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="addPushButton_1">
            <property name="text">
             <string>Ajouter une ligne</string>
@@ -267,6 +256,17 @@
            <property name="icon">
             <iconset resource="../ressources.qrc">
              <normaloff>:/Ressources/icons/icons8-add-row-96.png</normaloff>:/Ressources/icons/icons8-add-row-96.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="modifyPushButton">
+           <property name="text">
+            <string>Modifier une ligne</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../ressources.qrc">
+             <normaloff>:/Ressources/icons/icons8-edit-row-96.png</normaloff>:/Ressources/icons/icons8-edit-row-96.png</iconset>
            </property>
           </widget>
          </item>
@@ -493,17 +493,6 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="modifyPushButton_2">
-           <property name="text">
-            <string>Modifier une ligne</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../ressources.qrc">
-             <normaloff>:/Ressources/icons/icons8-edit-row-96.png</normaloff>:/Ressources/icons/icons8-edit-row-96.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="addPushButton_2">
            <property name="text">
             <string>Ajouter une ligne</string>
@@ -511,6 +500,17 @@
            <property name="icon">
             <iconset resource="../ressources.qrc">
              <normaloff>:/Ressources/icons/icons8-add-row-96.png</normaloff>:/Ressources/icons/icons8-add-row-96.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="modifyPushButton_2">
+           <property name="text">
+            <string>Modifier une ligne</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../ressources.qrc">
+             <normaloff>:/Ressources/icons/icons8-edit-row-96.png</normaloff>:/Ressources/icons/icons8-edit-row-96.png</iconset>
            </property>
           </widget>
          </item>
@@ -726,17 +726,6 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="modifyPushButton_3">
-           <property name="text">
-            <string>Modifier une ligne</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../ressources.qrc">
-             <normaloff>:/Ressources/icons/icons8-edit-row-96.png</normaloff>:/Ressources/icons/icons8-edit-row-96.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="addPushButton_3">
            <property name="text">
             <string>Ajouter une ligne</string>
@@ -744,6 +733,17 @@
            <property name="icon">
             <iconset resource="../ressources.qrc">
              <normaloff>:/Ressources/icons/icons8-add-row-96.png</normaloff>:/Ressources/icons/icons8-add-row-96.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="modifyPushButton_3">
+           <property name="text">
+            <string>Modifier une ligne</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../ressources.qrc">
+             <normaloff>:/Ressources/icons/icons8-edit-row-96.png</normaloff>:/Ressources/icons/icons8-edit-row-96.png</iconset>
            </property>
           </widget>
          </item>
