@@ -120,7 +120,7 @@ void MapsTable::updateTable2()
 
     // Put the max value + 1 in the number spinbox
     query2.first();
-    m_ui->nameSpinBox->setValue(query2.value(0).toInt() + 1);
+    m_ui->nameSpinBox_2->setValue(query2.value(0).toInt() + 1);
 
     m_db->close();
 }
@@ -531,7 +531,7 @@ void MapsTable::on_removePushButton_1_clicked()
 // In table 2
 void MapsTable::on_removePushButton_2_clicked()
 {
-    if (m_ui->tableView->selectionModel()->hasSelection())
+    if (m_ui->tableView_2->selectionModel()->hasSelection())
     {
         try
         {
@@ -598,7 +598,7 @@ void MapsTable::on_removePushButton_2_clicked()
 // In table 3
 void MapsTable::on_removePushButton_3_clicked()
 {
-    if (m_ui->tableView->selectionModel()->hasSelection())
+    if (m_ui->tableView_3->selectionModel()->hasSelection())
     {
         try
         {
