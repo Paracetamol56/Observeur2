@@ -28,12 +28,20 @@ MainWindow::MainWindow(QWidget* parent)
         settingDialog.exec();
     }
 
+    QString dbPath = "";
+    if (settings.contains("database"))
+    {
+        dbPath = settings.value("database").toString();
+    }
+    else
+    {
+        SettingDialog settingDialog(nullptr);
+        settingDialog.exec();
+    }
+
     // Initiate database
 
     *m_db = QSqlDatabase::addDatabase("QSQLITE");
-    // Set the database path and name
-    QString dbPath = QDir::currentPath();
-    dbPath =  dbPath + QString("/Database/data.sqlite");
     // Check if file exists
     if (QFile::exists(dbPath))
     {

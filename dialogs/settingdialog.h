@@ -10,6 +10,7 @@
 #include "errorhandler.h"
 
 #include <QFile>
+#include <QFileDialog>
 #include <QSettings>
 #include "angleutilities/angle.h"
 #include "errorhandler.h"
@@ -33,6 +34,7 @@ public:
 private slots:
     void on_SavePushButton_clicked();
     void on_CancelPushButton_clicked();
+    void on_DBBrowsePushButton_clicked();
 };
 
 #endif // SETTINGDIALOG_H

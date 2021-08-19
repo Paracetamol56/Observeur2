@@ -15,6 +15,7 @@ SettingDialog::SettingDialog(QWidget *parent)
     }
     else
     {
+        // Theme
         if (settings.value("theme").toString() == "dark")
         {
             m_ui->DarkRadioButton->setChecked(true);
@@ -25,6 +26,9 @@ SettingDialog::SettingDialog(QWidget *parent)
             m_ui->DarkRadioButton->setChecked(false);
             m_ui->LightRadioButton->setChecked(true);
         }
+
+        // Database
+        m_ui->DBPathLineEdit->setText(settings.value("database").toString());
 
         settings.beginGroup("position");
         // Longitude
@@ -43,7 +47,10 @@ SettingDialog::SettingDialog(QWidget *parent)
 
         // Altitude
         m_ui->AltitudeSpinBox->setValue(settings.value("altitude").toInt());
+
         settings.endGroup();
+
+        m_ui->CancelPushButton->setEnabled(true);
     }
 }
 
@@ -59,6 +66,7 @@ void SettingDialog::on_SavePushButton_clicked()
     // Keys stored in settings :
     /*
      * "theme" ("dark" or "light")
+     * "database" (path)
      * group "position" :
      *      - latitude (double totalDegree)
      *      - longitude (double totalDegree)
@@ -102,6 +110,8 @@ void SettingDialog::on_SavePushButton_clicked()
         }
     }
 
+    settings.setValue("database", m_ui->DBPathLineEdit->text());
+
     Angle latitude(false, m_ui->LatDegreeSpinBox->value(), m_ui->LatMinuteSpinBox->value(), m_ui->LatSecondDoubleSpinBox->value());
     Angle longitude(false, m_ui->LonDegreeSpinBox->value(), m_ui->LonMinuteSpinBox->value(), m_ui->LonSecondDoubleSpinBox->value());
 
@@ -121,3 +131,20 @@ void SettingDialog::on_CancelPushButton_clicked()
 {
     close();
 }
+
+
+void SettingDialog::on_DBBrowsePushButton_clicked()
+{
+    QSettings settings;
+
+    QString defaultPath = "";
+    if (settings.contains("database"))
+    {
+        defaultPath = settings.value("database").toString();
+    }
+
+    QString filename = QFileDialog::getOpenFileName(this, QString::fromUtf8("Chemin de la base de donnée"), defaultPath, "*.sqlite");
+    m_ui->DBPathLineEdit->setText(filename);
+    settings.setValue("database", filename);
+}
+
