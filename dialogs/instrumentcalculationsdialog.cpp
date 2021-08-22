@@ -7,6 +7,14 @@ InstrumentCalculationsDialog::InstrumentCalculationsDialog(QWidget *parent) :
     m_ui(new Ui::InstrumentCalculationsDialog)
 {
     m_ui->setupUi(this);
+
+    // Set table size policy
+    m_ui->editableEyepiecesTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // Set table edition delegation
+    m_ui->editableEyepiecesTableWidget->setItemDelegate(new Delegate);
+    // Sort by default
+    m_ui->editableEyepiecesTableWidget->setSortingEnabled(true);
+    m_ui->editableEyepiecesTableWidget->sortByColumn(0, Qt::AscendingOrder);
 }
 
 
@@ -80,5 +88,25 @@ void InstrumentCalculationsDialog::on_computePushButton_clicked()
     {
         e.printMessage();
     }
+}
+
+
+void InstrumentCalculationsDialog::on_addPushButton_clicked()
+{
+    // New row
+    m_ui->editableEyepiecesTableWidget->insertRow ( m_ui->editableEyepiecesTableWidget->rowCount() );
+    // Focal column
+    m_ui->editableEyepiecesTableWidget->setItem( m_ui->editableEyepiecesTableWidget->rowCount() - 1 , 0 , new QTableWidgetItem(0.00));
+    // Field column
+    m_ui->editableEyepiecesTableWidget->setItem( m_ui->editableEyepiecesTableWidget->rowCount() - 1 , 1 , new QTableWidgetItem(0.00));
+    // Edit the new item by default
+    m_ui->editableEyepiecesTableWidget->editItem( m_ui->editableEyepiecesTableWidget->itemAt(m_ui->editableEyepiecesTableWidget->rowCount() - 1, 0) );
+}
+
+
+void InstrumentCalculationsDialog::on_removePushButton_clicked()
+{
+    if (m_ui->editableEyepiecesTableWidget->selectedItems().count() != 0)
+        m_ui->editableEyepiecesTableWidget->removeRow(m_ui->editableEyepiecesTableWidget->selectedItems().first()->row());
 }
 

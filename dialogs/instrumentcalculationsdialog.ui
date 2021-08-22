@@ -140,34 +140,53 @@
          <number>6</number>
         </property>
         <item>
-         <widget class="QListView" name="eyepiecesListView"/>
+         <widget class="QTableWidget" name="editableEyepiecesTableWidget">
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="rowCount">
+           <number>0</number>
+          </property>
+          <property name="columnCount">
+           <number>2</number>
+          </property>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>100</number>
+          </attribute>
+          <attribute name="horizontalHeaderHighlightSections">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderHighlightSections">
+           <bool>false</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>Distance focale</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Champ apparent</string>
+           </property>
+          </column>
+         </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Focale d'occulaire</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="eyepieceFocalLineEdit"/>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Cahmp apparent</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="apparentFieldLineEdit_6"/>
-          </item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
           <item>
            <widget class="QPushButton" name="addPushButton">
             <property name="text">
              <string>Ajouter</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../ressources.qrc">
+              <normaloff>:/Ressources/icons/icons8-add-row-96.png</normaloff>:/Ressources/icons/icons8-add-row-96.png</iconset>
             </property>
            </widget>
           </item>
@@ -175,6 +194,10 @@
            <widget class="QPushButton" name="removePushButton">
             <property name="text">
              <string>Supprimer</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../ressources.qrc">
+              <normaloff>:/Ressources/icons/icons8-delete-row-96.png</normaloff>:/Ressources/icons/icons8-delete-row-96.png</iconset>
             </property>
            </widget>
           </item>
@@ -194,7 +217,7 @@
       <widget class="QTextBrowser" name="textBrowser"/>
      </item>
      <item>
-      <widget class="QTableView" name="tableView"/>
+      <widget class="QTableWidget" name="displayEyepiecesTableWidget"/>
      </item>
      <item>
       <widget class="QPushButton" name="computePushButton">
@@ -207,6 +230,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>
