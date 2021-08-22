@@ -217,9 +217,6 @@
       <widget class="QTextBrowser" name="textBrowser"/>
      </item>
      <item>
-      <widget class="QTableWidget" name="displayEyepiecesTableWidget"/>
-     </item>
-     <item>
       <widget class="QPushButton" name="computePushButton">
        <property name="text">
         <string>Calculer</string>

@@ -68,20 +68,82 @@ void InstrumentCalculationsDialog::on_computePushButton_clicked()
             if (m_ui->focalComboBox->currentIndex() == 1)
                 diameter *= 25.4;
 
-            QString markdown =
-                "**" + m_ui->brandLineEdit->text() + "**\n\n"
-                + m_ui->modelLineEdit->text() + "\n\n"
-                "Disatance focale : " + QString::number(focal, 'f', 2) + "mm\n\n"
-                + "Diamètre : " + QString::number(diameter, 'f', 2) + "mm\n\n"
-                + "Rapport F/D : " + QString::number(focal / diameter, 'f', 2)
-                + "\n\n---\n\n"
-                "Magnitude limite théorique : " + QString::number(5.0 * log10(diameter) + 2.1, 'f', 1) + "\n\n"
-                "Pouvoir séparateur théorique : " + QString::number(120 / diameter, 'f', 1) + "s d'arc\n\n"
-                "Ce qui correspond à une pièce de 1€ vue à " + QString::number((23.25 / tan(((120 / diameter) * PI / 180) / 3600)) / 1000000, 'f', 2)
-                + " km ou à des détails de " + QString::number(tan(((120 / diameter) * PI / 180) / 3600) * 384000, 'f', 2)
-                + " km sur la Lune.";
+            QString html =
+                "<!DOCTYPE html>"
+                "<html>"
+                "<head>"
+                "<meta charset=\"utf-8\">"
+                "<style>"
+                "table {"
+                "    border-collapse: collapse;"
+                "    table-layout: fixed;"
+                "    width: 100%;"
+                "}"
+                "th {"
+                "    border: 1px solid;"
+                "    padding: 2px;"
+                "    text-align: center;"
+                "}"
+                "td {"
+                "    border: 1px solid;"
+                "    padding: 2px;"
+                "    text-align: justify;"
+                "}"
+                "</style>"
+                "</head>"
+                "<body>"
+                "<h2>Instrument</h2>"
+                "<p><strong>" + m_ui->brandLineEdit->text() + "</strong></p>"
+                "<p>" + m_ui->modelLineEdit->text() + "</p>"
+                "<ul>"
+                "<li>Disatance focale : " + QString::number(focal, 'f', 2) + " mm</li>"
+                "<li>Diamètre : " + QString::number(diameter, 'f', 2) + " mm</li>"
+                "<li>Rapport F/D : " + QString::number(focal / diameter, 'f', 2) + "</li>"
+                "<li>Magnitude limite théorique : " + QString::number(5.0 * log10(diameter) + 2.1, 'f', 1) + "</li>"
+                "<li>Pouvoir séparateur théorique : " + QString::number(120 / diameter, 'f', 1) + " s d'arc<br>"
+                "<em>Ce qui correspond à une pièce de 1€ vue à " + QString::number((23.25 / tan(((120 / diameter) * PI / 180) / 3600)) / 1000000, 'f', 2)
+                + " km ou à des détails de " + QString::number(tan(((120 / diameter) * PI / 180) / 3600) * 384000, 'f', 2) + " km sur la Lune.</em></li>"
+                "</ul>"
+                "<hr>"
+                "<h2>Oculaires</h2>"
+                "<table>"
+                "<thead>"
+                "<tr>"
+                "<th>N°</th>"
+                "<th>Focale <em>(mm)</em></th>"
+                "<th>Grossissement</th>"
+                "<th>Champ apparent <em>(°)</em></th>"
+                "<th>Champ réel <em>(°)</em></th>"
+                "<th>Pupille de sortie <em>(mm)</em></th>"
+                "</tr>"
+                "</thead>"
+                "<tbody>";
 
-            m_ui->textBrowser->setMarkdown(markdown);
+            QTableWidget *table = m_ui->editableEyepiecesTableWidget;
+            for (int i = 0; i < m_ui->editableEyepiecesTableWidget->rowCount(); ++i)
+            {
+                double eyepieceFocal = table->item(i, 0)->text().toDouble();
+                double apparentField = table->item(i, 1)->text().toDouble();
+
+                qDebug() << apparentField;
+
+                html +=
+                    "<tr>"
+                    "<td>" + QString::number(i + 1) + "</td>"
+                    "<td>" + QString::number(eyepieceFocal, 'f', 2).rightJustified(2, '0') + "</td>"
+                    "<td>" + QString::number(focal / eyepieceFocal, 'f', 2).rightJustified(2, '0') + "</td>"
+                    "<td>" + QString::number(apparentField, 'f', 2).rightJustified(2, '0') + "</td>"
+                    "<td>" + QString::number(apparentField / (focal / eyepieceFocal), 'f', 2).rightJustified(2, '0') + "</td>"
+                    "<td>" + QString::number(diameter / (focal / eyepieceFocal), 'f', 2).rightJustified(2, '0') + "\n" + "</td>"
+                    "</tr>";
+            }
+
+            html +=
+                "</tbody>"
+                "</table>"
+                "</body>";
+
+            m_ui->textBrowser->setHtml(html);
         }
     }
     catch (Error &e)
