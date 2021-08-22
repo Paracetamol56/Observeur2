@@ -80,7 +80,7 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
         QPushButton *messierPushButton = new QPushButton(this);
         messierPushButton->setText("Simbad");
         messierPushButton->setIcon(QIcon(":/Ressources/icons/icons8-lien-externe-96.png"));
-        connect(messierPushButton, SIGNAL(clicked()), this, SLOT(on_messierPushButton_clicked()));
+        connect(messierPushButton, &QPushButton::released, this, &ObjectDialog::on_messierPushButton_clicked);
         messierLayout->addWidget(m_messierEdit);
         messierLayout->addWidget(messierPushButton);
         m_ui->formLayout->addRow("Messier", messierLayout);
@@ -95,7 +95,7 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
         QPushButton *ngcPushButton = new QPushButton(this);
         ngcPushButton->setText("Simbad");
         ngcPushButton->setIcon(QIcon(":/Ressources/icons/icons8-lien-externe-96.png"));
-        connect(ngcPushButton, SIGNAL(clicked()), this, SLOT(on_ngcPushButton_clicked()));
+        connect(ngcPushButton, &QPushButton::released, this, &ObjectDialog::on_ngcPushButton_clicked);
         ngcLayout->addWidget(m_ngcEdit);
         ngcLayout->addWidget(ngcPushButton);
         m_ui->formLayout->addRow("NGC", ngcLayout);
@@ -258,22 +258,6 @@ void ObjectDialog::on_ClosePushButton_clicked()
 
 void ObjectDialog::computeGraph()
 {
-    // Julian days to compute
-    /*
-    Jan 2451558.50000
-    Feb 2451589.50000
-    Mar 2451618.50000
-    Avr 2451649.50000
-    Mai 2451679.50000
-    Jun 2451710.50000
-    Jul 2451740.50000
-    Aug 2451771.50000
-    Sep 2451802.50000
-    Oct 2451832.50000
-    Nov 2451863.50000
-    Dec 2451893.50000
-    */
-
     EquatorialPosition objectPosition(m_rightAscension, m_declination);
 
     QBarSet *set0 = new QBarSet("Masse d'aire");
