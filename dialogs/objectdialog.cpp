@@ -274,15 +274,38 @@ void ObjectDialog::computeGraph()
     Dec 2451893.50000
     */
 
-    EquatorialPosition test(m_rightAscension, m_declination);
-    HorizontalPosition hpTest = test.toHorizontalPosition(14, 8, 2021, 23, 0, 0);
-    qDebug() << "Azi : " << hpTest.getAzimuth().getDegreeAngle();
-    qDebug() << "Alt : " << hpTest.getAltitude().getDegreeAngle();
+    EquatorialPosition objectPosition(m_rightAscension, m_declination);
 
     QBarSet *set0 = new QBarSet("Masse d'aire");
     QBarSet *set1 = new QBarSet("Elévation (°)");
-    *set0 << 1 << 2 << 3 << 4 << 5 << 6 << 6 << 5 << 4 << 3 << 2 << 1;
-    *set1 << 60 << 50 << 40 << 30 << 20 << 10 << 10 << 20 << 30 << 40 << 50 << 60;
+
+    QVector<Date> datesVector = {
+        Date(16, 1, 2020, 1, 0, 0),
+        Date(16, 2, 2020, 1, 0, 0),
+        Date(16, 3, 2020, 1, 0, 0),
+        Date(16, 4, 2020, 1, 0, 0),
+        Date(16, 5, 2020, 1, 0, 0),
+        Date(16, 6, 2020, 1, 0, 0),
+        Date(16, 7, 2020, 1, 0, 0),
+        Date(16, 8, 2020, 1, 0, 0),
+        Date(16, 9, 2020, 1, 0, 0),
+        Date(16, 10, 2020, 1, 0, 0),
+        Date(16, 11, 2020, 1, 0, 0),
+        Date(16, 12, 2020, 1, 0, 0)
+    };
+
+    QVectorIterator<Date> it(datesVector);
+
+    while (it.hasNext())
+    {
+        HorizontalPosition ObjectHorizontalPosition = objectPosition.toHorizontalPosition(it.next());
+        *set1 << ObjectHorizontalPosition.getAltitude().getTotalDegree();
+        qDebug() << "Azi : " << ObjectHorizontalPosition.getAzimuth().getDegreeAngle();
+        qDebug() << "Alt : " << ObjectHorizontalPosition.getAltitude().getDegreeAngle();
+    }
+
+    //*set0 << 1 << 2 << 3 << 4 << 5 << 6 << 6 << 5 << 4 << 3 << 2 << 1;
+    //*set1 << 60 << 50 << 40 << 30 << 20 << 10 << 10 << 20 << 30 << 40 << 50 << 60;
 
     QBarSeries *serie0 = new QBarSeries();
     serie0->append(set0);

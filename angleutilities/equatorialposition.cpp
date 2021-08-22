@@ -36,7 +36,7 @@ Angle EquatorialPosition::getDistance(EquatorialPosition *other)
 }
 
 
-HorizontalPosition EquatorialPosition::toHorizontalPosition(unsigned int day, unsigned int month, unsigned int year, unsigned int hour, unsigned int minute, unsigned int second)
+HorizontalPosition EquatorialPosition::toHorizontalPosition(Date date)
 {
     // Get observer position on earth
     QSettings settings;
@@ -74,20 +74,12 @@ HorizontalPosition EquatorialPosition::toHorizontalPosition(unsigned int day, un
     }
     settings.endGroup();
 
-    // Create date object
-    Date date(day, month, year, hour, minute, second);
     // Greenwich Mean Sidereal Time in hour
     double gmst = date.toGMST();
     // Local sideral time in hour
     double lst = std::fmod(gmst - longitude.getTotalHour() * (24.0 / 360.0), 24);
     // Local hour angle in degree
     Angle lha((lst - m_rightAscension.getTotalHour()) * 15.0);
-
-    qDebug() << "lat" << latitude.getTotalDegree();
-    qDebug() << "lon" << longitude.getTotalDegree();
-    qDebug() << "dec" << m_declination.getTotalDegree();
-    qDebug() << "ra " << m_rightAscension.getTotalDegree();
-    qDebug() << "lha" << lha.getTotalDegree();
 
     // Compute azimuth and altitude
     // Altitude a
