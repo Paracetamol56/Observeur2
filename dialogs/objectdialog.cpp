@@ -312,8 +312,6 @@ void ObjectDialog::computeGraph()
         }
         // Elevation
         *set1 << elevation.getTotalDegree();
-        qDebug() << "Azi : " << ObjectHorizontalPosition.getAzimuth().getDegreeAngle();
-        qDebug() << "Alt : " << ObjectHorizontalPosition.getAltitude().getDegreeAngle();
     }
 
     QBarSeries *serie0 = new QBarSeries();
