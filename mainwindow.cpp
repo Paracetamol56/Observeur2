@@ -661,6 +661,18 @@ void MainWindow::on_actionAfficher_la_todo_list_triggered()
 }
 
 
+void MainWindow::on_actionCalculs_pour_instruments_triggered()
+{
+    InstrumentCalculationsDialog *instrumentDialog = new InstrumentCalculationsDialog(this);
+    instrumentDialog->setWindowFlag(Qt::Window);
+    instrumentDialog->show();
+}
+
+
+
+
+
+
 
 
 
@@ -713,6 +725,9 @@ void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos
 
     contextMenu.exec(m_ui->objectTableView->viewport()->mapToGlobal(pos));
 }
+
+
+
 
 
 
