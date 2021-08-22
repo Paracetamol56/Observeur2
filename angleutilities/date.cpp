@@ -39,7 +39,7 @@ double Date::toJulianDay()
 
 double Date::toGMST()
 {
-    double meanGreenwichSiderealTime;
+    double greenwichMeanSiderealTime;
 
     Date date0 = *this;
     date0.m_hour = 0;
@@ -61,8 +61,8 @@ double Date::toGMST()
     thetaH = (double)thetaH * 0.0002777778;
 
     // Add time at midnight and time of day
-    meanGreenwichSiderealTime = theta0 + thetaH;
-    meanGreenwichSiderealTime = meanGreenwichSiderealTime >= 0 ? (meanGreenwichSiderealTime - (long)(meanGreenwichSiderealTime * 0.0416666667) * 24) : (meanGreenwichSiderealTime + 24);
+    greenwichMeanSiderealTime = theta0 + thetaH;
+    greenwichMeanSiderealTime = greenwichMeanSiderealTime >= 0 ? (greenwichMeanSiderealTime - (long)(greenwichMeanSiderealTime * 0.0416666667) * 24) : (greenwichMeanSiderealTime + 24);
 
-    return meanGreenwichSiderealTime;
+    return greenwichMeanSiderealTime;
 }

@@ -141,6 +141,11 @@ double Angle::getTotalHour() const
     }
 }
 
+void Angle::setTotalRadian(double totalRadian)
+{
+    m_totalDegree = std::fmod(totalRadian * 180.00 / PI, 360);
+}
+
 void Angle::setTotalDegree(double totalDegree)
 {
     if (totalDegree <= -360.00 || totalDegree >= 360.00)

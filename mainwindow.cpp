@@ -548,7 +548,7 @@ void MainWindow::on_actionTout_selectionner_triggered()
 
 void MainWindow::on_actionNouvel_objet_triggered()
 {
-    ObjectForm *newObjectWindow = new ObjectForm(nullptr, m_db, 0);
+    ObjectForm *newObjectWindow = new ObjectForm(this, m_db, 0);
     newObjectWindow->setWindowFlag(Qt::Window);
     connect(newObjectWindow, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
     newObjectWindow->show();
@@ -559,7 +559,7 @@ void MainWindow::on_actionModifier_un_objet_triggered()
 {
     if (m_selectedId.count() == 1)
     {
-        ObjectForm *modifyObjectWindow = new ObjectForm(nullptr, m_db, m_selectedId.first());
+        ObjectForm *modifyObjectWindow = new ObjectForm(this, m_db, m_selectedId.first());
         modifyObjectWindow->setWindowFlag(Qt::Window);
         connect(modifyObjectWindow, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
         modifyObjectWindow->show();
