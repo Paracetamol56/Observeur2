@@ -1,6 +1,8 @@
 # L'Observeur 2
 
-L'observeur 2 est une application QT5 qui permet l’édition et la visualisation d'un catalogue d'objets astronomique pour amateurs.
+<div style="text-align:center"><img src=Doc/logo.png alt="logo"></div>
+
+L'observeur 2 est une application QT6 qui permet l’édition et la visualisation d'un catalogue d'objets astronomique pour amateurs.
 
 ## Index
 
@@ -23,15 +25,18 @@ L'observeur 2 doit être une interface simple pour visualiser, modifier ou crée
 
 La base de données doit être contenu dans un fichier non chiffré pour permettre le partage entre plusieurs personnes facilement.
 
+![Screenshot1](Doc/screenshot1.png)
+![Screenshot2](Doc/screenshot2.png)
+
 ## Dépendances
 
-- QT5
+- QT6
 - Compilateur
 - QDarkStyleSheet
 
-### QT5
+### QT6
 
-Qt5 SDK : [téléchargement](https://www.qt.io/download)
+Qt6 SDK : [téléchargement](https://www.qt.io/download)
 
 ### Compilateur
 
@@ -45,7 +50,13 @@ QDarkStyleSheet est un excellent repository de feuille de style pour des applica
 
 ### Installation pour Windows
 
-Pas encore disponible
+Alpha disponible dans la [section release](https://github.com/Paracetamol56/Observeur2/releases/tag/alpha-0.1.1)
+
+**Etapes d'installation :**
+- Télécharger le fichier zip et l'extraie n'importe où sur votre ordinateur
+- Télécharger la base de données (le fichier *emptyDatabase.sqlite*) et le déplacer n'importe où sur votre ordinateur
+- Lancer l'application avec l'executable (*Observeur2.exe*)
+- Lors du premier démarrage, une fenetre de réglage apparait, remplissez les champs et choisissez le chemin de la base de données
 
 ### Installation pour Linux
 
