@@ -299,13 +299,22 @@ void ObjectDialog::computeGraph()
     while (it.hasNext())
     {
         HorizontalPosition ObjectHorizontalPosition = objectPosition.toHorizontalPosition(it.next());
-        *set1 << ObjectHorizontalPosition.getAltitude().getTotalDegree();
+        // Elevation angle
+        Angle elevation = ObjectHorizontalPosition.getAltitude();
+        // Airmass
+        if (elevation <= Angle(0.00))
+        {
+            *set0 << 0.00;
+        }
+        else
+        {
+            *set0 << (1 / cos((PI / 2) - elevation.getTotalRadian()));
+        }
+        // Elevation
+        *set1 << elevation.getTotalDegree();
         qDebug() << "Azi : " << ObjectHorizontalPosition.getAzimuth().getDegreeAngle();
         qDebug() << "Alt : " << ObjectHorizontalPosition.getAltitude().getDegreeAngle();
     }
-
-    //*set0 << 1 << 2 << 3 << 4 << 5 << 6 << 6 << 5 << 4 << 3 << 2 << 1;
-    //*set1 << 60 << 50 << 40 << 30 << 20 << 10 << 10 << 20 << 30 << 40 << 50 << 60;
 
     QBarSeries *serie0 = new QBarSeries();
     serie0->append(set0);
@@ -328,7 +337,7 @@ void ObjectDialog::computeGraph()
     serie1->attachAxis(axisX);
 
     QValueAxis *axisY0 = new QValueAxis();
-    axisY0->setRange(0, 10);
+    axisY0->setRange(0, 40);
     m_chart->addAxis(axisY0, Qt::AlignLeft);
     serie0->attachAxis(axisY0);
 
