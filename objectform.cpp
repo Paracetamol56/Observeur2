@@ -189,7 +189,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     }
     else
     {
-        query.prepare("SELECT MAX(object_id) FROM objects");
+        query.prepare("SELECT MAX(object_id + 0) FROM objects");
 
         if (query.exec() == false)
         {
