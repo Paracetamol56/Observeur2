@@ -42,7 +42,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="brnadLineEdit"/>
+         <widget class="QLineEdit" name="brandLineEdit"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
@@ -61,9 +61,6 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="focalLineEdit"/>
-        </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_4">
           <property name="text">
@@ -71,8 +68,55 @@
           </property>
          </widget>
         </item>
+        <item row="2" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0">
+          <item>
+           <widget class="QDoubleSpinBox" name="focalDoubleSpinBox">
+            <property name="maximum">
+             <double>99999.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="focalComboBox">
+            <item>
+             <property name="text">
+              <string>mm</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>in</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="diameterLineEdit"/>
+         <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,0">
+          <item>
+           <widget class="QDoubleSpinBox" name="diameterDoubleSpinBox">
+            <property name="maximum">
+             <double>99999.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="diametreComboBox">
+            <item>
+             <property name="text">
+              <string>mm</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>in</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
