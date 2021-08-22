@@ -81,7 +81,13 @@ HorizontalPosition EquatorialPosition::toHorizontalPosition(unsigned int day, un
     // Local sideral time in hour
     double lst = std::fmod(gmst - longitude.getTotalHour() * (24.0 / 360.0), 24);
     // Local hour angle in degree
-    Angle lha((lst - m_rightAscension.getTotalHour()) * 15);
+    Angle lha((lst - m_rightAscension.getTotalHour()) * 15.0);
+
+    qDebug() << "lat" << latitude.getTotalDegree();
+    qDebug() << "lon" << longitude.getTotalDegree();
+    qDebug() << "dec" << m_declination.getTotalDegree();
+    qDebug() << "ra " << m_rightAscension.getTotalDegree();
+    qDebug() << "lha" << lha.getTotalDegree();
 
     // Compute azimuth and altitude
     // Altitude a
@@ -89,7 +95,7 @@ HorizontalPosition EquatorialPosition::toHorizontalPosition(unsigned int day, un
     a.setTotalRadian(asin(sin(m_declination.getTotalRadian()) * sin(latitude.getTotalRadian()) + cos(m_declination.getTotalRadian()) * cos(latitude.getTotalRadian()) * cos(lha.getTotalRadian())));
     // Azimuth A
     Angle A(0.00);
-    A.setTotalRadian(asin(- sin(lha.getTotalRadian() * cos(m_declination.getTotalRadian()) / cos(a.getTotalRadian()))));
+    A.setTotalRadian(asin(-sin(lha.getTotalRadian() * cos(m_declination.getTotalRadian()) / cos(a.getTotalRadian()))));
 
     HorizontalPosition horizontalCoordinates(A, a);
 

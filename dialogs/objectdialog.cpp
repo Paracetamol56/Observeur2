@@ -274,8 +274,8 @@ void ObjectDialog::computeGraph()
     Dec 2451893.50000
     */
 
-    EquatorialPosition test("18h37m56.00s", "38°47'08\".00");
-    HorizontalPosition hpTest = test.toHorizontalPosition(14, 8, 2021, 21, 0, 0);
+    EquatorialPosition test(m_rightAscension, m_declination);
+    HorizontalPosition hpTest = test.toHorizontalPosition(14, 8, 2021, 23, 0, 0);
     qDebug() << "Azi : " << hpTest.getAzimuth().getDegreeAngle();
     qDebug() << "Alt : " << hpTest.getAltitude().getDegreeAngle();
 
