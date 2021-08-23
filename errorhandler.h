@@ -55,7 +55,7 @@ struct InputError
     : Error
 {
     InputError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "");
-    virtual void printMessage() override;
+    void printMessage() override;
 };
 
 
