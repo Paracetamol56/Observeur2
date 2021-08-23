@@ -124,17 +124,20 @@ void InstrumentCalculationsDialog::on_computePushButton_clicked()
             {
                 double eyepieceFocal = table->item(i, 0)->text().toDouble();
                 double apparentField = table->item(i, 1)->text().toDouble();
-
-                qDebug() << apparentField;
+                // Check inputs
+                if (eyepieceFocal == 0.00)
+                    throw MissingInputError(ErrorPriority::BadInput, "La focale de l'oculaire " + QString::number(i + 1) + " est incorrecte");
+                if (apparentField == 0.00)
+                    throw MissingInputError(ErrorPriority::BadInput, "Le champ apparent de l'oculaire " + QString::number(i + 1) + " est incorrect");
 
                 html +=
                     "<tr>"
                     "<td>" + QString::number(i + 1) + "</td>"
-                    "<td>" + QString::number(eyepieceFocal, 'f', 2).rightJustified(2, '0') + "</td>"
-                    "<td>" + QString::number(focal / eyepieceFocal, 'f', 2).rightJustified(2, '0') + "</td>"
+                    "<td>" + QString::number(eyepieceFocal, 'f', 2) + "</td>"
+                    "<td>" + QString::number(std::round(focal / eyepieceFocal)) + "</td>"
                     "<td>" + QString::number(apparentField, 'f', 2).rightJustified(2, '0') + "</td>"
-                    "<td>" + QString::number(apparentField / (focal / eyepieceFocal), 'f', 2).rightJustified(2, '0') + "</td>"
-                    "<td>" + QString::number(diameter / (focal / eyepieceFocal), 'f', 2).rightJustified(2, '0') + "\n" + "</td>"
+                    "<td>" + QString::number(apparentField / (focal / eyepieceFocal), 'f', 2) + "</td>"
+                    "<td>" + QString::number(diameter / (focal / eyepieceFocal), 'f', 2) + "\n" + "</td>"
                     "</tr>";
             }
 
