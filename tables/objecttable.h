@@ -9,11 +9,8 @@
 class ObjectTable
     : public TableDialog
 {
-
 public:
-
     ObjectTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
-
     void tablePopulate() override;
 };
 
