@@ -50,7 +50,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-
     Ui::MainWindow *m_ui = nullptr;
     QSqlDatabase *m_db = nullptr;
     QVector<unsigned int> m_selectedId = {};
