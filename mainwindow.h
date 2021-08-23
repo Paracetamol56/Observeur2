@@ -63,7 +63,6 @@ private:
     QVector<QString> m_typeFilter = {};
 
 public:
-
     explicit MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
@@ -71,7 +70,6 @@ public:
     void tableSelectionChanged();
 
 private slots:
-
     void on_actionA_propos_triggered();
     void on_actionQuitter_triggered();
     void on_AllConsellationsButton_clicked();
