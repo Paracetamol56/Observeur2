@@ -1,3 +1,13 @@
+/**
+ * /*
+ *  * Created on Tue Jul 31 2021
+ *  *
+ *  * Copyright (c) 2021 - Mathéo G - All Right Reserved
+ *  *
+ *  * Licensed under the Apache License, Version 2.0
+ *  * Available on GitHub at https://github.com/Paracetamol56/Observeur2
+ *  */ */
+
 #include "constellationtable.h"
 #include "ui_tabledialog.h"
 
