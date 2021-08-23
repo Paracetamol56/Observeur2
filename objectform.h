@@ -27,10 +27,9 @@
 #include "angleutilities/angle.h"
 #include "angleutilities/equatorialposition.h"
 
-
 namespace Ui
 {
-class ObjectForm;
+    class ObjectForm;
 }
 
 class ObjectForm : public QWidget
@@ -38,7 +37,6 @@ class ObjectForm : public QWidget
     Q_OBJECT
 
 private:
-
     Ui::ObjectForm *m_ui;
     QSqlDatabase *m_db;
 
@@ -72,9 +70,7 @@ private:
     QString m_description = "";
     int m_note = 0;
 
-
 public:
-
     explicit ObjectForm(QWidget *parent = nullptr, QSqlDatabase *db = nullptr, int objectId = 0);
     ~ObjectForm();
 
@@ -84,7 +80,6 @@ public:
     void InsertRow();
 
 private slots:
-
     void on_NoteHorizontalSlider_valueChanged(int value);
     void on_CancelPushButton_clicked();
     void on_SavePushButton_clicked();
@@ -94,7 +89,6 @@ private slots:
     void on_AutoComputePushButton_clicked();
 
 signals:
-
     void newValuesSaved();
 };
 
