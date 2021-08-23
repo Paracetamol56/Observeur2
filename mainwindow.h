@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+
 
 // Window
 #include <QMainWindow>
@@ -39,7 +38,6 @@
 // Error handling
 #include "errorhandler.h"
 
-
 namespace Ui
 {
     class MainWindow;
@@ -63,7 +61,7 @@ private:
     QVector<QString> m_typeFilter = {};
 
 public:
-    explicit MainWindow(QWidget* parent = 0);
+    explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
     void updateObject();
