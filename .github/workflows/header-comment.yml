@@ -10,22 +10,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
       #- name: Add comments to /
-      #  uses: pabio/header-comments
+      #  uses: koj-co/header-comments
       #  with:
       #    directory: /
       
       - name: Add comments to angleutilities
-        uses: pabio/header-comments
+        uses: koj-co/header-comments@1.0.5
         with:
           directory: angleutilities
 
       - name: Add comments to dialogs
-        uses: pabio/header-comments
+        uses: koj-co/header-comments@1.0.5
         with:
           directory: dialogs
 
       - name: Add comments to tables
-        uses: pabio/header-comments
+        uses: koj-co/header-comments@1.0.5
         with:
           directory: tables
       
