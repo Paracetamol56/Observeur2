@@ -50,7 +50,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-
     Ui::MainWindow *m_ui = nullptr;
     QSqlDatabase *m_db = nullptr;
     QVector<unsigned int> m_selectedId = {};
@@ -64,7 +63,6 @@ private:
     QVector<QString> m_typeFilter = {};
 
 public:
-
     explicit MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
@@ -72,7 +70,6 @@ public:
     void tableSelectionChanged();
 
 private slots:
-
     void on_actionA_propos_triggered();
     void on_actionQuitter_triggered();
     void on_AllConsellationsButton_clicked();

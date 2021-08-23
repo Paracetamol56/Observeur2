@@ -55,7 +55,7 @@ struct InputError
     : Error
 {
     InputError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "");
-    virtual void printMessage() override;
+    void printMessage() override;
 };
 
 
@@ -63,7 +63,7 @@ struct MissingInputError
     : InputError
 {
     MissingInputError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "");
-    virtual void printMessage() override;
+    void printMessage() override;
 };
 
 
@@ -73,7 +73,7 @@ struct FileError
     QFile *m_file = nullptr;
 
     FileError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", QFile *file = nullptr);
-    virtual void printMessage() override;
+    void printMessage() override;
 };
 
 

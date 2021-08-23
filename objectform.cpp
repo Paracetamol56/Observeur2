@@ -710,7 +710,6 @@ void ObjectForm::on_SavePushButton_clicked()
             }
             else // modify an existing object
             {
-
                 m_db->open();
 
                 QSqlQuery query;
