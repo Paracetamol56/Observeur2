@@ -16,20 +16,20 @@ jobs:
         path: '/'
         pattern: '{file_base}_H'
     
-    - name: Check include guards in /angleutilities/
+    - name: Check include guards in angleutilities/
       uses: sbeyer/include-guards-check-action@v1.0.0
       with:
-        path: '/angleutilities'
+        path: 'angleutilities/'
         pattern: '{file_base}_H'
 
-    - name: Check include guards in /dialogs/
+    - name: Check include guards in dialogs/
       uses: sbeyer/include-guards-check-action@v1.0.0
       with:
-        path: '/dialogs'
+        path: 'dialogs/'
         pattern: '{file_base}_H'
 
-    - name: Check include guards in /tables/
+    - name: Check include guards in tables/
       uses: sbeyer/include-guards-check-action@v1.0.0
       with:
-        path: '/tables'
+        path: 'tables/'
         pattern: '{file_base}_H'
