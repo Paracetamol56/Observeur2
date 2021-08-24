@@ -9,11 +9,8 @@
 class ConstellationTable
     : public TableDialog
 {
-
 public:
-
     ConstellationTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
-
     void tablePopulate() override;
 };
 

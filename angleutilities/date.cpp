@@ -1,3 +1,11 @@
+/**
+ * Created on Tue Jul 31 2021
+ * 
+ * Copyright (c) 2021 - Mathéo G - All Right Reserved
+ * 
+ * Licensed under the Apache License, Version 2.0
+ * Available on GitHub at https://github.com/Paracetamol56/Observeur2 */
+
 #include "date.h"
 
 Date::Date(unsigned int day, unsigned int month, unsigned int year,
@@ -39,7 +47,7 @@ double Date::toJulianDay()
 
 double Date::toGMST()
 {
-    double meanGreenwichSiderealTime;
+    double greenwichMeanSiderealTime;
 
     Date date0 = *this;
     date0.m_hour = 0;
@@ -61,8 +69,8 @@ double Date::toGMST()
     thetaH = (double)thetaH * 0.0002777778;
 
     // Add time at midnight and time of day
-    meanGreenwichSiderealTime = theta0 + thetaH;
-    meanGreenwichSiderealTime = meanGreenwichSiderealTime >= 0 ? (meanGreenwichSiderealTime - (long)(meanGreenwichSiderealTime * 0.0416666667) * 24) : (meanGreenwichSiderealTime + 24);
+    greenwichMeanSiderealTime = theta0 + thetaH;
+    greenwichMeanSiderealTime = greenwichMeanSiderealTime >= 0 ? (greenwichMeanSiderealTime - (long)(greenwichMeanSiderealTime * 0.0416666667) * 24) : (greenwichMeanSiderealTime + 24);
 
-    return meanGreenwichSiderealTime;
+    return greenwichMeanSiderealTime;
 }

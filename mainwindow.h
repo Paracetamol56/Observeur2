@@ -34,10 +34,10 @@
 #include "objectform.h"
 #include "dialogs/objectdialog.h"
 #include "dialogs/settingdialog.h"
+#include "dialogs/instrumentcalculationsdialog.h"
 
 // Error handling
 #include "errorhandler.h"
-
 
 namespace Ui
 {
@@ -49,7 +49,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-
     Ui::MainWindow *m_ui = nullptr;
     QSqlDatabase *m_db = nullptr;
     QVector<unsigned int> m_selectedId = {};
@@ -63,15 +62,13 @@ private:
     QVector<QString> m_typeFilter = {};
 
 public:
-
-    explicit MainWindow(QWidget* parent = 0);
+    explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
     void updateObject();
     void tableSelectionChanged();
 
 private slots:
-
     void on_actionA_propos_triggered();
     void on_actionQuitter_triggered();
     void on_AllConsellationsButton_clicked();
@@ -98,6 +95,7 @@ private slots:
     void on_newValuesSaved();
     void on_actionAide_en_ligne_triggered();
     void on_actionEditer_les_cartes_triggered();
+    void on_actionCalculs_pour_instruments_triggered();
 };
 
 #endif // MAINWINDOW_H

@@ -20,6 +20,7 @@ SOURCES += \
     angleutilities/date.cpp \
     angleutilities/equatorialposition.cpp \
     angleutilities/horizontalposition.cpp \
+    dialogs/instrumentcalculationsdialog.cpp \
     dialogs/objectdialog.cpp \
     dialogs/settingdialog.cpp \
     tables/mapmodificationdialog.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     angleutilities/date.h \
     angleutilities/equatorialposition.h \
     angleutilities/horizontalposition.h \
+    dialogs/instrumentcalculationsdialog.h \
     dialogs/objectdialog.h \
     dialogs/settingdialog.h \
     tables/mapmodificationdialog.h \
@@ -52,6 +54,7 @@ HEADERS += \
     objectform.h
 
 FORMS += \
+    dialogs/instrumentcalculationsdialog.ui \
     mainwindow.ui \
     dialogs/objectdialog.ui \
     dialogs/settingdialog.ui \

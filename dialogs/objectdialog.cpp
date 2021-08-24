@@ -1,3 +1,11 @@
+/**
+ * Created on Tue Jul 31 2021
+ * 
+ * Copyright (c) 2021 - Mathéo G - All Right Reserved
+ * 
+ * Licensed under the Apache License, Version 2.0
+ * Available on GitHub at https://github.com/Paracetamol56/Observeur2 */
+
 #include "objectdialog.h"
 #include "ui_objectdialog.h"
 
@@ -80,7 +88,7 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
         QPushButton *messierPushButton = new QPushButton(this);
         messierPushButton->setText("Simbad");
         messierPushButton->setIcon(QIcon(":/Ressources/icons/icons8-lien-externe-96.png"));
-        connect(messierPushButton, SIGNAL(clicked()), this, SLOT(on_messierPushButton_clicked()));
+        connect(messierPushButton, &QPushButton::released, this, &ObjectDialog::on_messierPushButton_clicked);
         messierLayout->addWidget(m_messierEdit);
         messierLayout->addWidget(messierPushButton);
         m_ui->formLayout->addRow("Messier", messierLayout);
@@ -95,7 +103,7 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
         QPushButton *ngcPushButton = new QPushButton(this);
         ngcPushButton->setText("Simbad");
         ngcPushButton->setIcon(QIcon(":/Ressources/icons/icons8-lien-externe-96.png"));
-        connect(ngcPushButton, SIGNAL(clicked()), this, SLOT(on_ngcPushButton_clicked()));
+        connect(ngcPushButton, &QPushButton::released, this, &ObjectDialog::on_ngcPushButton_clicked);
         ngcLayout->addWidget(m_ngcEdit);
         ngcLayout->addWidget(ngcPushButton);
         m_ui->formLayout->addRow("NGC", ngcLayout);
@@ -258,31 +266,45 @@ void ObjectDialog::on_ClosePushButton_clicked()
 
 void ObjectDialog::computeGraph()
 {
-    // Julian days to compute
-    /*
-    Jan 2451558.50000
-    Feb 2451589.50000
-    Mar 2451618.50000
-    Avr 2451649.50000
-    Mai 2451679.50000
-    Jun 2451710.50000
-    Jul 2451740.50000
-    Aug 2451771.50000
-    Sep 2451802.50000
-    Oct 2451832.50000
-    Nov 2451863.50000
-    Dec 2451893.50000
-    */
-
-    EquatorialPosition test("18h37m56.00s", "38°47'08\".00");
-    HorizontalPosition hpTest = test.toHorizontalPosition(14, 8, 2021, 21, 0, 0);
-    qDebug() << "Azi : " << hpTest.getAzimuth().getDegreeAngle();
-    qDebug() << "Alt : " << hpTest.getAltitude().getDegreeAngle();
+    EquatorialPosition objectPosition(m_rightAscension, m_declination);
 
     QBarSet *set0 = new QBarSet("Masse d'aire");
     QBarSet *set1 = new QBarSet("Elévation (°)");
-    *set0 << 1 << 2 << 3 << 4 << 5 << 6 << 6 << 5 << 4 << 3 << 2 << 1;
-    *set1 << 60 << 50 << 40 << 30 << 20 << 10 << 10 << 20 << 30 << 40 << 50 << 60;
+
+    QVector<Date> datesVector = {
+        Date(16, 1, 2020, 1, 0, 0),
+        Date(16, 2, 2020, 1, 0, 0),
+        Date(16, 3, 2020, 1, 0, 0),
+        Date(16, 4, 2020, 1, 0, 0),
+        Date(16, 5, 2020, 1, 0, 0),
+        Date(16, 6, 2020, 1, 0, 0),
+        Date(16, 7, 2020, 1, 0, 0),
+        Date(16, 8, 2020, 1, 0, 0),
+        Date(16, 9, 2020, 1, 0, 0),
+        Date(16, 10, 2020, 1, 0, 0),
+        Date(16, 11, 2020, 1, 0, 0),
+        Date(16, 12, 2020, 1, 0, 0)
+    };
+
+    QVectorIterator<Date> it(datesVector);
+
+    while (it.hasNext())
+    {
+        HorizontalPosition ObjectHorizontalPosition = objectPosition.toHorizontalPosition(it.next());
+        // Elevation angle
+        Angle elevation = ObjectHorizontalPosition.getAltitude();
+        // Airmass
+        if (elevation <= Angle(0.00))
+        {
+            *set0 << 0.00;
+        }
+        else
+        {
+            *set0 << (1 / cos((PI / 2) - elevation.getTotalRadian()));
+        }
+        // Elevation
+        *set1 << elevation.getTotalDegree();
+    }
 
     QBarSeries *serie0 = new QBarSeries();
     serie0->append(set0);
@@ -305,7 +327,7 @@ void ObjectDialog::computeGraph()
     serie1->attachAxis(axisX);
 
     QValueAxis *axisY0 = new QValueAxis();
-    axisY0->setRange(0, 10);
+    axisY0->setRange(0, 40);
     m_chart->addAxis(axisY0, Qt::AlignLeft);
     serie0->attachAxis(axisY0);
 

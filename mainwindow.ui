@@ -375,9 +375,16 @@
     <addaction name="actionTout_selectionner"/>
     <addaction name="actionEditer_les_cartes"/>
    </widget>
+   <widget class="QMenu" name="menuOutils">
+    <property name="title">
+     <string>Outils</string>
+    </property>
+    <addaction name="actionCalculs_pour_instruments"/>
+   </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuEdition"/>
    <addaction name="menuAffichage"/>
+   <addaction name="menuOutils"/>
    <addaction name="menuAide"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
@@ -469,6 +476,9 @@
    <property name="text">
     <string>Tout selectionner</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
   </action>
   <action name="actionAide_en_ligne">
    <property name="icon">
@@ -478,6 +488,9 @@
    <property name="text">
     <string>Aide en ligne</string>
    </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
   </action>
   <action name="actionSupprimer_un_objet">
    <property name="icon">
@@ -486,6 +499,9 @@
    </property>
    <property name="text">
     <string>Supprimer l'objet</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
    </property>
   </action>
   <action name="actionModifier_un_objet">
@@ -550,6 +566,9 @@
    <property name="text">
     <string>Paramètre</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="actionEditer_les_cartes">
    <property name="icon">
@@ -558,6 +577,15 @@
    </property>
    <property name="text">
     <string>Editer les cartes</string>
+   </property>
+  </action>
+  <action name="actionCalculs_pour_instruments">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-telescope-96.png</normaloff>:/Ressources/icons/icons8-telescope-96.png</iconset>
+   </property>
+   <property name="text">
+    <string>Calculs pour instruments</string>
    </property>
   </action>
  </widget>
