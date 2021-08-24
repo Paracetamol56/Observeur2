@@ -81,7 +81,7 @@ struct MissingFileError
     : FileError
 {
     MissingFileError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", QFile *file = nullptr);
-    virtual void printMessage() override;
+    void printMessage() override;
 };
 
 
@@ -91,7 +91,7 @@ struct SqlError
     QSqlQuery *m_sqlQuery = nullptr;
 
     SqlError(ErrorPriority prioryty = ErrorPriority::Undefined, QString message = "", QSqlQuery *sqlQuery = nullptr);
-    virtual void printMessage() override;
+    void printMessage() override;
 };
 
 /*
