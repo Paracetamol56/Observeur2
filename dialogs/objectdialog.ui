@@ -23,6 +23,119 @@
      <item>
       <layout class="QFormLayout" name="formLayout"/>
      </item>
+     <item>
+      <layout class="QVBoxLayout" name="chartVerticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QGroupBox" name="typeSelectionGroupBox">
+           <property name="title">
+            <string>Type d'échantillonnage</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QRadioButton" name="yearSamplingRadioButton">
+              <property name="text">
+               <string>Au cours de l'année</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="daySamplingRadioButton">
+              <property name="text">
+               <string>Un jour</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="dateGroupBox">
+           <property name="title">
+            <string>Date d'échantillonnage</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1,0">
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>Le</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="daySpinBox">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>30</number>
+                </property>
+                <property name="value">
+                 <number>15</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="ofMonthLabel">
+                <property name="text">
+                 <string>du mois</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hourHorizontalLayout" stretch="0,1,0,1,0">
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>A</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="hourSpinBox">
+                <property name="maximum">
+                 <number>23</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>h</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="minuteSpinBox">
+                <property name="maximum">
+                 <number>59</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>m</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
    <item>

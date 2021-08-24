@@ -57,19 +57,21 @@ private:
 
     // Graph
     QChartView *m_chartView = nullptr;
-    QChart *m_chart = nullptr;
 
 public:
     explicit ObjectDialog(QWidget *parent = nullptr, QSqlDatabase *database = nullptr, const unsigned int objectId = 0);
     ~ObjectDialog();
 
-    void computeGraph();
+    void computeYearGraph();
+    void computeDayGraph();
 
 private slots:
     void on_messierPushButton_clicked();
     void on_ngcPushButton_clicked();
     void on_ModifyPushButton_clicked();
     void on_ClosePushButton_clicked();
+    void on_typeSelectionGroupBox_clicked();
+    void on_dateGroupBox_clicked();
 };
 
 #endif // OBJECTDIALOG_H
