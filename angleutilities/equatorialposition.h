@@ -35,7 +35,7 @@ public:
 
     Angle getDistance(EquatorialPosition *other = nullptr);
 
-    HorizontalPosition toHorizontalPosition(unsigned int day, unsigned int month, unsigned int year, unsigned int hour, unsigned int minute, unsigned int second);
+    HorizontalPosition toHorizontalPosition(Date date);
 };
 
 #endif // EQUATORIALPOSITION_H

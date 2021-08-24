@@ -9,11 +9,8 @@
 class TypeTable
     : public TableDialog
 {
-
 public:
-
     TypeTable(QWidget *parent = nullptr, QSqlDatabase *db = nullptr);
-
     void tablePopulate() override;
 };
 

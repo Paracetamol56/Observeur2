@@ -1,3 +1,11 @@
+/**
+ * Created on Tue Jul 31 2021
+ * 
+ * Copyright (c) 2021 - Mathéo G - All Right Reserved
+ * 
+ * Licensed under the Apache License, Version 2.0
+ * Available on GitHub at https://github.com/Paracetamol56/Observeur2 */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -548,7 +556,7 @@ void MainWindow::on_actionTout_selectionner_triggered()
 
 void MainWindow::on_actionNouvel_objet_triggered()
 {
-    ObjectForm *newObjectWindow = new ObjectForm(nullptr, m_db, 0);
+    ObjectForm *newObjectWindow = new ObjectForm(this, m_db, 0);
     newObjectWindow->setWindowFlag(Qt::Window);
     connect(newObjectWindow, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
     newObjectWindow->show();
@@ -559,7 +567,7 @@ void MainWindow::on_actionModifier_un_objet_triggered()
 {
     if (m_selectedId.count() == 1)
     {
-        ObjectForm *modifyObjectWindow = new ObjectForm(nullptr, m_db, m_selectedId.first());
+        ObjectForm *modifyObjectWindow = new ObjectForm(this, m_db, m_selectedId.first());
         modifyObjectWindow->setWindowFlag(Qt::Window);
         connect(modifyObjectWindow, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
         modifyObjectWindow->show();
@@ -661,6 +669,18 @@ void MainWindow::on_actionAfficher_la_todo_list_triggered()
 }
 
 
+void MainWindow::on_actionCalculs_pour_instruments_triggered()
+{
+    InstrumentCalculationsDialog *instrumentDialog = new InstrumentCalculationsDialog(this);
+    instrumentDialog->setWindowFlag(Qt::Window);
+    instrumentDialog->show();
+}
+
+
+
+
+
+
 
 
 
@@ -668,20 +688,54 @@ void MainWindow::on_actionAfficher_la_todo_list_triggered()
 
 void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos)
 {
-    QModelIndex index = m_ui->objectTableView->indexAt(pos);
-
     QMenu contextMenu;
-    contextMenu.addAction(tr("Modifier"));
-    contextMenu.addAction(tr("Ajouter à la todo list"));
-    contextMenu.addAction(tr("Tout selectionner"));
-    contextMenu.addAction(tr("Supprimer"));
 
-    QAction* setAction = contextMenu.exec(m_ui->objectTableView->viewport()->mapToGlobal(pos));
-    if (setAction != 0)
-    {
-        qDebug() << index;
-    }
+    // Add object action
+    QAction addAction("Ajouter", &contextMenu);
+    connect(&addAction, SIGNAL(triggered()), this, SLOT(on_actionNouvel_objet_triggered()));
+
+    // Modification action
+    QAction modifyAction("Modifier", &contextMenu);
+    connect(&modifyAction, SIGNAL(triggered()), this, SLOT(on_actionModifier_un_objet_triggered()));
+    if (m_selectedId.count() != 1)
+        modifyAction.setEnabled(false);
+
+    // Show details action
+    QAction detailAction("Voir en détail", &contextMenu);
+    connect(&detailAction, SIGNAL(triggered()), this, SLOT(on_actionAfficher_les_d_tails_de_l_objet_triggered()));
+    if (m_selectedId.count() != 1)
+        detailAction.setEnabled(false);
+
+    // Delete object action
+    QAction deleteAction("Supprimer", &contextMenu);
+    connect(&deleteAction, SIGNAL(triggered()), this, SLOT(on_actionSupprimer_un_objet_triggered()));
+    if (m_selectedId.count() < 1)
+        deleteAction.setEnabled(false);
+
+    // Select all action
+    QAction selectAllAction("Tout selectionner", &contextMenu);
+    connect(&selectAllAction, SIGNAL(triggered()), this, SLOT(on_actionTout_selectionner_triggered()));
+
+    // Add to the todo list action
+    QAction todoListAction("Ajouter à la todo list", &contextMenu);
+    connect(&todoListAction, SIGNAL(triggered()), this, SLOT(/* todo */));
+    if (m_selectedId.count() < 1)
+        todoListAction.setEnabled(false);
+
+    // Append every actions to the context menu
+    contextMenu.addAction(&addAction);
+    contextMenu.addAction(&modifyAction);
+    contextMenu.addAction(&detailAction);
+    contextMenu.addAction(&deleteAction);
+    contextMenu.addSeparator();
+    contextMenu.addAction(&selectAllAction);
+    contextMenu.addAction(&todoListAction);
+
+    contextMenu.exec(m_ui->objectTableView->viewport()->mapToGlobal(pos));
 }
+
+
+
 
 
 

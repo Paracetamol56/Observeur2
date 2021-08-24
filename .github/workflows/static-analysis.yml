@@ -1,0 +1,31 @@
+name: static-analysis
+
+on: [push, pull_request]
+
+jobs:
+  include-guards:
+    name: Check include guards
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Check include guards in /
+      uses: sbeyer/include-guards-check-action@v1.0.0
+      with:
+        path: '/'
+        pattern: '{file_base}_H'
+    - name: Check include guards in angleutilities/
+      uses: sbeyer/include-guards-check-action@v1.0.0
+      with:
+        path: 'angleutilities/'
+        pattern: '{file_base}_H'
+    - name: Check include guards in dialogs/
+      uses: sbeyer/include-guards-check-action@v1.0.0
+      with:
+        path: 'dialogs/'
+        pattern: '{file_base}_H'
+    - name: Check include guards in tables/
+      uses: sbeyer/include-guards-check-action@v1.0.0
+      with:
+        path: 'tables/'
+        pattern: '{file_base}_H'

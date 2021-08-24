@@ -1,3 +1,11 @@
+/**
+ * Created on Tue Jul 31 2021
+ * 
+ * Copyright (c) 2021 - Mathéo G - All Right Reserved
+ * 
+ * Licensed under the Apache License, Version 2.0
+ * Available on GitHub at https://github.com/Paracetamol56/Observeur2 */
+
 #include "angle.h"
 
 // Constructor (from a double)
@@ -139,6 +147,11 @@ double Angle::getTotalHour() const
     {
         return (360.00 + m_totalDegree) / 15;
     }
+}
+
+void Angle::setTotalRadian(double totalRadian)
+{
+    m_totalDegree = std::fmod(totalRadian * 180.00 / PI, 360);
 }
 
 void Angle::setTotalDegree(double totalDegree)

@@ -642,7 +642,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce text support &lt;a href=&quot;https://fr.wikipedia.org/wiki/Markdown&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;markdown&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html>&lt;head/>&lt;body>&lt;p>Ce text support &lt;a href=&quot;https://fr.wikipedia.org/wiki/Markdown&quot;>&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;>markdown&lt;/span>&lt;/a>&lt;/p>&lt;/body>&lt;/html></string>
               </property>
              </widget>
             </item>

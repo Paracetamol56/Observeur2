@@ -27,6 +27,7 @@ public:
     double getTotalRadian() const;
     double getTotalDegree() const;
     double getTotalHour() const;
+    void setTotalRadian(double totalRadian = 0.00);
     void setTotalDegree(double totalDegree = 0.00);
     void setTotalHour(double totalHour = 0.00);
 
