@@ -24,208 +24,7 @@
      <verstretch>1</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,2">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetMinimumSize</enum>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>100</horstretch>
-        <verstretch>100</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="tabPosition">
-       <enum>QTabWidget::North</enum>
-      </property>
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="Constellations">
-       <attribute name="icon">
-        <iconset resource="ressources.qrc">
-         <normaloff>:/Ressources/icons/icons8-constellation-96.png</normaloff>:/Ressources/icons/icons8-constellation-96.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string>Constellations</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QCheckBox" name="AllConstellationCheckBox">
-          <property name="text">
-           <string>Tout selectionner</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-          <property name="tristate">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QListWidget" name="ConstellationListWidget"/>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="leftMargin">
-           <number>6</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>6</number>
-          </property>
-          <property name="bottomMargin">
-           <number>6</number>
-          </property>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="AllConsellationsButton">
-            <property name="text">
-             <string>Toutes les constellations</string>
-            </property>
-            <property name="icon">
-             <iconset resource="ressources.qrc">
-              <normaloff>:/Ressources/icons/icons8-constellation-96.png</normaloff>:/Ressources/icons/icons8-constellation-96.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="Periode">
-       <attribute name="icon">
-        <iconset resource="ressources.qrc">
-         <normaloff>:/Ressources/icons/icons8-event-96.png</normaloff>:/Ressources/icons/icons8-event-96.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string>Periode</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="Types">
-       <attribute name="icon">
-        <iconset resource="ressources.qrc">
-         <normaloff>:/Ressources/icons/icons8-nebula-96.png</normaloff>:/Ressources/icons/icons8-nebula-96.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string>Types</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QCheckBox" name="AllTypeCheckBox">
-          <property name="text">
-           <string>Tout selectionner</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QListWidget" name="TypeListWidget"/>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="leftMargin">
-           <number>6</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>6</number>
-          </property>
-          <property name="bottomMargin">
-           <number>6</number>
-          </property>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="AllTypesButton">
-            <property name="text">
-             <string>Tous les types</string>
-            </property>
-            <property name="icon">
-             <iconset resource="ressources.qrc">
-              <normaloff>:/Ressources/icons/icons8-nebula-96.png</normaloff>:/Ressources/icons/icons8-nebula-96.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="leftMargin">
@@ -357,6 +156,7 @@
      <addaction name="actionDark"/>
      <addaction name="actionNight_vision"/>
     </widget>
+    <addaction name="actionAfficher_les_filtres"/>
     <addaction name="actionAfficher_toute_les_constellations"/>
     <addaction name="actionAfficher_tous_les_types"/>
     <addaction name="actionAfficher_tous_les_objets"/>
@@ -411,8 +211,204 @@
    <addaction name="actionSupprimer_un_objet"/>
    <addaction name="actionTout_selectionner"/>
    <addaction name="separator"/>
+   <addaction name="actionAfficher_les_filtres"/>
    <addaction name="actionAfficher_les_d_tails_de_l_objet"/>
    <addaction name="actionAfficher_la_todo_list"/>
+  </widget>
+  <widget class="QDockWidget" name="filterDockWidget">
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>100</horstretch>
+         <verstretch>100</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="tabPosition">
+        <enum>QTabWidget::North</enum>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="Constellations">
+        <attribute name="icon">
+         <iconset resource="ressources.qrc">
+          <normaloff>:/Ressources/icons/icons8-constellation-96.png</normaloff>:/Ressources/icons/icons8-constellation-96.png</iconset>
+        </attribute>
+        <attribute name="title">
+         <string>Constellations</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="AllConstellationCheckBox">
+           <property name="text">
+            <string>Tout selectionner</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <property name="tristate">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="ConstellationListWidget"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="leftMargin">
+            <number>6</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>6</number>
+           </property>
+           <property name="bottomMargin">
+            <number>6</number>
+           </property>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="AllConsellationsButton">
+             <property name="text">
+              <string>Toutes les constellations</string>
+             </property>
+             <property name="icon">
+              <iconset resource="ressources.qrc">
+               <normaloff>:/Ressources/icons/icons8-constellation-96.png</normaloff>:/Ressources/icons/icons8-constellation-96.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="Periode">
+        <attribute name="icon">
+         <iconset resource="ressources.qrc">
+          <normaloff>:/Ressources/icons/icons8-event-96.png</normaloff>:/Ressources/icons/icons8-event-96.png</iconset>
+        </attribute>
+        <attribute name="title">
+         <string>Periode</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="Types">
+        <attribute name="icon">
+         <iconset resource="ressources.qrc">
+          <normaloff>:/Ressources/icons/icons8-nebula-96.png</normaloff>:/Ressources/icons/icons8-nebula-96.png</iconset>
+        </attribute>
+        <attribute name="title">
+         <string>Types</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="AllTypeCheckBox">
+           <property name="text">
+            <string>Tout selectionner</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="TypeListWidget"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="leftMargin">
+            <number>6</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>6</number>
+           </property>
+           <property name="bottomMargin">
+            <number>6</number>
+           </property>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="AllTypesButton">
+             <property name="text">
+              <string>Tous les types</string>
+             </property>
+             <property name="icon">
+              <iconset resource="ressources.qrc">
+               <normaloff>:/Ressources/icons/icons8-nebula-96.png</normaloff>:/Ressources/icons/icons8-nebula-96.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <action name="actionQuitter">
    <property name="icon">
@@ -451,6 +447,9 @@
    </property>
   </action>
   <action name="actionNight_vision">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="ressources.qrc">
      <normaloff>:/Ressources/icons/icons8-vision-96.png</normaloff>:/Ressources/icons/icons8-vision-96.png</iconset>
@@ -588,9 +587,60 @@
     <string>Calculs pour instruments</string>
    </property>
   </action>
+  <action name="actionAfficher_les_filtres">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-filtre-rempli-96.png</normaloff>:/Ressources/icons/icons8-filtre-rempli-96.png</iconset>
+   </property>
+   <property name="text">
+    <string>Afficher les filtres</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="ressources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionAfficher_les_filtres</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>filterDockWidget</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>195</x>
+     <y>393</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>filterDockWidget</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>actionAfficher_les_filtres</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>393</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

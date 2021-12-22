@@ -45,5 +45,6 @@
         <file>Ressources/icons/icons8-delete-row-96.png</file>
         <file>Ressources/icons/icons8-save-96.png</file>
         <file>Ressources/icons/icons8-edit-row-96.png</file>
+        <file>Ressources/icons/icons8-filtre-rempli-96.png</file>
     </qresource>
 </RCC>
