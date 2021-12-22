@@ -66,7 +66,8 @@ FORMS += \
 RESOURCES += \
     ressources.qrc \
     light.qrc \
-    dark.qrc
+    dark.qrc \
+    red.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -29,6 +29,10 @@ MainWindow::MainWindow(QWidget* parent)
         {
             on_actionLight_triggered();
         }
+        else if (settings.value("theme").toString() == "red")
+        {
+            on_actionNight_vision_triggered();
+        }
     }
     else
     {
@@ -543,7 +547,21 @@ void MainWindow::on_actionDark_triggered()
 
 void MainWindow::on_actionNight_vision_triggered()
 {
-    //todo
+    QFile qssFile(":/qdarkstyle/red/Ressources/red/red.qss");
+
+    if (qssFile.exists() == false)
+    {
+        MissingFileError errorMessage(ErrorPriority::Critical, "Le fichier de style est introuvable", &qssFile);
+        errorMessage.printMessage();
+    }
+    else
+    {
+        QSettings settings;
+        settings.setValue("theme", "red");
+        qssFile.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&qssFile);
+        qApp->setStyleSheet(ts.readAll());
+    }
 }
 
 
