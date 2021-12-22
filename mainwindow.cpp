@@ -29,6 +29,10 @@ MainWindow::MainWindow(QWidget* parent)
         {
             on_actionLight_triggered();
         }
+        else if (settings.value("theme").toString() == "red")
+        {
+            on_actionNight_vision_triggered();
+        }
     }
     else
     {
@@ -553,7 +557,7 @@ void MainWindow::on_actionNight_vision_triggered()
     else
     {
         QSettings settings;
-        settings.setValue("theme", "dark");
+        settings.setValue("theme", "red");
         qssFile.open(QFile::ReadOnly | QFile::Text);
         QTextStream ts(&qssFile);
         qApp->setStyleSheet(ts.readAll());
