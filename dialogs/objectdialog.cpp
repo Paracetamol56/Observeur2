@@ -228,6 +228,12 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
     }
 
     m_db->close();
+
+    // Chart
+    m_chartView = new QChartView();
+    computeYearGraph();
+    m_chartView->setRenderHint(QPainter::Antialiasing);
+    m_ui->chartVerticalLayout->addWidget(m_chartView);
 }
 
 
@@ -329,10 +335,7 @@ void ObjectDialog::computeYearGraph()
     chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
 
-    m_chartView = new QChartView(chart);
-    m_chartView->setRenderHint(QPainter::Antialiasing);
-
-    m_ui->chartVerticalLayout->addWidget(m_chartView);
+    m_chartView->setChart(chart);
 }
 
 
@@ -367,16 +370,12 @@ void ObjectDialog::computeDayGraph()
     chart->createDefaultAxes();
     chart->setTitle("Graphe de visibilité");
 
-    m_chartView = new QChartView(chart);
-    m_chartView->setRenderHint(QPainter::Antialiasing);
-
-    m_chartView = new QChartView(chart);
-
-    m_ui->chartVerticalLayout->addWidget(m_chartView);
+    m_chartView->setChart(chart);
+    //m_ui->chartVerticalLayout->addWidget(m_chartView);
 }
 
 
-void ObjectDialog::on_typeSelectionGroupBox_clicked()
+void ObjectDialog::on_typeChange()
 {
     if (m_ui->yearSamplingRadioButton->isChecked())
     {
@@ -401,7 +400,7 @@ void ObjectDialog::on_typeSelectionGroupBox_clicked()
 }
 
 
-void ObjectDialog::on_dateGroupBox_clicked()
+void ObjectDialog::on_dateChange()
 {
     if (m_ui->yearSamplingRadioButton->isChecked())
     {

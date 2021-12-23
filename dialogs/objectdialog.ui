@@ -24,7 +24,7 @@
       <layout class="QFormLayout" name="formLayout"/>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="chartVerticalLayout">
+      <layout class="QVBoxLayout" name="chartVerticalLayout" stretch="0">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
@@ -182,5 +182,90 @@
  <resources>
   <include location="../ressources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>yearSamplingRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_typeChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>daySamplingRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_typeChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>460</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>daySpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_dateChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>705</x>
+     <y>194</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hourSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_dateChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>451</x>
+     <y>509</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>minuteSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_dateChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>983</x>
+     <y>509</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_dateChange()</slot>
+  <slot>on_typeChange()</slot>
+ </slots>
 </ui>

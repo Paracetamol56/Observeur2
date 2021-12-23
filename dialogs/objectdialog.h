@@ -28,6 +28,12 @@
 
 // QtCharts
 #include <QtCharts>
+#include <QChartView>
+#include <QValueAxis>
+#include <QPainter>
+#include <QBarSet>
+#include <QLineSeries>
+#include <QBarSeries>
 
 #include "angleutilities/angle.h"
 #include "angleutilities/equatorialposition.h"
@@ -70,8 +76,8 @@ private slots:
     void on_ngcPushButton_clicked();
     void on_ModifyPushButton_clicked();
     void on_ClosePushButton_clicked();
-    void on_typeSelectionGroupBox_clicked();
-    void on_dateGroupBox_clicked();
+    void on_typeChange();
+    void on_dateChange();
 };
 
 #endif // OBJECTDIALOG_H
