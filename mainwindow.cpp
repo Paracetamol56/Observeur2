@@ -695,6 +695,14 @@ void MainWindow::on_actionCalculs_pour_instruments_triggered()
 }
 
 
+void MainWindow::on_actionCalculs_solaires_triggered()
+{
+    SunCalculationsDialog * sunDialog = new SunCalculationsDialog(this);
+    sunDialog->setWindowFlag(Qt::Window);
+    sunDialog->show();
+}
+
+
 
 
 
@@ -751,6 +759,9 @@ void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos
 
     contextMenu.exec(m_ui->objectTableView->viewport()->mapToGlobal(pos));
 }
+
+
+
 
 
 

@@ -180,6 +180,7 @@
      <string>Outils</string>
     </property>
     <addaction name="actionCalculs_pour_instruments"/>
+    <addaction name="actionCalculs_solaires"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuEdition"/>
@@ -603,6 +604,15 @@
    </property>
    <property name="text">
     <string>Afficher les filtres</string>
+   </property>
+  </action>
+  <action name="actionCalculs_solaires">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/Ressources/icons/icons8-soleil-96.png</normaloff>:/Ressources/icons/icons8-soleil-96.png</iconset>
+   </property>
+   <property name="text">
+    <string>Calculs solaires</string>
    </property>
   </action>
  </widget>

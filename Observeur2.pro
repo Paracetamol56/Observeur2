@@ -23,6 +23,7 @@ SOURCES += \
     dialogs/instrumentcalculationsdialog.cpp \
     dialogs/objectdialog.cpp \
     dialogs/settingdialog.cpp \
+    dialogs/suncalculationsdialog.cpp \
     tables/mapmodificationdialog.cpp \
     tables/mapstable.cpp \
     tables/constellationtable.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     dialogs/instrumentcalculationsdialog.h \
     dialogs/objectdialog.h \
     dialogs/settingdialog.h \
+    dialogs/suncalculationsdialog.h \
     tables/mapmodificationdialog.h \
     tables/mapstable.h \
     tables/constellationtable.h \
@@ -55,12 +57,13 @@ HEADERS += \
 
 FORMS += \
     dialogs/instrumentcalculationsdialog.ui \
-    mainwindow.ui \
     dialogs/objectdialog.ui \
     dialogs/settingdialog.ui \
+    dialogs/suncalculationsdialog.ui \
     tables/mapmodificationdialog.ui \
     tables/mapstable.ui \
     tables/tabledialog.ui \
+    mainwindow.ui \
     objectform.ui
 
 RESOURCES += \
