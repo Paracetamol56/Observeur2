@@ -234,6 +234,10 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
     computeYearGraph();
     m_chartView->setRenderHint(QPainter::Antialiasing);
     m_ui->chartVerticalLayout->addWidget(m_chartView);
+
+    QDate currentDate = QDate::currentDate();
+    m_ui->dateEdit->setDate(currentDate);
+    m_ui->dayDateGroupBox->hide();
 }
 
 
@@ -289,7 +293,7 @@ void ObjectDialog::computeYearGraph()
         // Elevation angle
         Angle elevation = ObjectHorizontalPosition.getAltitude();
         // Airmass
-        if (elevation <= Angle(0.00))
+        if (elevation <= Angle(5.0))
         {
             *set0 << 0.00;
         }
@@ -346,32 +350,53 @@ void ObjectDialog::computeDayGraph()
     QLineSeries *serie0 = new QLineSeries();
     QLineSeries *serie1 = new QLineSeries();
 
+    serie0->setName("Elévation (°)");
+    serie1->setName("Horizon");
+
     // Populate sets
     // Static variables for each value
-    Date date(m_ui->daySpinBox->value(), 1, 2020, 0, 0, 0);
+    QDate editedDate = m_ui->dateEdit->date();
+    Date date(editedDate.day(), editedDate.month(), editedDate.year(), 0, 0, 0);
     //
-    for (int i = 0; i <= 24; ++i)
+    for (float i = 0; i <= 24.0; i += 0.5f)
     {
-        date.m_hour = i;
+        date.m_hour = std::trunc(i);
+        date.m_minute = (i - date.m_hour) * 60;
+
 
         HorizontalPosition ObjectHorizontalPosition = objectPosition.toHorizontalPosition(date);
         // Elevation angle
         Angle elevation = ObjectHorizontalPosition.getAltitude();
-        // Airmass
-        *serie0 << QPointF(i, (1 / cos((PI / 2) - elevation.getTotalRadian())));
         // Elevation
-        *serie1 << QPointF(i, elevation.getTotalDegree());
+        *serie0 << QPointF(i, elevation.getTotalDegree());
     }
 
+    // Horizon
+    *serie1 << QPointF(0.0, 0.0) << QPointF(24.0, 0.0);
+
     QChart *chart = new QChart();
-    chart->legend()->hide();
     chart->addSeries(serie0);
     chart->addSeries(serie1);
-    chart->createDefaultAxes();
+
+    QValueAxis *axisY0 = new QValueAxis();
+    axisY0->setRange(-90.0, 90.0);
+    chart->addAxis(axisY0, Qt::AlignLeft);
+    serie0->attachAxis(axisY0);
+    serie1->attachAxis(axisY0);
+
+    QValueAxis *axisX0 = new QValueAxis();
+    axisX0->setRange(0, 24);
+    axisX0->setTickCount(13);
+    chart->addAxis(axisX0, Qt::AlignBottom);
+    serie0->attachAxis(axisX0);
+    serie1->attachAxis(axisX0);
+
     chart->setTitle("Graphe de visibilité");
 
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
     m_chartView->setChart(chart);
-    //m_ui->chartVerticalLayout->addWidget(m_chartView);
 }
 
 
@@ -379,22 +404,16 @@ void ObjectDialog::on_typeChange()
 {
     if (m_ui->yearSamplingRadioButton->isChecked())
     {
-        // Enable ui elements
-        m_ui->label_3->setEnabled(true);
-        m_ui->hourSpinBox->setEnabled(true);
-        m_ui->label_4->setEnabled(true);
-        m_ui->minuteSpinBox->setEnabled(true);
-        m_ui->label_5->setEnabled(true);
+        // Update ui
+        m_ui->yearDateGroupBox->show();
+        m_ui->dayDateGroupBox->hide();
         computeYearGraph();
     }
     else if (m_ui->daySamplingRadioButton->isChecked())
     {
-        // Disable ui elements
-        m_ui->label_3->setEnabled(false);
-        m_ui->hourSpinBox->setEnabled(false);
-        m_ui->label_4->setEnabled(false);
-        m_ui->minuteSpinBox->setEnabled(false);
-        m_ui->label_5->setEnabled(false);
+        // Update ui
+        m_ui->yearDateGroupBox->hide();
+        m_ui->dayDateGroupBox->show();
         computeDayGraph();
     }
 }
