@@ -15,6 +15,11 @@ SunCalculationsDialog::SunCalculationsDialog(QWidget *parent) :
 {
     m_ui->setupUi(this);
 
+    // Set date tu current day
+    QDate currentDate = QDate::currentDate();
+    m_ui->daySpinBox->setValue(currentDate.day());
+    m_ui->monthComboBox->setCurrentIndex(currentDate.month() - 1);
+
     // Get local coordinates from settings
     QSettings settings;
 
