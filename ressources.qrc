@@ -50,5 +50,6 @@
         <file>Ressources/icons/icons8-sun-elevation-96.png</file>
         <file>Ressources/icons/icons8-le-coucher-du-soleil-96.png</file>
         <file>Ressources/icons/icons8-lever-du-soleil-96.png</file>
+        <file>Ressources/icons/icons8-midday-96.png</file>
     </qresource>
 </RCC>

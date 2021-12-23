@@ -26,6 +26,7 @@ private:
     Ui::SunCalculationsDialog *m_ui;
 
     Angle m_latitude = Angle(0.0);
+    Angle m_longitude = Angle(0.0);
 
     // Chart
     QChartView *m_chartView;
