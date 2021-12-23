@@ -332,8 +332,6 @@ void ObjectDialog::computeYearGraph()
     m_chartView = new QChartView(chart);
     m_chartView->setRenderHint(QPainter::Antialiasing);
 
-    m_chartView = new QChartView(chart);
-
     m_ui->chartVerticalLayout->addWidget(m_chartView);
 }
 

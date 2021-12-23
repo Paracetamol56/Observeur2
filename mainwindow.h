@@ -35,6 +35,7 @@
 #include "dialogs/objectdialog.h"
 #include "dialogs/settingdialog.h"
 #include "dialogs/instrumentcalculationsdialog.h"
+#include "dialogs/suncalculationsdialog.h"
 
 // Error handling
 #include "errorhandler.h"
@@ -96,6 +97,7 @@ private slots:
     void on_actionAide_en_ligne_triggered();
     void on_actionEditer_les_cartes_triggered();
     void on_actionCalculs_pour_instruments_triggered();
+    void on_actionCalculs_solaires_triggered();
 };
 
 #endif // MAINWINDOW_H
