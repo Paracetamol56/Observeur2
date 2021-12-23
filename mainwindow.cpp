@@ -277,25 +277,25 @@ void MainWindow::tableSelectionChanged()
     // Update the menu
     if (m_selectedId.empty())
     {
-        m_ui->menuEdition->actions().at(1)->setEnabled(false); // "Modifier un objet"
-        m_ui->menuEdition->actions().at(2)->setEnabled(false); // "Supprimer un objet"
-        m_ui->menuAffichage->actions().at(3)->setEnabled(false); // "Afficher les détaills de l'objets"
+        m_ui->actionModifier_un_objet->setEnabled(false); // "Modifier un objet"
+        m_ui->actionSupprimer_un_objet->setEnabled(false); // "Supprimer un objet"
+        m_ui->actionAfficher_les_d_tails_de_l_objet->setEnabled(false); // "Afficher les détaills de l'objets"
     }
     else
     {
         if (m_selectedId.count() == 1)
         {
-            m_ui->menuEdition->actions().at(1)->setEnabled(true); // "Modifier un objet"
+            m_ui->actionModifier_un_objet->setEnabled(true); // "Modifier un objet"
             m_ui->menuEdition->actions().at(2)->setText("Supprimer les objets");
-            m_ui->menuEdition->actions().at(2)->setEnabled(true); // "Supprimer les objets"
-            m_ui->menuAffichage->actions().at(3)->setEnabled(true); // "Afficher les détaills de l'objets"
+            m_ui->actionSupprimer_un_objet->setEnabled(true); // "Supprimer les objets"
+            m_ui->actionAfficher_les_d_tails_de_l_objet->setEnabled(true); // "Afficher les détaills de l'objets"
         }
         else
         {
-            m_ui->menuEdition->actions().at(1)->setEnabled(false); // "Modifier un objet"
+            m_ui->actionModifier_un_objet->setEnabled(false); // "Modifier un objet"
             m_ui->menuEdition->actions().at(2)->setText("Supprimer l'objets");
-            m_ui->menuEdition->actions().at(2)->setEnabled(true); // "Supprimer un objet"
-            m_ui->menuAffichage->actions().at(3)->setEnabled(false); // "Afficher les détaills de l'objets"
+            m_ui->actionSupprimer_un_objet->setEnabled(true); // "Supprimer un objet"
+            m_ui->actionAfficher_les_d_tails_de_l_objet->setEnabled(false); // "Afficher les détaills de l'objets"
         }
     }
 }
