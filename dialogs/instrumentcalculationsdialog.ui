@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Calculs pour instruments</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>

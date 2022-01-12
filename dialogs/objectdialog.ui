@@ -23,6 +23,176 @@
      <item>
       <layout class="QFormLayout" name="formLayout"/>
      </item>
+     <item>
+      <layout class="QVBoxLayout" name="chartVerticalLayout" stretch="0">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QGroupBox" name="typeSelectionGroupBox">
+           <property name="title">
+            <string>Type d'échantillonnage</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QRadioButton" name="yearSamplingRadioButton">
+              <property name="text">
+               <string>Au cours de l'année</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="daySamplingRadioButton">
+              <property name="text">
+               <string>Un jour</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="yearDateGroupBox">
+           <property name="title">
+            <string>Date d'échantillonnage</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <property name="leftMargin">
+             <number>3</number>
+            </property>
+            <property name="topMargin">
+             <number>3</number>
+            </property>
+            <property name="rightMargin">
+             <number>3</number>
+            </property>
+            <property name="bottomMargin">
+             <number>3</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1,0">
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>Le</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="daySpinBox">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>30</number>
+                </property>
+                <property name="value">
+                 <number>15</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="ofMonthLabel">
+                <property name="text">
+                 <string>du mois</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hourHorizontalLayout" stretch="0,1,0,1,0">
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>A</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="hourSpinBox">
+                <property name="maximum">
+                 <number>23</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>h</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="minuteSpinBox">
+                <property name="maximum">
+                 <number>59</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>m</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="dayDateGroupBox">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="title">
+            <string>Date d'échantillonnage</string>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <property name="leftMargin">
+             <number>3</number>
+            </property>
+            <property name="topMargin">
+             <number>3</number>
+            </property>
+            <property name="rightMargin">
+             <number>3</number>
+            </property>
+            <property name="bottomMargin">
+             <number>3</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="0,1">
+              <item>
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string>Le</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateEdit" name="dateEdit">
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
    <item>
@@ -69,5 +239,106 @@
  <resources>
   <include location="../ressources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>yearSamplingRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_typeChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>daySamplingRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_typeChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>460</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>daySpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_dateChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>705</x>
+     <y>194</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hourSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_dateChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>451</x>
+     <y>509</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>minuteSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_dateChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>983</x>
+     <y>509</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dateEdit</sender>
+   <signal>dateChanged(QDate)</signal>
+   <receiver>ObjectDialog</receiver>
+   <slot>on_dateChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1003</x>
+     <y>351</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_dateChange()</slot>
+  <slot>on_typeChange()</slot>
+ </slots>
 </ui>

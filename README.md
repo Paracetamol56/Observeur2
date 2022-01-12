@@ -1,5 +1,5 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/paracetamol56/observeur2/badge)](https://www.codefactor.io/repository/github/paracetamol56/observeur2)
-![Progressbar](https://progress-bar.dev/80/?scale=100&title=completion&width=120&color=565656&suffix=%)
+![Progressbar](https://progress-bar.dev/85/?scale=100&title=completion&width=120&color=565656&suffix=%)
 ![QTversion](https://img.shields.io/badge/QT%20version-Qt6-brightgreen)
 ![License](https://img.shields.io/github/license/Paracetamol56/Observeur2?color=informational&label=License)
 ![Issues-open](https://img.shields.io/github/issues-raw/Paracetamol56/Observeur2?label=Open%20issues)

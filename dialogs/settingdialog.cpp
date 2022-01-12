@@ -28,11 +28,19 @@ SettingDialog::SettingDialog(QWidget *parent)
         {
             m_ui->DarkRadioButton->setChecked(true);
             m_ui->LightRadioButton->setChecked(false);
+            m_ui->RedRadioButton->setChecked(false);
         }
         else if (settings.value("theme").toString() == "light")
         {
             m_ui->DarkRadioButton->setChecked(false);
             m_ui->LightRadioButton->setChecked(true);
+            m_ui->RedRadioButton->setChecked(false);
+        }
+        else if (settings.value("theme").toString() == "red")
+        {
+            m_ui->DarkRadioButton->setChecked(false);
+            m_ui->LightRadioButton->setChecked(false);
+            m_ui->RedRadioButton->setChecked(true);
         }
 
         // Database
@@ -73,7 +81,7 @@ void SettingDialog::on_SavePushButton_clicked()
 {
     // Keys stored in settings :
     /*
-     * "theme" ("dark" or "light")
+     * "theme" ("dark", "light" or "red")
      * "database" (path)
      * group "position" :
      *      - latitude (double totalDegree)
@@ -112,6 +120,23 @@ void SettingDialog::on_SavePushButton_clicked()
         else
         {
             settings.setValue("theme", QString("light"));
+            qssFile.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&qssFile);
+            qApp->setStyleSheet(ts.readAll());
+        }
+    }
+    else if (m_ui->RedRadioButton->isChecked())
+    {
+        QFile qssFile(":/qdarkstyle/red/Ressources/red/red.qss");
+
+        if (qssFile.exists() == false)
+        {
+            MissingFileError errorMessage(ErrorPriority::Critical, "Le fichier de style est introuvable", &qssFile);
+            errorMessage.printMessage();
+        }
+        else
+        {
+            settings.setValue("theme", QString("red"));
             qssFile.open(QFile::ReadOnly | QFile::Text);
             QTextStream ts(&qssFile);
             qApp->setStyleSheet(ts.readAll());

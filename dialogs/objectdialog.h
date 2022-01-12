@@ -28,6 +28,12 @@
 
 // QtCharts
 #include <QtCharts>
+#include <QChartView>
+#include <QValueAxis>
+#include <QPainter>
+#include <QBarSet>
+#include <QLineSeries>
+#include <QBarSeries>
 
 #include "angleutilities/angle.h"
 #include "angleutilities/equatorialposition.h"
@@ -57,19 +63,21 @@ private:
 
     // Graph
     QChartView *m_chartView = nullptr;
-    QChart *m_chart = nullptr;
 
 public:
     explicit ObjectDialog(QWidget *parent = nullptr, QSqlDatabase *database = nullptr, const unsigned int objectId = 0);
     ~ObjectDialog();
 
-    void computeGraph();
+    void computeYearGraph();
+    void computeDayGraph();
 
 private slots:
     void on_messierPushButton_clicked();
     void on_ngcPushButton_clicked();
     void on_ModifyPushButton_clicked();
     void on_ClosePushButton_clicked();
+    void on_typeChange();
+    void on_dateChange();
 };
 
 #endif // OBJECTDIALOG_H

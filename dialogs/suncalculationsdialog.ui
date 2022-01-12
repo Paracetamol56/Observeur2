@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SunCalculationsDialog</class>
+ <widget class="QWidget" name="SunCalculationsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>758</width>
+    <height>669</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QSpinBox" name="daySpinBox">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>31</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="monthComboBox">
+       <item>
+        <property name="text">
+         <string>Janvier</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Février</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Mars</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Avril</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Mai</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Juin</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Juillet</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Août</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Septembre</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Octobre</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Novembre</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Décembre</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="elevationLayout" stretch="0,1,3">
+     <item>
+      <widget class="QLabel" name="elevationLabel_1">
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../ressources.qrc">:/Ressources/icons/icons8-sun-elevation-96.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="elevationLabel_2">
+       <property name="text">
+        <string>Elévation</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="elevationLineEdit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="EoTLayout" stretch="0,1,3">
+     <item>
+      <widget class="QLabel" name="EoTLabel_1">
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../ressources.qrc">:/Ressources/icons/icons8-midday-96.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="EoTLabel_2">
+       <property name="text">
+        <string>Equation du temps</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="EoTLineEdit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

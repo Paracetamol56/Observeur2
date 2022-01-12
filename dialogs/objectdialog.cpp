@@ -229,7 +229,15 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
 
     m_db->close();
 
-    computeGraph();
+    // Chart
+    m_chartView = new QChartView();
+    computeYearGraph();
+    m_chartView->setRenderHint(QPainter::Antialiasing);
+    m_ui->chartVerticalLayout->addWidget(m_chartView);
+
+    QDate currentDate = QDate::currentDate();
+    m_ui->dateEdit->setDate(currentDate);
+    m_ui->dayDateGroupBox->hide();
 }
 
 
@@ -264,37 +272,28 @@ void ObjectDialog::on_ClosePushButton_clicked()
 }
 
 
-void ObjectDialog::computeGraph()
+void ObjectDialog::computeYearGraph()
 {
     EquatorialPosition objectPosition(m_rightAscension, m_declination);
 
     QBarSet *set0 = new QBarSet("Masse d'aire");
     QBarSet *set1 = new QBarSet("Elévation (°)");
 
-    QVector<Date> datesVector = {
-        Date(16, 1, 2020, 1, 0, 0),
-        Date(16, 2, 2020, 1, 0, 0),
-        Date(16, 3, 2020, 1, 0, 0),
-        Date(16, 4, 2020, 1, 0, 0),
-        Date(16, 5, 2020, 1, 0, 0),
-        Date(16, 6, 2020, 1, 0, 0),
-        Date(16, 7, 2020, 1, 0, 0),
-        Date(16, 8, 2020, 1, 0, 0),
-        Date(16, 9, 2020, 1, 0, 0),
-        Date(16, 10, 2020, 1, 0, 0),
-        Date(16, 11, 2020, 1, 0, 0),
-        Date(16, 12, 2020, 1, 0, 0)
-    };
-
-    QVectorIterator<Date> it(datesVector);
-
-    while (it.hasNext())
+    // Populate sets
+    // Static variables for each value
+    unsigned int dayOfMonth = m_ui->daySpinBox->value();
+    unsigned int hour = m_ui->hourSpinBox->value();
+    unsigned int minute = m_ui->minuteSpinBox->value();
+    //
+    for (int i = 1; i <= 12; ++i)
     {
-        HorizontalPosition ObjectHorizontalPosition = objectPosition.toHorizontalPosition(it.next());
+        Date date(dayOfMonth, i, 2000, hour, minute, 0);
+
+        HorizontalPosition ObjectHorizontalPosition = objectPosition.toHorizontalPosition(date);
         // Elevation angle
         Angle elevation = ObjectHorizontalPosition.getAltitude();
         // Airmass
-        if (elevation <= Angle(0.00))
+        if (elevation <= Angle(5.0))
         {
             *set0 << 0.00;
         }
@@ -306,43 +305,139 @@ void ObjectDialog::computeGraph()
         *set1 << elevation.getTotalDegree();
     }
 
+
     QBarSeries *serie0 = new QBarSeries();
     serie0->append(set0);
 
     QBarSeries *serie1 = new QBarSeries();
     serie1->append(set1);
 
-    m_chart = new QChart();
-    m_chart->addSeries(serie0);
-    m_chart->addSeries(serie1);
-    m_chart->setTitle("Graphe de visibilité");
-    m_chart->setAnimationOptions(QChart::SeriesAnimations);
+    QChart *chart = new QChart();
+    chart->addSeries(serie0);
+    chart->addSeries(serie1);
+    chart->setTitle("Graphe de visibilité");
+    chart->setAnimationOptions(QChart::SeriesAnimations);
 
     QStringList categories;
     categories << "Janvier" << "Février" << "Mars" << "Avril" << "Mai" << "Juin" << "Juillet" << "Août" << "Septembre" << "Octobre" << "Novembre" << "Décembre";
     QBarCategoryAxis *axisX = new QBarCategoryAxis();
     axisX->append(categories);
-    m_chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisX, Qt::AlignBottom);
     serie0->attachAxis(axisX);
     serie1->attachAxis(axisX);
 
     QValueAxis *axisY0 = new QValueAxis();
     axisY0->setRange(0, 40);
-    m_chart->addAxis(axisY0, Qt::AlignLeft);
+    chart->addAxis(axisY0, Qt::AlignLeft);
     serie0->attachAxis(axisY0);
 
     QValueAxis *axisY1 = new QValueAxis();
     axisY1->setRange(0, 90);
-    m_chart->addAxis(axisY1, Qt::AlignRight);
+    chart->addAxis(axisY1, Qt::AlignRight);
     serie1->attachAxis(axisY1);
 
-    m_chart->legend()->setVisible(true);
-    m_chart->legend()->setAlignment(Qt::AlignBottom);
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
 
-    m_chartView = new QChartView(m_chart);
-    m_chartView->setRenderHint(QPainter::Antialiasing);
-
-    m_chartView = new QChartView(m_chart);
-    m_ui->mainHorizontalLayout->addWidget(m_chartView);
+    m_chartView->setChart(chart);
 }
+
+
+void ObjectDialog::computeDayGraph()
+{
+    EquatorialPosition objectPosition(m_rightAscension, m_declination);
+
+    QLineSeries *serie0 = new QLineSeries();
+    QLineSeries *serie1 = new QLineSeries();
+
+    serie0->setName("Elévation (°)");
+    serie1->setName("Horizon");
+
+    // Populate sets
+    // Static variables for each value
+    QDate editedDate = m_ui->dateEdit->date();
+    Date date(editedDate.day(), editedDate.month(), editedDate.year(), 0, 0, 0);
+    //
+    for (float i = 0; i <= 24.0; i += 0.5f)
+    {
+        date.m_hour = std::trunc(i);
+        date.m_minute = (i - date.m_hour) * 60;
+
+
+        HorizontalPosition ObjectHorizontalPosition = objectPosition.toHorizontalPosition(date);
+        // Elevation angle
+        Angle elevation = ObjectHorizontalPosition.getAltitude();
+        // Elevation
+        *serie0 << QPointF(i, elevation.getTotalDegree());
+    }
+
+    // Horizon
+    *serie1 << QPointF(0.0, 0.0) << QPointF(24.0, 0.0);
+
+    QChart *chart = new QChart();
+    chart->addSeries(serie0);
+    chart->addSeries(serie1);
+
+    QValueAxis *axisY0 = new QValueAxis();
+    axisY0->setRange(-90.0, 90.0);
+    chart->addAxis(axisY0, Qt::AlignLeft);
+    serie0->attachAxis(axisY0);
+    serie1->attachAxis(axisY0);
+
+    QValueAxis *axisX0 = new QValueAxis();
+    axisX0->setRange(0, 24);
+    axisX0->setTickCount(13);
+    chart->addAxis(axisX0, Qt::AlignBottom);
+    serie0->attachAxis(axisX0);
+    serie1->attachAxis(axisX0);
+
+    chart->setTitle("Graphe de visibilité");
+
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
+    m_chartView->setChart(chart);
+}
+
+
+void ObjectDialog::on_typeChange()
+{
+    if (m_ui->yearSamplingRadioButton->isChecked())
+    {
+        // Update ui
+        m_ui->yearDateGroupBox->show();
+        m_ui->dayDateGroupBox->hide();
+        computeYearGraph();
+    }
+    else if (m_ui->daySamplingRadioButton->isChecked())
+    {
+        // Update ui
+        m_ui->yearDateGroupBox->hide();
+        m_ui->dayDateGroupBox->show();
+        computeDayGraph();
+    }
+}
+
+
+void ObjectDialog::on_dateChange()
+{
+    if (m_ui->yearSamplingRadioButton->isChecked())
+    {
+        computeYearGraph();
+    }
+    else if (m_ui->daySamplingRadioButton->isChecked())
+    {
+        computeDayGraph();
+    }
+}
+
+
+
+
+
+
+
+
+
+
 

@@ -29,6 +29,10 @@ MainWindow::MainWindow(QWidget* parent)
         {
             on_actionLight_triggered();
         }
+        else if (settings.value("theme").toString() == "red")
+        {
+            on_actionNight_vision_triggered();
+        }
     }
     else
     {
@@ -273,25 +277,25 @@ void MainWindow::tableSelectionChanged()
     // Update the menu
     if (m_selectedId.empty())
     {
-        m_ui->menuEdition->actions().at(1)->setEnabled(false); // "Modifier un objet"
-        m_ui->menuEdition->actions().at(2)->setEnabled(false); // "Supprimer un objet"
-        m_ui->menuAffichage->actions().at(3)->setEnabled(false); // "Afficher les détaills de l'objets"
+        m_ui->actionModifier_un_objet->setEnabled(false); // "Modifier un objet"
+        m_ui->actionSupprimer_un_objet->setEnabled(false); // "Supprimer un objet"
+        m_ui->actionAfficher_les_d_tails_de_l_objet->setEnabled(false); // "Afficher les détaills de l'objets"
     }
     else
     {
         if (m_selectedId.count() == 1)
         {
-            m_ui->menuEdition->actions().at(1)->setEnabled(true); // "Modifier un objet"
+            m_ui->actionModifier_un_objet->setEnabled(true); // "Modifier un objet"
             m_ui->menuEdition->actions().at(2)->setText("Supprimer les objets");
-            m_ui->menuEdition->actions().at(2)->setEnabled(true); // "Supprimer les objets"
-            m_ui->menuAffichage->actions().at(3)->setEnabled(true); // "Afficher les détaills de l'objets"
+            m_ui->actionSupprimer_un_objet->setEnabled(true); // "Supprimer les objets"
+            m_ui->actionAfficher_les_d_tails_de_l_objet->setEnabled(true); // "Afficher les détaills de l'objets"
         }
         else
         {
-            m_ui->menuEdition->actions().at(1)->setEnabled(false); // "Modifier un objet"
+            m_ui->actionModifier_un_objet->setEnabled(false); // "Modifier un objet"
             m_ui->menuEdition->actions().at(2)->setText("Supprimer l'objets");
-            m_ui->menuEdition->actions().at(2)->setEnabled(true); // "Supprimer un objet"
-            m_ui->menuAffichage->actions().at(3)->setEnabled(false); // "Afficher les détaills de l'objets"
+            m_ui->actionSupprimer_un_objet->setEnabled(true); // "Supprimer un objet"
+            m_ui->actionAfficher_les_d_tails_de_l_objet->setEnabled(false); // "Afficher les détaills de l'objets"
         }
     }
 }
@@ -543,7 +547,21 @@ void MainWindow::on_actionDark_triggered()
 
 void MainWindow::on_actionNight_vision_triggered()
 {
-    //todo
+    QFile qssFile(":/qdarkstyle/red/Ressources/red/red.qss");
+
+    if (qssFile.exists() == false)
+    {
+        MissingFileError errorMessage(ErrorPriority::Critical, "Le fichier de style est introuvable", &qssFile);
+        errorMessage.printMessage();
+    }
+    else
+    {
+        QSettings settings;
+        settings.setValue("theme", "red");
+        qssFile.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&qssFile);
+        qApp->setStyleSheet(ts.readAll());
+    }
 }
 
 
@@ -677,6 +695,14 @@ void MainWindow::on_actionCalculs_pour_instruments_triggered()
 }
 
 
+void MainWindow::on_actionCalculs_solaires_triggered()
+{
+    SunCalculationsDialog * sunDialog = new SunCalculationsDialog(this);
+    sunDialog->setWindowFlag(Qt::Window);
+    sunDialog->show();
+}
+
+
 
 
 
@@ -733,6 +759,9 @@ void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos
 
     contextMenu.exec(m_ui->objectTableView->viewport()->mapToGlobal(pos));
 }
+
+
+
 
 
 
