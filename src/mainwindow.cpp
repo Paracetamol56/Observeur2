@@ -1,19 +1,16 @@
 /**
  * Created on Tue Jul 31 2021
- * 
+ *
  * Copyright (c) 2021 - Mathéo G - All Right Reserved
- * 
+ *
  * Licensed under the Apache License, Version 2.0
  * Available on GitHub at https://github.com/Paracetamol56/Observeur2 */
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
-MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent)
-    , m_ui(new Ui::MainWindow)
-    , m_db(new QSqlDatabase)
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent), m_ui(new Ui::MainWindow), m_db(new QSqlDatabase)
 {
     m_ui->setupUi(this);
 
@@ -59,7 +56,6 @@ MainWindow::MainWindow(QWidget* parent)
     {
         m_db->setDatabaseName(dbPath);
 
-
         // Get data from database to fill the constallation table
 
         m_db->open();
@@ -77,9 +73,9 @@ MainWindow::MainWindow(QWidget* parent)
         }
 
         // Add items one by one in a list widget
-        while(query.next())
+        while (query.next())
         {
-            QListWidgetItem* item = new QListWidgetItem;
+            QListWidgetItem *item = new QListWidgetItem;
             QString str = query.value(0).toString();
             m_constellationFilter.push_back(str);
             item->setText(str);
@@ -98,9 +94,9 @@ MainWindow::MainWindow(QWidget* parent)
         }
 
         // Add items one by one in a list widget
-        while(query.next())
+        while (query.next())
         {
-            QListWidgetItem* item = new QListWidgetItem;
+            QListWidgetItem *item = new QListWidgetItem;
             QString str = query.value(0).toString();
             m_typeFilter.push_back(str);
             item->setText(str);
@@ -127,12 +123,10 @@ MainWindow::MainWindow(QWidget* parent)
     connect(m_ui->objectTableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::tableSelectionChanged);
 }
 
-
 MainWindow::~MainWindow()
 {
     delete m_ui;
 }
-
 
 // Object list updater
 void MainWindow::updateObject()
@@ -141,7 +135,8 @@ void MainWindow::updateObject()
     QString constellationFilterString = "";
     {
         QVectorIterator<QString> it(m_constellationFilter);
-        while (it.hasNext()) {
+        while (it.hasNext())
+        {
             constellationFilterString += ("'" + it.next() + "', ");
         }
         int lastIndex = constellationFilterString.lastIndexOf(QChar(','));
@@ -152,7 +147,8 @@ void MainWindow::updateObject()
     QString typeFilterString = "";
     {
         QVectorIterator<QString> it(m_typeFilter);
-        while (it.hasNext()) {
+        while (it.hasNext())
+        {
             typeFilterString += ("'" + it.next() + "', ");
         }
         int lastIndex = typeFilterString.lastIndexOf(QChar(','));
@@ -164,33 +160,34 @@ void MainWindow::updateObject()
     QSqlQuery query;
 
     query.prepare(
-                "SELECT "
-                "objects.`object_name` AS `Nom`, "
-                "objects.`object_messier` AS `M`, "
-                "objects.`object_ngc` AS `NGC`, "
-                "categories.`category_name` AS `Category`, "
-                "constellations.`constellation_name` AS `Constellation`, "
-                "objects.`object_apparent_magnitude` AS `Magnitude apparente`, "
-                "objects.`object_appreciation` AS `Appreciation`, "
-                "objects.`object_note` AS `Note /10`, "
-                "skymap1.`skymap1_number` AS `Carte (N1)`, "
-                "skymap2.`skymap2_number` AS `Carte (N2)`, "
-                "skymap3.`skymap3_number` AS `Carte (N3)` "
-                "FROM objects "
-                "INNER JOIN categories "
-                "ON categories.`category_id` = objects.`object_category` "
-                "INNER JOIN constellations "
-                "ON constellations.`constellation_id` = objects.`object_constellation` "
-                "INNER JOIN skymap1 "
-                "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
-                "INNER JOIN skymap2 "
-                "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
-                "INNER JOIN skymap3 "
-                "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
-                "WHERE constellations.`constellation_name` IN ("+ constellationFilterString + ") "
-                "AND categories.`category_name` IN (" + typeFilterString + ")"
-                "ORDER BY objects.`object_name` ASC;"
-                );
+        "SELECT "
+        "objects.`object_name` AS `Nom`, "
+        "objects.`object_messier` AS `M`, "
+        "objects.`object_ngc` AS `NGC`, "
+        "categories.`category_name` AS `Category`, "
+        "constellations.`constellation_name` AS `Constellation`, "
+        "objects.`object_apparent_magnitude` AS `Magnitude apparente`, "
+        "objects.`object_appreciation` AS `Appreciation`, "
+        "objects.`object_note` AS `Note /10`, "
+        "skymap1.`skymap1_number` AS `Carte (N1)`, "
+        "skymap2.`skymap2_number` AS `Carte (N2)`, "
+        "skymap3.`skymap3_number` AS `Carte (N3)` "
+        "FROM objects "
+        "INNER JOIN categories "
+        "ON categories.`category_id` = objects.`object_category` "
+        "INNER JOIN constellations "
+        "ON constellations.`constellation_id` = objects.`object_constellation` "
+        "INNER JOIN skymap1 "
+        "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
+        "INNER JOIN skymap2 "
+        "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
+        "INNER JOIN skymap3 "
+        "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
+        "WHERE constellations.`constellation_name` IN (" +
+        constellationFilterString + ") "
+                                    "AND categories.`category_name` IN (" +
+        typeFilterString + ")"
+                           "ORDER BY objects.`object_name` ASC;");
 
     if (query.exec() == false)
     {
@@ -223,7 +220,6 @@ void MainWindow::updateObject()
     connect(m_ui->objectTableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::tableSelectionChanged);
 }
 
-
 // Is triggered when the object table selection change
 void MainWindow::tableSelectionChanged()
 {
@@ -248,10 +244,10 @@ void MainWindow::tableSelectionChanged()
 
         QSqlQuery query;
         query.prepare(
-                    "SELECT `object_id`"
-                    "FROM `objects`"
-                    "WHERE object_name IN (" + nameListString +")"
-                    );
+            "SELECT `object_id`"
+            "FROM `objects`"
+            "WHERE object_name IN (" +
+            nameListString + ")");
 
         if (query.exec() == false)
         {
@@ -262,7 +258,7 @@ void MainWindow::tableSelectionChanged()
 
         m_selectedId.clear();
 
-        while(query.next())
+        while (query.next())
         {
             m_selectedId.push_back(query.value(0).toInt());
         }
@@ -277,8 +273,8 @@ void MainWindow::tableSelectionChanged()
     // Update the menu
     if (m_selectedId.empty())
     {
-        m_ui->actionModifier_un_objet->setEnabled(false); // "Modifier un objet"
-        m_ui->actionSupprimer_un_objet->setEnabled(false); // "Supprimer un objet"
+        m_ui->actionModifier_un_objet->setEnabled(false);               // "Modifier un objet"
+        m_ui->actionSupprimer_un_objet->setEnabled(false);              // "Supprimer un objet"
         m_ui->actionAfficher_les_d_tails_de_l_objet->setEnabled(false); // "Afficher les détaills de l'objets"
     }
     else
@@ -287,19 +283,18 @@ void MainWindow::tableSelectionChanged()
         {
             m_ui->actionModifier_un_objet->setEnabled(true); // "Modifier un objet"
             m_ui->menuEdition->actions().at(2)->setText("Supprimer les objets");
-            m_ui->actionSupprimer_un_objet->setEnabled(true); // "Supprimer les objets"
+            m_ui->actionSupprimer_un_objet->setEnabled(true);              // "Supprimer les objets"
             m_ui->actionAfficher_les_d_tails_de_l_objet->setEnabled(true); // "Afficher les détaills de l'objets"
         }
         else
         {
             m_ui->actionModifier_un_objet->setEnabled(false); // "Modifier un objet"
             m_ui->menuEdition->actions().at(2)->setText("Supprimer l'objets");
-            m_ui->actionSupprimer_un_objet->setEnabled(true); // "Supprimer un objet"
+            m_ui->actionSupprimer_un_objet->setEnabled(true);               // "Supprimer un objet"
             m_ui->actionAfficher_les_d_tails_de_l_objet->setEnabled(false); // "Afficher les détaills de l'objets"
         }
     }
 }
-
 
 // BUTTONS EVENTS
 
@@ -308,7 +303,6 @@ void MainWindow::on_AllConsellationsButton_clicked()
     ConstellationTable constellationTableDIalog(nullptr, m_db);
     constellationTableDIalog.exec();
 }
-
 
 void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
 {
@@ -349,7 +343,6 @@ void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
     updateObject();
 }
 
-
 void MainWindow::on_AllConstellationCheckBox_clicked()
 {
     // If AllConstellationCheckBox is checked
@@ -358,10 +351,10 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
         m_constellationFilter.clear();
 
         // Iterate through the list widget
-        for(int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
+        for (int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
         {
             // Set the item checked
-            QListWidgetItem* item = m_ui->ConstellationListWidget->item(i);
+            QListWidgetItem *item = m_ui->ConstellationListWidget->item(i);
             item->setCheckState(Qt::Checked);
             // Add the item to the table
             m_constellationFilter.push_back(item->text());
@@ -372,10 +365,10 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
         m_constellationFilter.clear();
 
         // Iterate through the list widget
-        for(int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
+        for (int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
         {
             // Set the item unchecked
-            QListWidgetItem* item = m_ui->ConstellationListWidget->item(i);
+            QListWidgetItem *item = m_ui->ConstellationListWidget->item(i);
             item->setCheckState(Qt::Unchecked);
         }
     }
@@ -383,13 +376,11 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
     updateObject();
 }
 
-
 void MainWindow::on_AllTypesButton_clicked()
 {
     TypeTable typeTableDialog(nullptr, m_db);
     typeTableDialog.exec();
 }
-
 
 void MainWindow::on_TypeListWidget_itemClicked(QListWidgetItem *item)
 {
@@ -430,7 +421,6 @@ void MainWindow::on_TypeListWidget_itemClicked(QListWidgetItem *item)
     updateObject();
 }
 
-
 void MainWindow::on_AllTypeCheckBox_clicked()
 {
     // If AllConstellationCheckBox is checked
@@ -439,10 +429,10 @@ void MainWindow::on_AllTypeCheckBox_clicked()
         m_typeFilter.clear();
 
         // Iterate through the list widget
-        for(int i = 0; i < m_ui->TypeListWidget->count(); ++i)
+        for (int i = 0; i < m_ui->TypeListWidget->count(); ++i)
         {
             // Set the item checked
-            QListWidgetItem* item = m_ui->TypeListWidget->item(i);
+            QListWidgetItem *item = m_ui->TypeListWidget->item(i);
             item->setCheckState(Qt::Checked);
             // Add the item to the table
             m_typeFilter.push_back(item->text());
@@ -453,10 +443,10 @@ void MainWindow::on_AllTypeCheckBox_clicked()
         m_typeFilter.clear();
 
         // Iterate through the list widget
-        for(int i = 0; i < m_ui->TypeListWidget->count(); ++i)
+        for (int i = 0; i < m_ui->TypeListWidget->count(); ++i)
         {
             // Set the item unchecked
-            QListWidgetItem* item = m_ui->TypeListWidget->item(i);
+            QListWidgetItem *item = m_ui->TypeListWidget->item(i);
             item->setCheckState(Qt::Unchecked);
         }
     }
@@ -464,14 +454,11 @@ void MainWindow::on_AllTypeCheckBox_clicked()
     updateObject();
 }
 
-
 void MainWindow::on_AllObjectsPushButton_clicked()
 {
     ObjectTable objectTableDialog(nullptr, m_db);
     objectTableDialog.exec();
 }
-
-
 
 // MENU EVENTS
 
@@ -480,19 +467,16 @@ void MainWindow::on_actionQuitter_triggered()
     QApplication::quit();
 }
 
-
 void MainWindow::on_actionParam_tre_triggered()
 {
     SettingDialog settingDialog(nullptr);
     settingDialog.exec();
 }
 
-
 void MainWindow::on_actionAide_en_ligne_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/Paracetamol56/Observeur2"));
 }
-
 
 void MainWindow::on_actionA_propos_triggered()
 {
@@ -504,10 +488,9 @@ void MainWindow::on_actionA_propos_triggered()
     aboutMessageBox.exec();
 }
 
-
 void MainWindow::on_actionLight_triggered()
 {
-    QFile qssFile(":/qdarkstyle/light/Ressources/light/light.qss");
+    QFile qssFile(":/qdarkstyle/light/res/light/light.qss");
 
     if (qssFile.exists() == false)
     {
@@ -524,10 +507,9 @@ void MainWindow::on_actionLight_triggered()
     }
 }
 
-
 void MainWindow::on_actionDark_triggered()
 {
-    QFile qssFile(":/qdarkstyle/dark/Ressources/dark/dark.qss");
+    QFile qssFile(":/qdarkstyle/dark/res/dark/dark.qss");
 
     if (qssFile.exists() == false)
     {
@@ -544,10 +526,9 @@ void MainWindow::on_actionDark_triggered()
     }
 }
 
-
 void MainWindow::on_actionNight_vision_triggered()
 {
-    QFile qssFile(":/qdarkstyle/red/Ressources/red/red.qss");
+    QFile qssFile(":/qdarkstyle/red/res/red/red.qss");
 
     if (qssFile.exists() == false)
     {
@@ -564,13 +545,11 @@ void MainWindow::on_actionNight_vision_triggered()
     }
 }
 
-
 void MainWindow::on_actionTout_selectionner_triggered()
 {
     m_ui->objectTableView->selectAll();
     tableSelectionChanged();
 }
-
 
 void MainWindow::on_actionNouvel_objet_triggered()
 {
@@ -579,7 +558,6 @@ void MainWindow::on_actionNouvel_objet_triggered()
     connect(newObjectWindow, SIGNAL(newValuesSaved()), this, SLOT(on_newValuesSaved()));
     newObjectWindow->show();
 }
-
 
 void MainWindow::on_actionModifier_un_objet_triggered()
 {
@@ -592,12 +570,10 @@ void MainWindow::on_actionModifier_un_objet_triggered()
     }
 }
 
-
 void MainWindow::on_newValuesSaved()
 {
     updateObject();
 }
-
 
 void MainWindow::on_actionAfficher_les_d_tails_de_l_objet_triggered()
 {
@@ -605,7 +581,6 @@ void MainWindow::on_actionAfficher_les_d_tails_de_l_objet_triggered()
     ObjectDialog objectDialog(this, m_db, m_selectedId.first());
     objectDialog.exec();
 }
-
 
 void MainWindow::on_actionSupprimer_un_objet_triggered()
 {
@@ -651,7 +626,6 @@ void MainWindow::on_actionSupprimer_un_objet_triggered()
     }
 }
 
-
 void MainWindow::on_actionEditer_les_cartes_triggered()
 {
     MapsTable *mapsTable = new MapsTable(this, m_db);
@@ -659,13 +633,11 @@ void MainWindow::on_actionEditer_les_cartes_triggered()
     mapsTable->show();
 }
 
-
 void MainWindow::on_actionAfficher_toute_les_constellations_triggered()
 {
     ConstellationTable constellationTableDIalog(nullptr, m_db);
     constellationTableDIalog.exec();
 }
-
 
 void MainWindow::on_actionAfficher_tous_les_types_triggered()
 {
@@ -673,19 +645,16 @@ void MainWindow::on_actionAfficher_tous_les_types_triggered()
     constellationTableDIalog.exec();
 }
 
-
 void MainWindow::on_actionAfficher_tous_les_objets_triggered()
 {
     ObjectTable objectTableDIalog(nullptr, m_db);
     objectTableDIalog.exec();
 }
 
-
 void MainWindow::on_actionAfficher_la_todo_list_triggered()
 {
     // todo
 }
-
 
 void MainWindow::on_actionCalculs_pour_instruments_triggered()
 {
@@ -694,23 +663,12 @@ void MainWindow::on_actionCalculs_pour_instruments_triggered()
     instrumentDialog->show();
 }
 
-
 void MainWindow::on_actionCalculs_solaires_triggered()
 {
-    SunCalculationsDialog * sunDialog = new SunCalculationsDialog(this);
+    SunCalculationsDialog *sunDialog = new SunCalculationsDialog(this);
     sunDialog->setWindowFlag(Qt::Window);
     sunDialog->show();
 }
-
-
-
-
-
-
-
-
-
-
 
 void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos)
 {
@@ -759,35 +717,3 @@ void MainWindow::on_objectTableView_customContextMenuRequested(const QPoint &pos
 
     contextMenu.exec(m_ui->objectTableView->viewport()->mapToGlobal(pos));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

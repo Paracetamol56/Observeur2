@@ -53,7 +53,7 @@
        </property>
        <property name="icon">
         <iconset resource="ressources.qrc">
-         <normaloff>:/Ressources/icons/icons8-print-96.png</normaloff>:/Ressources/icons/icons8-print-96.png</iconset>
+         <normaloff>:/res/icons/icons8-print-96.png</normaloff>:/res/icons/icons8-print-96.png</iconset>
        </property>
       </widget>
      </item>
@@ -64,7 +64,7 @@
        </property>
        <property name="icon">
         <iconset resource="ressources.qrc">
-         <normaloff>:/Ressources/icons/icons8-close-window-96.png</normaloff>:/Ressources/icons/icons8-close-window-96.png</iconset>
+         <normaloff>:/res/icons/icons8-close-window-96.png</normaloff>:/res/icons/icons8-close-window-96.png</iconset>
        </property>
       </widget>
      </item>

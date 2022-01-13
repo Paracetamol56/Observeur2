@@ -67,7 +67,7 @@ FORMS += \
     objectform.ui
 
 RESOURCES += \
-    ressources.qrc \
+    images.qrc \
     light.qrc \
     dark.qrc \
     red.qrc

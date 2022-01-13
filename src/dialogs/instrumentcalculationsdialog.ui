@@ -186,7 +186,7 @@
             </property>
             <property name="icon">
              <iconset resource="../ressources.qrc">
-              <normaloff>:/Ressources/icons/icons8-add-row-96.png</normaloff>:/Ressources/icons/icons8-add-row-96.png</iconset>
+              <normaloff>:/res/icons/icons8-add-row-96.png</normaloff>:/res/icons/icons8-add-row-96.png</iconset>
             </property>
            </widget>
           </item>
@@ -197,7 +197,7 @@
             </property>
             <property name="icon">
              <iconset resource="../ressources.qrc">
-              <normaloff>:/Ressources/icons/icons8-delete-row-96.png</normaloff>:/Ressources/icons/icons8-delete-row-96.png</iconset>
+              <normaloff>:/res/icons/icons8-delete-row-96.png</normaloff>:/res/icons/icons8-delete-row-96.png</iconset>
             </property>
            </widget>
           </item>

@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../ressources.qrc">
-    <normaloff>:/Ressources/icons/icons8-edition-de-la-carte-96.png</normaloff>:/Ressources/icons/icons8-edition-de-la-carte-96.png</iconset>
+    <normaloff>:/res/icons/icons8-edition-de-la-carte-96.png</normaloff>:/res/icons/icons8-edition-de-la-carte-96.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
    <item>
@@ -173,7 +173,7 @@
        </property>
        <property name="icon">
         <iconset resource="../ressources.qrc">
-         <normaloff>:/Ressources/icons/icons8-save-96.png</normaloff>:/Ressources/icons/icons8-save-96.png</iconset>
+         <normaloff>:/res/icons/icons8-save-96.png</normaloff>:/res/icons/icons8-save-96.png</iconset>
        </property>
       </widget>
      </item>
@@ -184,7 +184,7 @@
        </property>
        <property name="icon">
         <iconset resource="../ressources.qrc">
-         <normaloff>:/Ressources/icons/icons8-close-window-96.png</normaloff>:/Ressources/icons/icons8-close-window-96.png</iconset>
+         <normaloff>:/res/icons/icons8-close-window-96.png</normaloff>:/res/icons/icons8-close-window-96.png</iconset>
        </property>
       </widget>
      </item>

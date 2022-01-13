@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="ressources.qrc">
-    <normaloff>:/Ressources/icons/icons8-telescope-96.png</normaloff>:/Ressources/icons/icons8-telescope-96.png</iconset>
+    <normaloff>:/res/icons/icons8-telescope-96.png</normaloff>:/res/icons/icons8-telescope-96.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
@@ -684,7 +684,7 @@
        </property>
        <property name="icon">
         <iconset resource="ressources.qrc">
-         <normaloff>:/Ressources/icons/icons8-add-property-96.png</normaloff>:/Ressources/icons/icons8-add-property-96.png</iconset>
+         <normaloff>:/res/icons/icons8-add-property-96.png</normaloff>:/res/icons/icons8-add-property-96.png</iconset>
        </property>
       </widget>
      </item>
@@ -695,7 +695,7 @@
        </property>
        <property name="icon">
         <iconset resource="ressources.qrc">
-         <normaloff>:/Ressources/icons/icons8-delete-document-96.png</normaloff>:/Ressources/icons/icons8-delete-document-96.png</iconset>
+         <normaloff>:/res/icons/icons8-delete-document-96.png</normaloff>:/res/icons/icons8-delete-document-96.png</iconset>
        </property>
       </widget>
      </item>

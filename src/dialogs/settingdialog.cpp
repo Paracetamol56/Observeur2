@@ -1,8 +1,8 @@
 /**
  * Created on Tue Jul 31 2021
- * 
+ *
  * Copyright (c) 2021 - Mathéo G - All Right Reserved
- * 
+ *
  * Licensed under the Apache License, Version 2.0
  * Available on GitHub at https://github.com/Paracetamol56/Observeur2 */
 
@@ -10,8 +10,7 @@
 #include "ui_settingdialog.h"
 
 SettingDialog::SettingDialog(QWidget *parent)
-    : QDialog(parent)
-    , m_ui(new Ui::SettingDialog)
+    : QDialog(parent), m_ui(new Ui::SettingDialog)
 {
     m_ui->setupUi(this);
 
@@ -70,12 +69,10 @@ SettingDialog::SettingDialog(QWidget *parent)
     }
 }
 
-
 SettingDialog::~SettingDialog()
 {
     delete m_ui;
 }
-
 
 void SettingDialog::on_SavePushButton_clicked()
 {
@@ -93,7 +90,7 @@ void SettingDialog::on_SavePushButton_clicked()
 
     if (m_ui->DarkRadioButton->isChecked())
     {
-        QFile qssFile(":/qdarkstyle/dark/Ressources/dark/dark.qss");
+        QFile qssFile(":/qdarkstyle/dark/res/dark/dark.qss");
 
         if (qssFile.exists() == false)
         {
@@ -110,7 +107,7 @@ void SettingDialog::on_SavePushButton_clicked()
     }
     else if (m_ui->LightRadioButton->isChecked())
     {
-        QFile qssFile(":/qdarkstyle/light/Ressources/light/light.qss");
+        QFile qssFile(":/qdarkstyle/light/res/light/light.qss");
 
         if (qssFile.exists() == false)
         {
@@ -127,7 +124,7 @@ void SettingDialog::on_SavePushButton_clicked()
     }
     else if (m_ui->RedRadioButton->isChecked())
     {
-        QFile qssFile(":/qdarkstyle/red/Ressources/red/red.qss");
+        QFile qssFile(":/qdarkstyle/red/res/red/red.qss");
 
         if (qssFile.exists() == false)
         {
@@ -159,12 +156,10 @@ void SettingDialog::on_SavePushButton_clicked()
     close();
 }
 
-
 void SettingDialog::on_CancelPushButton_clicked()
 {
     close();
 }
-
 
 void SettingDialog::on_DBBrowsePushButton_clicked()
 {
@@ -180,4 +175,3 @@ void SettingDialog::on_DBBrowsePushButton_clicked()
     m_ui->DBPathLineEdit->setText(filename);
     settings.setValue("database", filename);
 }
-

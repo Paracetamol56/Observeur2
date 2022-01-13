@@ -1,24 +1,22 @@
 /**
  * Created on Tue Jul 31 2021
- * 
+ *
  * Copyright (c) 2021 - Mathéo G - All Right Reserved
- * 
+ *
  * Licensed under the Apache License, Version 2.0
  * Available on GitHub at https://github.com/Paracetamol56/Observeur2 */
 
 #include "typetable.h"
 #include "ui_tabledialog.h"
 
-
 TypeTable::TypeTable(QWidget *parent, QSqlDatabase *db)
     : TableDialog(parent, db)
 {
-    setWindowIcon(QIcon(":/Ressources/icons/icons8-nebula-96.png"));
+    setWindowIcon(QIcon(":/res/icons/icons8-nebula-96.png"));
     setWindowTitle("Tous les types");
     m_ui->label->setText("Tous les types");
     tablePopulate();
 }
-
 
 void TypeTable::tablePopulate()
 {
@@ -28,11 +26,11 @@ void TypeTable::tablePopulate()
 
     // Set the query
     query.prepare(
-                "SELECT "
-                "`category_name` AS `Nom`, "
-                "`category_description` AS `Description` "
-                "FROM `categories` "
-                "WHERE 1");
+        "SELECT "
+        "`category_name` AS `Nom`, "
+        "`category_description` AS `Description` "
+        "FROM `categories` "
+        "WHERE 1");
 
     if (query.exec() == false)
     {
