@@ -9,23 +9,23 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Check include guards in /src/
+    - name: Check include guards in src/
       uses: sbeyer/include-guards-check-action@v1.0.0
       with:
-        path: '/src/'
+        path: 'src/'
         pattern: '{file_base}_H'
-    - name: Check include guards in /src/angleutilities/
+    - name: Check include guards in src/angleutilities/
       uses: sbeyer/include-guards-check-action@v1.0.0
       with:
-        path: '/src/angleutilities/'
+        path: 'src/angleutilities/'
         pattern: '{file_base}_H'
-    - name: Check include guards in /src/dialogs/
+    - name: Check include guards in src/dialogs/
       uses: sbeyer/include-guards-check-action@v1.0.0
       with:
-        path: '/src/dialogs/'
+        path: 'src/dialogs/'
         pattern: '{file_base}_H'
-    - name: Check include guards in /src/tables/
+    - name: Check include guards in src/tables/
       uses: sbeyer/include-guards-check-action@v1.0.0
       with:
-        path: '/src/tables/'
+        path: 'src/tables/'
         pattern: '{file_base}_H'
