@@ -1,24 +1,22 @@
 /**
  * Created on Tue Jul 31 2021
- * 
+ *
  * Copyright (c) 2021 - Mathéo G - All Right Reserved
- * 
+ *
  * Licensed under the Apache License, Version 2.0
  * Available on GitHub at https://github.com/Paracetamol56/Observeur2 */
 
 #include "objecttable.h"
 #include "ui_tabledialog.h"
 
-
 ObjectTable::ObjectTable(QWidget *parent, QSqlDatabase *db)
     : TableDialog(parent, db)
 {
-    setWindowIcon(QIcon(":/Ressources/icons/icons8-show-property-96.png"));
+    setWindowIcon(QIcon(":/res/icons/icons8-show-property-96.png"));
     setWindowTitle("Tous les objets");
     m_ui->label->setText("Tous les objets");
     tablePopulate();
 }
-
 
 void ObjectTable::tablePopulate()
 {
@@ -28,10 +26,10 @@ void ObjectTable::tablePopulate()
 
     // Set the query
     query.prepare(
-                "SELECT "
-                "* "
-                "FROM `objects` "
-                "WHERE 1");
+        "SELECT "
+        "* "
+        "FROM `objects` "
+        "WHERE 1");
 
     if (query.exec() == false)
     {

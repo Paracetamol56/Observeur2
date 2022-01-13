@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="ressources.qrc">
-    <normaloff>:/Ressources/icons/icons8-telescope-96.png</normaloff>:/Ressources/icons/icons8-telescope-96.png</iconset>
+    <normaloff>:/res/icons/icons8-telescope-96.png</normaloff>:/res/icons/icons8-telescope-96.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
@@ -96,7 +96,7 @@
           </property>
           <property name="icon">
            <iconset resource="ressources.qrc">
-            <normaloff>:/Ressources/icons/icons8-todo-list-96.png</normaloff>:/Ressources/icons/icons8-todo-list-96.png</iconset>
+            <normaloff>:/res/icons/icons8-todo-list-96.png</normaloff>:/res/icons/icons8-todo-list-96.png</iconset>
           </property>
          </widget>
         </item>
@@ -107,7 +107,7 @@
           </property>
           <property name="icon">
            <iconset resource="ressources.qrc">
-            <normaloff>:/Ressources/icons/icons8-show-property-96.png</normaloff>:/Ressources/icons/icons8-show-property-96.png</iconset>
+            <normaloff>:/res/icons/icons8-show-property-96.png</normaloff>:/res/icons/icons8-show-property-96.png</iconset>
           </property>
          </widget>
         </item>
@@ -150,7 +150,7 @@
      </property>
      <property name="icon">
       <iconset resource="ressources.qrc">
-       <normaloff>:/Ressources/icons/icons8-change-theme-96.png</normaloff>:/Ressources/icons/icons8-change-theme-96.png</iconset>
+       <normaloff>:/res/icons/icons8-change-theme-96.png</normaloff>:/res/icons/icons8-change-theme-96.png</iconset>
      </property>
      <addaction name="actionLight"/>
      <addaction name="actionDark"/>
@@ -245,7 +245,7 @@
        <widget class="QWidget" name="Constellations">
         <attribute name="icon">
          <iconset resource="ressources.qrc">
-          <normaloff>:/Ressources/icons/icons8-constellation-96.png</normaloff>:/Ressources/icons/icons8-constellation-96.png</iconset>
+          <normaloff>:/res/icons/icons8-constellation-96.png</normaloff>:/res/icons/icons8-constellation-96.png</iconset>
         </attribute>
         <attribute name="title">
          <string>Constellations</string>
@@ -313,7 +313,7 @@
              </property>
              <property name="icon">
               <iconset resource="ressources.qrc">
-               <normaloff>:/Ressources/icons/icons8-constellation-96.png</normaloff>:/Ressources/icons/icons8-constellation-96.png</iconset>
+               <normaloff>:/res/icons/icons8-constellation-96.png</normaloff>:/res/icons/icons8-constellation-96.png</iconset>
              </property>
             </widget>
            </item>
@@ -324,7 +324,7 @@
        <widget class="QWidget" name="Periode">
         <attribute name="icon">
          <iconset resource="ressources.qrc">
-          <normaloff>:/Ressources/icons/icons8-event-96.png</normaloff>:/Ressources/icons/icons8-event-96.png</iconset>
+          <normaloff>:/res/icons/icons8-event-96.png</normaloff>:/res/icons/icons8-event-96.png</iconset>
         </attribute>
         <attribute name="title">
          <string>Periode</string>
@@ -333,7 +333,7 @@
        <widget class="QWidget" name="Types">
         <attribute name="icon">
          <iconset resource="ressources.qrc">
-          <normaloff>:/Ressources/icons/icons8-nebula-96.png</normaloff>:/Ressources/icons/icons8-nebula-96.png</iconset>
+          <normaloff>:/res/icons/icons8-nebula-96.png</normaloff>:/res/icons/icons8-nebula-96.png</iconset>
         </attribute>
         <attribute name="title">
          <string>Types</string>
@@ -398,7 +398,7 @@
              </property>
              <property name="icon">
               <iconset resource="ressources.qrc">
-               <normaloff>:/Ressources/icons/icons8-nebula-96.png</normaloff>:/Ressources/icons/icons8-nebula-96.png</iconset>
+               <normaloff>:/res/icons/icons8-nebula-96.png</normaloff>:/res/icons/icons8-nebula-96.png</iconset>
              </property>
             </widget>
            </item>
@@ -414,7 +414,7 @@
   <action name="actionQuitter">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-close-window-96.png</normaloff>:/Ressources/icons/icons8-close-window-96.png</iconset>
+     <normaloff>:/res/icons/icons8-close-window-96.png</normaloff>:/res/icons/icons8-close-window-96.png</iconset>
    </property>
    <property name="text">
     <string>Quitter</string>
@@ -423,7 +423,7 @@
   <action name="actionA_propos">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-info-96.png</normaloff>:/Ressources/icons/icons8-info-96.png</iconset>
+     <normaloff>:/res/icons/icons8-info-96.png</normaloff>:/res/icons/icons8-info-96.png</iconset>
    </property>
    <property name="text">
     <string>A propos</string>
@@ -432,7 +432,7 @@
   <action name="actionLight">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-luke-skywalker-96.png</normaloff>:/Ressources/icons/icons8-luke-skywalker-96.png</iconset>
+     <normaloff>:/res/icons/icons8-luke-skywalker-96.png</normaloff>:/res/icons/icons8-luke-skywalker-96.png</iconset>
    </property>
    <property name="text">
     <string>Light</string>
@@ -441,7 +441,7 @@
   <action name="actionDark">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-darth-vader-96.png</normaloff>:/Ressources/icons/icons8-darth-vader-96.png</iconset>
+     <normaloff>:/res/icons/icons8-darth-vader-96.png</normaloff>:/res/icons/icons8-darth-vader-96.png</iconset>
    </property>
    <property name="text">
     <string>Dark</string>
@@ -453,7 +453,7 @@
    </property>
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-vision-96.png</normaloff>:/Ressources/icons/icons8-vision-96.png</iconset>
+     <normaloff>:/res/icons/icons8-vision-96.png</normaloff>:/res/icons/icons8-vision-96.png</iconset>
    </property>
    <property name="text">
     <string>Night vision</string>
@@ -462,7 +462,7 @@
   <action name="actionNouvel_objet">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-add-property-96.png</normaloff>:/Ressources/icons/icons8-add-property-96.png</iconset>
+     <normaloff>:/res/icons/icons8-add-property-96.png</normaloff>:/res/icons/icons8-add-property-96.png</iconset>
    </property>
    <property name="text">
     <string>Ajouter un objet</string>
@@ -471,7 +471,7 @@
   <action name="actionTout_selectionner">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-select-all-96.png</normaloff>:/Ressources/icons/icons8-select-all-96.png</iconset>
+     <normaloff>:/res/icons/icons8-select-all-96.png</normaloff>:/res/icons/icons8-select-all-96.png</iconset>
    </property>
    <property name="text">
     <string>Tout selectionner</string>
@@ -483,7 +483,7 @@
   <action name="actionAide_en_ligne">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-user-manual-96.png</normaloff>:/Ressources/icons/icons8-user-manual-96.png</iconset>
+     <normaloff>:/res/icons/icons8-user-manual-96.png</normaloff>:/res/icons/icons8-user-manual-96.png</iconset>
    </property>
    <property name="text">
     <string>Aide en ligne</string>
@@ -495,7 +495,7 @@
   <action name="actionSupprimer_un_objet">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-remove-property-96.png</normaloff>:/Ressources/icons/icons8-remove-property-96.png</iconset>
+     <normaloff>:/res/icons/icons8-remove-property-96.png</normaloff>:/res/icons/icons8-remove-property-96.png</iconset>
    </property>
    <property name="text">
     <string>Supprimer l'objet</string>
@@ -507,7 +507,7 @@
   <action name="actionModifier_un_objet">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-edit-property-96.png</normaloff>:/Ressources/icons/icons8-edit-property-96.png</iconset>
+     <normaloff>:/res/icons/icons8-edit-property-96.png</normaloff>:/res/icons/icons8-edit-property-96.png</iconset>
    </property>
    <property name="text">
     <string>Modifier l'objet</string>
@@ -516,7 +516,7 @@
   <action name="actionAfficher_toute_les_constellations">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-constellation-96.png</normaloff>:/Ressources/icons/icons8-constellation-96.png</iconset>
+     <normaloff>:/res/icons/icons8-constellation-96.png</normaloff>:/res/icons/icons8-constellation-96.png</iconset>
    </property>
    <property name="text">
     <string>Afficher toute les constellations</string>
@@ -525,7 +525,7 @@
   <action name="actionAfficher_tous_les_types">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-nebula-96.png</normaloff>:/Ressources/icons/icons8-nebula-96.png</iconset>
+     <normaloff>:/res/icons/icons8-nebula-96.png</normaloff>:/res/icons/icons8-nebula-96.png</iconset>
    </property>
    <property name="text">
     <string>Afficher tous les types</string>
@@ -534,7 +534,7 @@
   <action name="actionAfficher_tous_les_objets">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-show-property-96.png</normaloff>:/Ressources/icons/icons8-show-property-96.png</iconset>
+     <normaloff>:/res/icons/icons8-show-property-96.png</normaloff>:/res/icons/icons8-show-property-96.png</iconset>
    </property>
    <property name="text">
     <string>Afficher tous les objets</string>
@@ -543,7 +543,7 @@
   <action name="actionAfficher_la_todo_list">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-todo-list-96.png</normaloff>:/Ressources/icons/icons8-todo-list-96.png</iconset>
+     <normaloff>:/res/icons/icons8-todo-list-96.png</normaloff>:/res/icons/icons8-todo-list-96.png</iconset>
    </property>
    <property name="text">
     <string>Afficher la todo list</string>
@@ -552,7 +552,7 @@
   <action name="actionAfficher_les_d_tails_de_l_objet">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-show-property-96.png</normaloff>:/Ressources/icons/icons8-show-property-96.png</iconset>
+     <normaloff>:/res/icons/icons8-show-property-96.png</normaloff>:/res/icons/icons8-show-property-96.png</iconset>
    </property>
    <property name="text">
     <string>Afficher les détails de l'objet</string>
@@ -561,7 +561,7 @@
   <action name="actionParam_tre">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-settings-96.png</normaloff>:/Ressources/icons/icons8-settings-96.png</iconset>
+     <normaloff>:/res/icons/icons8-settings-96.png</normaloff>:/res/icons/icons8-settings-96.png</iconset>
    </property>
    <property name="text">
     <string>Paramètre</string>
@@ -573,7 +573,7 @@
   <action name="actionEditer_les_cartes">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-edition-de-la-carte-96.png</normaloff>:/Ressources/icons/icons8-edition-de-la-carte-96.png</iconset>
+     <normaloff>:/res/icons/icons8-edition-de-la-carte-96.png</normaloff>:/res/icons/icons8-edition-de-la-carte-96.png</iconset>
    </property>
    <property name="text">
     <string>Editer les cartes</string>
@@ -582,7 +582,7 @@
   <action name="actionCalculs_pour_instruments">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-telescope-96.png</normaloff>:/Ressources/icons/icons8-telescope-96.png</iconset>
+     <normaloff>:/res/icons/icons8-telescope-96.png</normaloff>:/res/icons/icons8-telescope-96.png</iconset>
    </property>
    <property name="text">
     <string>Calculs pour instruments</string>
@@ -600,7 +600,7 @@
    </property>
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-filtre-rempli-96.png</normaloff>:/Ressources/icons/icons8-filtre-rempli-96.png</iconset>
+     <normaloff>:/res/icons/icons8-filtre-rempli-96.png</normaloff>:/res/icons/icons8-filtre-rempli-96.png</iconset>
    </property>
    <property name="text">
     <string>Afficher les filtres</string>
@@ -609,7 +609,7 @@
   <action name="actionCalculs_solaires">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/Ressources/icons/icons8-soleil-96.png</normaloff>:/Ressources/icons/icons8-soleil-96.png</iconset>
+     <normaloff>:/res/icons/icons8-soleil-96.png</normaloff>:/res/icons/icons8-soleil-96.png</iconset>
    </property>
    <property name="text">
     <string>Calculs solaires</string>

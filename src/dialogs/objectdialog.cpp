@@ -1,26 +1,20 @@
 /**
  * Created on Tue Jul 31 2021
- * 
+ *
  * Copyright (c) 2021 - Mathéo G - All Right Reserved
- * 
+ *
  * Licensed under the Apache License, Version 2.0
  * Available on GitHub at https://github.com/Paracetamol56/Observeur2 */
 
 #include "objectdialog.h"
 #include "ui_objectdialog.h"
 
-
 ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsigned int objectId)
-    : QDialog(parent)
-    , m_ui(new Ui::ObjectDialog)
-    , m_db(database)
-    , m_id(objectId)
-    , m_rightAscension(0.00)
-    , m_declination(0.00)
+    : QDialog(parent), m_ui(new Ui::ObjectDialog), m_db(database), m_id(objectId), m_rightAscension(0.00), m_declination(0.00)
 {
     m_ui->setupUi(this);
 
-    setWindowIcon(QIcon(":/Ressources/icons/icons8-show-property-96.png"));
+    setWindowIcon(QIcon(":/res/icons/icons8-show-property-96.png"));
 
     m_db->open();
 
@@ -28,39 +22,38 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
 
     // Set the query
     query.prepare(
-                "SELECT "
-                "`objects`.`object_id`, "                   // 0
-                "`objects`.`object_name`, "                 // 1
-                "`objects`.`object_messier`, "              // 2
-                "`objects`.`object_ngc`, "                  // 3
-                "`objects`.`object_othername1`, "           // 4
-                "`objects`.`object_othername2`, "           // 5
-                "`categories`.`category_name`, "            // 6
-                "`constellations`.`constellation_name`, "   // 7
-                "`objects`.`object_apparent_magnitude`, "   // 8
-                "`objects`.`object_secondary_magnitude`, "  // 9
-                "`objects`.`object_right_ascension`, "      // 10
-                "`objects`.`object_declination`, "          // 11
-                "`objects`.`object_appreciation`, "         // 12
-                "`objects`.`object_note`, "                 // 13
-                "`skymap1`.`skymap1_number`, "              // 14
-                "`skymap2`.`skymap2_number`, "              // 15
-                "`skymap3`.`skymap3_number`, "              // 16
-                "`objects`.`object_distance`, "             // 17
-                "`objects`.`object_diameter`"               // 18
-                "FROM `objects` "
-                "INNER JOIN categories "
-                "ON categories.`category_id` = objects.`object_category` "
-                "INNER JOIN constellations "
-                "ON constellations.`constellation_id` = objects.`object_constellation` "
-                "INNER JOIN skymap1 "
-                "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
-                "INNER JOIN skymap2 "
-                "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
-                "INNER JOIN skymap3 "
-                "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
-                "WHERE `objects`.`object_id` = :object_id;"
-                );
+        "SELECT "
+        "`objects`.`object_id`, "                  // 0
+        "`objects`.`object_name`, "                // 1
+        "`objects`.`object_messier`, "             // 2
+        "`objects`.`object_ngc`, "                 // 3
+        "`objects`.`object_othername1`, "          // 4
+        "`objects`.`object_othername2`, "          // 5
+        "`categories`.`category_name`, "           // 6
+        "`constellations`.`constellation_name`, "  // 7
+        "`objects`.`object_apparent_magnitude`, "  // 8
+        "`objects`.`object_secondary_magnitude`, " // 9
+        "`objects`.`object_right_ascension`, "     // 10
+        "`objects`.`object_declination`, "         // 11
+        "`objects`.`object_appreciation`, "        // 12
+        "`objects`.`object_note`, "                // 13
+        "`skymap1`.`skymap1_number`, "             // 14
+        "`skymap2`.`skymap2_number`, "             // 15
+        "`skymap3`.`skymap3_number`, "             // 16
+        "`objects`.`object_distance`, "            // 17
+        "`objects`.`object_diameter`"              // 18
+        "FROM `objects` "
+        "INNER JOIN categories "
+        "ON categories.`category_id` = objects.`object_category` "
+        "INNER JOIN constellations "
+        "ON constellations.`constellation_id` = objects.`object_constellation` "
+        "INNER JOIN skymap1 "
+        "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
+        "INNER JOIN skymap2 "
+        "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
+        "INNER JOIN skymap3 "
+        "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
+        "WHERE `objects`.`object_id` = :object_id;");
 
     query.bindValue(":object_id", QString::number(objectId));
 
@@ -74,9 +67,9 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
 
     // Name
     {
-    QLineEdit *nameEdit = new QLineEdit(query.value(1).toString(), this);
-    nameEdit->setReadOnly(true);
-    m_ui->formLayout->addRow("Nom", nameEdit);
+        QLineEdit *nameEdit = new QLineEdit(query.value(1).toString(), this);
+        nameEdit->setReadOnly(true);
+        m_ui->formLayout->addRow("Nom", nameEdit);
     }
 
     // Messier
@@ -87,7 +80,7 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
         m_messierEdit->setReadOnly(true);
         QPushButton *messierPushButton = new QPushButton(this);
         messierPushButton->setText("Simbad");
-        messierPushButton->setIcon(QIcon(":/Ressources/icons/icons8-lien-externe-96.png"));
+        messierPushButton->setIcon(QIcon(":/res/icons/icons8-lien-externe-96.png"));
         connect(messierPushButton, &QPushButton::released, this, &ObjectDialog::on_messierPushButton_clicked);
         messierLayout->addWidget(m_messierEdit);
         messierLayout->addWidget(messierPushButton);
@@ -102,7 +95,7 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
         m_ngcEdit->setReadOnly(true);
         QPushButton *ngcPushButton = new QPushButton(this);
         ngcPushButton->setText("Simbad");
-        ngcPushButton->setIcon(QIcon(":/Ressources/icons/icons8-lien-externe-96.png"));
+        ngcPushButton->setIcon(QIcon(":/res/icons/icons8-lien-externe-96.png"));
         connect(ngcPushButton, &QPushButton::released, this, &ObjectDialog::on_ngcPushButton_clicked);
         ngcLayout->addWidget(m_ngcEdit);
         ngcLayout->addWidget(ngcPushButton);
@@ -240,24 +233,20 @@ ObjectDialog::ObjectDialog(QWidget *parent, QSqlDatabase *database, const unsign
     m_ui->dayDateGroupBox->hide();
 }
 
-
 ObjectDialog::~ObjectDialog()
 {
     delete m_ui;
 }
-
 
 void ObjectDialog::on_messierPushButton_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://simbad.u-strasbg.fr/simbad/sim-basic?Ident=m" + m_messierEdit->text() + "&submit=SIMBAD+search"));
 }
 
-
 void ObjectDialog::on_ngcPushButton_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://simbad.u-strasbg.fr/simbad/sim-basic?Ident=ngc" + m_ngcEdit->text() + "&submit=SIMBAD+search"));
 }
-
 
 void ObjectDialog::on_ModifyPushButton_clicked()
 {
@@ -270,7 +259,6 @@ void ObjectDialog::on_ClosePushButton_clicked()
 {
     this->close();
 }
-
 
 void ObjectDialog::computeYearGraph()
 {
@@ -305,7 +293,6 @@ void ObjectDialog::computeYearGraph()
         *set1 << elevation.getTotalDegree();
     }
 
-
     QBarSeries *serie0 = new QBarSeries();
     serie0->append(set0);
 
@@ -319,7 +306,18 @@ void ObjectDialog::computeYearGraph()
     chart->setAnimationOptions(QChart::SeriesAnimations);
 
     QStringList categories;
-    categories << "Janvier" << "Février" << "Mars" << "Avril" << "Mai" << "Juin" << "Juillet" << "Août" << "Septembre" << "Octobre" << "Novembre" << "Décembre";
+    categories << "Janvier"
+               << "Février"
+               << "Mars"
+               << "Avril"
+               << "Mai"
+               << "Juin"
+               << "Juillet"
+               << "Août"
+               << "Septembre"
+               << "Octobre"
+               << "Novembre"
+               << "Décembre";
     QBarCategoryAxis *axisX = new QBarCategoryAxis();
     axisX->append(categories);
     chart->addAxis(axisX, Qt::AlignBottom);
@@ -342,7 +340,6 @@ void ObjectDialog::computeYearGraph()
     m_chartView->setChart(chart);
 }
 
-
 void ObjectDialog::computeDayGraph()
 {
     EquatorialPosition objectPosition(m_rightAscension, m_declination);
@@ -362,7 +359,6 @@ void ObjectDialog::computeDayGraph()
     {
         date.m_hour = std::trunc(i);
         date.m_minute = (i - date.m_hour) * 60;
-
 
         HorizontalPosition ObjectHorizontalPosition = objectPosition.toHorizontalPosition(date);
         // Elevation angle
@@ -399,7 +395,6 @@ void ObjectDialog::computeDayGraph()
     m_chartView->setChart(chart);
 }
 
-
 void ObjectDialog::on_typeChange()
 {
     if (m_ui->yearSamplingRadioButton->isChecked())
@@ -418,7 +413,6 @@ void ObjectDialog::on_typeChange()
     }
 }
 
-
 void ObjectDialog::on_dateChange()
 {
     if (m_ui->yearSamplingRadioButton->isChecked())
@@ -430,14 +424,3 @@ void ObjectDialog::on_dateChange()
         computeDayGraph();
     }
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -1,20 +1,16 @@
 /**
  * Created on Tue Jul 31 2021
- * 
+ *
  * Copyright (c) 2021 - Mathéo G - All Right Reserved
- * 
+ *
  * Licensed under the Apache License, Version 2.0
  * Available on GitHub at https://github.com/Paracetamol56/Observeur2 */
 
 #include "objectform.h"
 #include "ui_objectform.h"
 
-
 ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
-    : QWidget(parent)
-    , m_ui(new Ui::ObjectForm)
-    , m_db(db)
-    , m_objectId(objectId)
+    : QWidget(parent), m_ui(new Ui::ObjectForm), m_db(db), m_objectId(objectId)
 {
     m_ui->setupUi(this);
 
@@ -35,7 +31,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     }
 
     // Add items one by one in a list widget
-    while(query.next())
+    while (query.next())
     {
         QString itemStr = query.value(0).toString();
         m_ui->TypeComboBox->addItem(itemStr);
@@ -52,7 +48,7 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     }
 
     // Add items one by one in a list widget
-    while(query.next())
+    while (query.next())
     {
         QString itemStr = query.value(0).toString();
         m_ui->ConstellationComboBox->addItem(itemStr);
@@ -68,40 +64,39 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
 
         // Set the query
         query.prepare(
-                    "SELECT "
-                    "objects.`object_name`, "
-                    "objects.`object_messier`, "
-                    "objects.`object_ngc`, "
-                    "objects.`object_othername1`, "
-                    "objects.`object_othername2`, "
-                    "objects.`object_category`, "
-                    "categories.`category_name`, "
-                    "objects.`object_constellation`, "
-                    "constellations.`constellation_name`, "
-                    "objects.`object_apparent_magnitude`, "
-                    "objects.`object_secondary_magnitude`, "
-                    "objects.`object_distance`, "
-                    "objects.`object_diameter`, "
-                    "objects.`object_right_ascension`, "
-                    "objects.`object_declination`, "
-                    "skymap1.`skymap1_number`, "
-                    "skymap2.`skymap2_number`, "
-                    "skymap3.`skymap3_number`, "
-                    "objects.`object_appreciation`, "
-                    "objects.`object_note` "
-                    "FROM objects "
-                    "INNER JOIN categories "
-                    "ON categories.`category_id` = objects.`object_category` "
-                    "INNER JOIN constellations "
-                    "ON constellations.`constellation_id` = objects.`object_constellation` "
-                    "INNER JOIN skymap1 "
-                    "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
-                    "INNER JOIN skymap2 "
-                    "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
-                    "INNER JOIN skymap3 "
-                    "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
-                    "WHERE objects.`object_id` = :objectId;"
-                    );
+            "SELECT "
+            "objects.`object_name`, "
+            "objects.`object_messier`, "
+            "objects.`object_ngc`, "
+            "objects.`object_othername1`, "
+            "objects.`object_othername2`, "
+            "objects.`object_category`, "
+            "categories.`category_name`, "
+            "objects.`object_constellation`, "
+            "constellations.`constellation_name`, "
+            "objects.`object_apparent_magnitude`, "
+            "objects.`object_secondary_magnitude`, "
+            "objects.`object_distance`, "
+            "objects.`object_diameter`, "
+            "objects.`object_right_ascension`, "
+            "objects.`object_declination`, "
+            "skymap1.`skymap1_number`, "
+            "skymap2.`skymap2_number`, "
+            "skymap3.`skymap3_number`, "
+            "objects.`object_appreciation`, "
+            "objects.`object_note` "
+            "FROM objects "
+            "INNER JOIN categories "
+            "ON categories.`category_id` = objects.`object_category` "
+            "INNER JOIN constellations "
+            "ON constellations.`constellation_id` = objects.`object_constellation` "
+            "INNER JOIN skymap1 "
+            "ON skymap1.`skymap1_id` = objects.`object_skymap1_id` "
+            "INNER JOIN skymap2 "
+            "ON skymap2.`skymap2_id` = objects.`object_skymap2_id` "
+            "INNER JOIN skymap3 "
+            "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
+            "WHERE objects.`object_id` = :objectId;");
 
         query.bindValue(":objectId", QString::number(m_objectId));
 
@@ -213,12 +208,10 @@ ObjectForm::ObjectForm(QWidget *parent, QSqlDatabase *db, int objectId)
     m_db->close();
 }
 
-
 ObjectForm::~ObjectForm()
 {
     delete m_ui;
 }
-
 
 // Verify all input fields and call error message in case of invalid values
 bool ObjectForm::CheckInput()
@@ -246,7 +239,6 @@ bool ObjectForm::CheckInput()
         }
     }
 
-
     // === Messier verification
     int testMessier = m_ui->MessierSpinBox->value();
     if (testMessier != 0)
@@ -264,7 +256,6 @@ bool ObjectForm::CheckInput()
             return false;
         }
     }
-
 
     // === NGC verification
     int testNgc = m_ui->NgcSpinBox->value();
@@ -284,7 +275,6 @@ bool ObjectForm::CheckInput()
         }
     }
 
-
     // === Other name 1 verification
     QString testOtherName1 = m_ui->OtherNameLineEdit_1->text();
     if (testOtherName1 != "")
@@ -303,10 +293,9 @@ bool ObjectForm::CheckInput()
         }
     }
 
-
     // === Other name 2 verification
     QString testOtherName2 = m_ui->OtherNameLineEdit_2->text();
-    if (testOtherName2!= "")
+    if (testOtherName2 != "")
     {
         // Select all object with the same name
         m_db->open();
@@ -330,10 +319,11 @@ bool ObjectForm::CheckInput()
     int testType = 0;
     {
         m_db->open();
-                QSqlQuery query("SELECT `category_id` "
-                                "FROM `categories` "
-                                "WHERE `category_name` = \"" + m_ui->TypeComboBox->currentText() + "\"");
-                query.exec();
+        QSqlQuery query("SELECT `category_id` "
+                        "FROM `categories` "
+                        "WHERE `category_name` = \"" +
+                        m_ui->TypeComboBox->currentText() + "\"");
+        query.exec();
         m_db->close();
         if (query.next())
         {
@@ -346,17 +336,17 @@ bool ObjectForm::CheckInput()
         }
     }
 
-
     // === Constellation verification
     // Select constellation id with the same constellation name
     int testConstellation = 0;
     {
         m_db->open();
-                QSqlQuery query("SELECT `constellation_id` "
-                                "FROM `constellations` "
-                                "WHERE `constellation_name` = \"" + m_ui->ConstellationComboBox->currentText() + "\"");
-                query.exec();
-                m_db->close();
+        QSqlQuery query("SELECT `constellation_id` "
+                        "FROM `constellations` "
+                        "WHERE `constellation_name` = \"" +
+                        m_ui->ConstellationComboBox->currentText() + "\"");
+        query.exec();
+        m_db->close();
         if (query.next())
         {
             testConstellation = query.value(0).toInt();
@@ -367,7 +357,6 @@ bool ObjectForm::CheckInput()
             return false;
         }
     }
-
 
     // === Magnitude verification
     double testApparentMagnitude = m_ui->ApparentMagnitudeDoubleSpinBox_1->value();
@@ -393,14 +382,12 @@ bool ObjectForm::CheckInput()
         testSecondApparentMagnitude = 0;
     }
 
-
     // === Position verification
     // Right ascension
     Angle testRightAscention(true, m_ui->RAHourSpinBox->value(), m_ui->RAMinuteSpinBox->value(), m_ui->RASecondDoubleSpinBox->value());
 
     // Declination
     Angle testDeclination(false, m_ui->DecDegreeSpinBox->value(), m_ui->DecMinuteSpinBox->value(), m_ui->DecSecondDoubleSpinBox->value());
-
 
     // COPYING TEST VALUES INTO ATTRIBUTES
 
@@ -507,10 +494,8 @@ bool ObjectForm::CheckInput()
     m_description = m_ui->DescriptionTextEdit->toPlainText();
     m_note = m_ui->NoteHorizontalSlider->value();
 
-
     return true;
 }
-
 
 // When the user finish typing in OtherNameLineEdit_1,
 // check if there is text and enable (or not) OtherNameLineEdit_2
@@ -528,7 +513,6 @@ void ObjectForm::on_OtherNameLineEdit_1_editingFinished()
     }
 }
 
-
 // When the user finish selection,
 // check if the choice is "Etoile double" and enable (or not) OtherNameLineEdit_2
 void ObjectForm::on_TypeComboBox_currentTextChanged(const QString &arg1)
@@ -543,14 +527,12 @@ void ObjectForm::on_TypeComboBox_currentTextChanged(const QString &arg1)
     }
 }
 
-
 // When The note value is changed on the slider
 void ObjectForm::on_NoteHorizontalSlider_valueChanged(int value)
 {
     m_ui->NoteDisplayLabel->setText(QString(QString::number(value) + "/10"));
     m_note = value;
 }
-
 
 void ObjectForm::on_AutoComputePushButton_clicked()
 {
@@ -559,8 +541,8 @@ void ObjectForm::on_AutoComputePushButton_clicked()
     for (int iMapSet = 1; iMapSet < 4; ++iMapSet)
     {
         EquatorialPosition objectPosition(
-                    Angle(true, m_ui->RAHourSpinBox->value(), m_ui->RAMinuteSpinBox->value(), m_ui->RASecondDoubleSpinBox->value()),
-                    Angle(false, m_ui->DecDegreeSpinBox->value(), m_ui->DecMinuteSpinBox->value(), m_ui->DecSecondDoubleSpinBox->value()));
+            Angle(true, m_ui->RAHourSpinBox->value(), m_ui->RAMinuteSpinBox->value(), m_ui->RASecondDoubleSpinBox->value()),
+            Angle(false, m_ui->DecDegreeSpinBox->value(), m_ui->DecMinuteSpinBox->value(), m_ui->DecSecondDoubleSpinBox->value()));
 
         Angle minDistance = Angle(359.99);
         int minId = 1;
@@ -576,7 +558,7 @@ void ObjectForm::on_AutoComputePushButton_clicked()
             sqlError.printMessage();
         }
 
-        while(query.next())
+        while (query.next())
         {
             EquatorialPosition mapPosition(Angle(query.value(1).toString()), Angle(query.value(2).toString()));
             Angle distance = objectPosition.getDistance(&mapPosition);
@@ -587,7 +569,8 @@ void ObjectForm::on_AutoComputePushButton_clicked()
             }
         }
 
-        switch (iMapSet) {
+        switch (iMapSet)
+        {
         case 1:
             m_ui->Map1SpinBox->setValue(minId);
             break;
@@ -605,7 +588,6 @@ void ObjectForm::on_AutoComputePushButton_clicked()
     m_db->close();
 }
 
-
 void ObjectForm::on_PreviewPushButton_clicked()
 {
     QDialog *markdownPreviewDialog = new QDialog(nullptr);
@@ -617,7 +599,7 @@ void ObjectForm::on_PreviewPushButton_clicked()
     mainLayout->addWidget(textBrowser);
     mainLayout->addWidget(buttonBox);
     markdownPreviewDialog->setLayout(mainLayout);
-    markdownPreviewDialog->setWindowIcon(QIcon(":/Ressources/icons/icons8-markdown-96.png"));
+    markdownPreviewDialog->setWindowIcon(QIcon(":/res/icons/icons8-markdown-96.png"));
     markdownPreviewDialog->setWindowTitle("Prévisualisation markdown");
 
     connect(buttonBox, &QDialogButtonBox::accepted, markdownPreviewDialog, &QDialog::accept);
@@ -625,12 +607,10 @@ void ObjectForm::on_PreviewPushButton_clicked()
     markdownPreviewDialog->exec();
 }
 
-
 void ObjectForm::on_CancelPushButton_clicked()
 {
     close();
 }
-
 
 void ObjectForm::on_SavePushButton_clicked()
 {
@@ -645,7 +625,7 @@ void ObjectForm::on_SavePushButton_clicked()
                 QSqlQuery query;
 
                 query.prepare(
-                            QString("INSERT INTO objects "
+                    QString("INSERT INTO objects "
                             "(`object_id`, "
                             "`object_name`, "
                             "`object_messier`, "
@@ -723,7 +703,7 @@ void ObjectForm::on_SavePushButton_clicked()
                 QSqlQuery query;
 
                 query.prepare(
-                            QString("UPDATE objects "
+                    QString("UPDATE objects "
                             "SET "
                             "`object_name` = :name, "
                             "`object_messier` = :messier, "
