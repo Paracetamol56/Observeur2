@@ -48,8 +48,22 @@ MainWindow::MainWindow(QWidget *parent)
         settingDialog.exec();
     }
 
-    // Initiate database
+    // Initialize the database
+    databaseInit(dbPath);
 
+    // Connections
+    connect(m_ui->objectTableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::tableSelectionChanged);
+}
+
+
+MainWindow::~MainWindow()
+{
+    delete m_ui;
+}
+
+
+void MainWindow::databaseInit(QString dbPath)
+{
     *m_db = QSqlDatabase::addDatabase("QSQLITE");
     // Check if file exists
     if (QFile::exists(dbPath))
@@ -118,9 +132,6 @@ MainWindow::MainWindow(QWidget *parent)
         MissingFileError errorMessage(ErrorPriority::Critical, "Aucun fichier \"data.sqlite\" trouvé", new QFile(dbPath));
         errorMessage.printMessage();
     }
-
-    // Connections
-    connect(m_ui->objectTableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::tableSelectionChanged);
 }
 
 MainWindow::~MainWindow()
@@ -469,7 +480,7 @@ void MainWindow::on_actionQuitter_triggered()
 
 void MainWindow::on_actionParam_tre_triggered()
 {
-    SettingDialog settingDialog(nullptr);
+    SettingDialog settingDialog(this);
     settingDialog.exec();
 }
 

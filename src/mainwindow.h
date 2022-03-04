@@ -66,6 +66,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void databaseInit(QString dbPath);
     void updateObject();
     void tableSelectionChanged();
 

@@ -10,7 +10,9 @@
 #include "ui_settingdialog.h"
 
 SettingDialog::SettingDialog(QWidget *parent)
-    : QDialog(parent), m_ui(new Ui::SettingDialog)
+    : QDialog(parent)
+    , m_ui(new Ui::SettingDialog)
+    , parentWidget(parent)
 {
     m_ui->setupUi(this);
 
@@ -141,6 +143,9 @@ void SettingDialog::on_SavePushButton_clicked()
     }
 
     settings.setValue("database", m_ui->DBPathLineEdit->text());
+    // Update the database in the main window
+    MainWindow *mainWindow = dynamic_cast<MainWindow*>(parentWidget);
+    mainWindow->databaseInit(m_ui->DBPathLineEdit->text());
 
     Angle latitude(false, m_ui->LatDegreeSpinBox->value(), m_ui->LatMinuteSpinBox->value(), m_ui->LatSecondDoubleSpinBox->value());
     Angle longitude(false, m_ui->LonDegreeSpinBox->value(), m_ui->LonMinuteSpinBox->value(), m_ui->LonSecondDoubleSpinBox->value());
