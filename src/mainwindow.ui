@@ -240,7 +240,7 @@
         <enum>QTabWidget::North</enum>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="Constellations">
         <attribute name="icon">
@@ -343,7 +343,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="AllConstallationCheckBox">
+          <widget class="QCheckBox" name="AllPeriodesCheckBox">
            <property name="text">
             <string>Tout selectionner</string>
            </property>

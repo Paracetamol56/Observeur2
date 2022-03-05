@@ -99,6 +99,8 @@ private slots:
     void on_actionEditer_les_cartes_triggered();
     void on_actionCalculs_pour_instruments_triggered();
     void on_actionCalculs_solaires_triggered();
+    void on_UpdatePeriodeButton_clicked();
+    void on_AllConstallationCheckBox_clicked();
 };
 
 #endif // MAINWINDOW_H

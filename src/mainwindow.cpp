@@ -48,6 +48,17 @@ MainWindow::MainWindow(QWidget *parent)
         settingDialog.exec();
     }
 
+    // Fill in the periode
+    QString monthList[12] = { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre" };
+
+    for (int i = 0; i < 12; ++i) {
+        QListWidgetItem *item = new QListWidgetItem;
+        QString str = monthList[i];
+        item->setText(str);
+        item->setCheckState(Qt::Checked);
+        m_ui->PeriodeListWidget->addItem(item);
+    }
+
     // Initialize the database
     databaseInit(dbPath);
 
@@ -381,6 +392,45 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
     }
 
     updateObject();
+}
+
+void MainWindow::on_AllConstallationCheckBox_clicked()
+{
+    // If AllConstellationCheckBox is checked
+    if (m_ui->AllPeriodesCheckBox->checkState() == Qt::Checked)
+    {
+        m_constellationFilter.clear();
+
+        // Iterate through the list widget
+        for (int i = 0; i < m_ui->PeriodeListWidget->count(); ++i)
+        {
+            // Set the item checked
+            QListWidgetItem *item = m_ui->PeriodeListWidget->item(i);
+            item->setCheckState(Qt::Checked);
+            // Add the item to the table
+            m_constellationFilter.push_back(item->text());
+        }
+    }
+    else if (m_ui->AllPeriodesCheckBox->checkState() == Qt::Unchecked)
+    {
+        m_constellationFilter.clear();
+
+        // Iterate through the list widget
+        for (int i = 0; i < m_ui->PeriodeListWidget->count(); ++i)
+        {
+            // Set the item unchecked
+            QListWidgetItem *item = m_ui->PeriodeListWidget->item(i);
+            item->setCheckState(Qt::Unchecked);
+        }
+    }
+
+    updateObject();
+}
+
+void MainWindow::on_UpdatePeriodeButton_clicked()
+{
+    // ToDo
+
 }
 
 void MainWindow::on_AllTypesButton_clicked()
