@@ -322,6 +322,7 @@ void MainWindow::on_AllConsellationsButton_clicked()
     constellationTableDIalog.exec();
 }
 
+
 void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
 {
     // If the clicked item is checked
@@ -361,6 +362,7 @@ void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
     updateObject();
 }
 
+
 void MainWindow::on_AllConstellationCheckBox_clicked()
 {
     // If AllConstellationCheckBox is checked
@@ -397,10 +399,41 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
 void MainWindow::on_AllConstallationCheckBox_clicked()
 {
     // If AllConstellationCheckBox is checked
-    if (m_ui->AllPeriodesCheckBox->checkState() == Qt::Checked)
+    if (m_ui->AllConstellationCheckBox->checkState() == Qt::Checked)
     {
         m_constellationFilter.clear();
 
+        // Iterate through the list widget
+        for (int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
+        {
+            // Set the item checked
+            QListWidgetItem *item = m_ui->ConstellationListWidget->item(i);
+            item->setCheckState(Qt::Checked);
+            // Add the item to the table
+            m_constellationFilter.push_back(item->text());
+        }
+    }
+    else if (m_ui->AllConstellationCheckBox->checkState() == Qt::Unchecked)
+    {
+        m_constellationFilter.clear();
+
+        // Iterate through the list widget
+        for (int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
+        {
+            // Set the item unchecked
+            QListWidgetItem *item = m_ui->ConstellationListWidget->item(i);
+            item->setCheckState(Qt::Unchecked);
+        }
+    }
+
+    updateObject();
+}
+
+void MainWindow::on_AllPeriodesCheckBox_clicked()
+{
+    // If AllPeriodesCheckBox is checked
+    if (m_ui->AllPeriodesCheckBox->checkState() == Qt::Checked)
+    {
         // Iterate through the list widget
         for (int i = 0; i < m_ui->PeriodeListWidget->count(); ++i)
         {
@@ -408,19 +441,19 @@ void MainWindow::on_AllConstallationCheckBox_clicked()
             QListWidgetItem *item = m_ui->PeriodeListWidget->item(i);
             item->setCheckState(Qt::Checked);
             // Add the item to the table
-            m_constellationFilter.push_back(item->text());
+            m_periodeFilter[i] = true;
         }
     }
     else if (m_ui->AllPeriodesCheckBox->checkState() == Qt::Unchecked)
     {
-        m_constellationFilter.clear();
-
         // Iterate through the list widget
         for (int i = 0; i < m_ui->PeriodeListWidget->count(); ++i)
         {
             // Set the item unchecked
             QListWidgetItem *item = m_ui->PeriodeListWidget->item(i);
             item->setCheckState(Qt::Unchecked);
+            // Remove the item from the table
+            m_periodeFilter[i] = false;
         }
     }
 
@@ -431,6 +464,63 @@ void MainWindow::on_UpdatePeriodeButton_clicked()
 {
     // ToDo
 
+}
+
+void MainWindow::on_PeriodeListWidget_itemClicked(QListWidgetItem *item)
+{
+    // If the clicked item is checked
+    if (item->checkState() == Qt::Checked)
+    {
+        if (m_typeFilter.count(item->text()) < 1)
+        {
+            m_periodeFilter[m_ui->PeriodeListWidget->row(item)] = true;
+
+            size_t count = 0;
+            for (size_t i = 0; i < sizeof(m_periodeFilter); ++i)
+            {
+                if (m_periodeFilter[i])
+                {
+                    ++count;
+                }
+            }
+
+            // If all items are checked (filter count == list count)
+            if (count == sizeof(m_periodeFilter))
+            {
+                // Checked the parent checkbox
+                m_ui->AllPeriodesCheckBox->setCheckState(Qt::Checked);
+            }
+            else
+            {
+                // Partialy check the parent checkbox
+                m_ui->AllPeriodesCheckBox->setCheckState(Qt::PartiallyChecked);
+            }
+        }
+    }
+    else if (item->checkState() == Qt::Unchecked)
+    {
+        m_periodeFilter[m_ui->PeriodeListWidget->row(item)] = false;
+
+        size_t count = 0;
+        for (size_t i = 0; i < sizeof(m_periodeFilter); ++i)
+        {
+            if (m_periodeFilter[i])
+            {
+                ++count;
+            }
+        }
+
+        if (count < 1)
+        {
+            m_ui->AllPeriodesCheckBox->setCheckState(Qt::Unchecked);
+        }
+        else
+        {
+            m_ui->AllPeriodesCheckBox->setCheckState(Qt::PartiallyChecked);
+        }
+    }
+
+    updateObject();
 }
 
 void MainWindow::on_AllTypesButton_clicked()
