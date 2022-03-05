@@ -134,10 +134,6 @@ void MainWindow::databaseInit(QString dbPath)
     }
 }
 
-MainWindow::~MainWindow()
-{
-    delete m_ui;
-}
 
 // Object list updater
 void MainWindow::updateObject()
