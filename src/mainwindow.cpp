@@ -465,12 +465,71 @@ void MainWindow::on_UpdatePeriodeButton_clicked()
     // ToDo
 
     // Loop through all the objects
+    for (int i = 0; i < m_ui->objectTableView->model()->rowCount(); ++i)
+    {
+        // Get the id
+        m_db->open();
+        QSqlQuery query;
+        query.prepare(QString("SELECT `object_id`, `object_right_ascension`, `object_declination` FROM `objects` WHERE `object_name` = :object_name"));
+        query.bindValue(":object_name", m_ui->objectTableView->model()->index(i, 0).data().toString());
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Warning, "Ipossible de récupérer les coordonnées de l'objet", &query);
+            sqlError.printMessage();
+        }
+        else
+        {
+            query.next();
+            int objectId = query.value(0).toInt();
+            Angle objectRightAscention = Angle(query.value(1).toString());
+            Angle objectDeclination = Angle(query.value(2).toString());
+            EquatorialPosition ObjectEquatorialPosition(objectRightAscention, objectDeclination);
 
-        // Loop through all the mounth
+            // Loop through all the mounth
+            QString mounthColumns[12] = {
+                "object_periode_january",
+                "object_periode_february",
+                "object_periode_march",
+                "object_periode_april",
+                "object_periode_may",
+                "object_periode_june",
+                "object_periode_july",
+                "object_periode_august",
+                "object_periode_september",
+                "object_periode_october",
+                "object_periode_november",
+                "object_periode_december"
+            };
 
-            // Compute max elevation
+            for (size_t m = 1; m <= 12; ++m)
+            {
+                // Compute elevation at 0h00
+                // ToDo : compute the max elevation instead
+                Date date(15, m, 2000, 0, 0, 0);
+                HorizontalPosition ObjectHorizontalPosition = ObjectEquatorialPosition.toHorizontalPosition(date);
+                Angle elevation = ObjectHorizontalPosition.getAltitude();
 
-            // Store the value in the database
+                // Store the value in the database
+                QSqlQuery elevationQuery;
+                elevationQuery.prepare(
+                    QString("UPDATE objects "
+                            "SET "
+                            "`:mounth_periode` = :elevation "
+                            "WHERE `object_id` = :object_id"));
+
+                elevationQuery.bindValue(":mounth_periode", mounthColumns[m - 1]);
+                elevationQuery.bindValue(":elevation", QString::number(elevation.getTotalDegree(), 'f', 2));
+                elevationQuery.bindValue(":object_id", QString::number(objectId));
+
+                if (elevationQuery.exec() == false)
+                {
+                    SqlError sqlError(ErrorPriority::Warning, "Ipossible d'écrire les données", &elevationQuery);
+                    sqlError.printMessage();
+                }
+            }
+        }
+        m_db->close();
+    }
 }
 
 void MainWindow::on_PeriodeListWidget_itemClicked(QListWidgetItem *item)
