@@ -464,6 +464,13 @@ void MainWindow::on_UpdatePeriodeButton_clicked()
 {
     // ToDo
 
+    // Loop through all the objects
+
+        // Loop through all the mounth
+
+            // Compute max elevation
+
+            // Store the value in the database
 }
 
 void MainWindow::on_PeriodeListWidget_itemClicked(QListWidgetItem *item)
