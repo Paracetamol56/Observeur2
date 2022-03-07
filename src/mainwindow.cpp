@@ -161,6 +161,37 @@ void MainWindow::updateObject()
         constellationFilterString = constellationFilterString.left(lastIndex);
     }
 
+    // Format periodes filter
+    QString periodeFilterString = "";
+    {
+        QString periodeFilterCondition[12];
+        for (size_t i = 0; i < 12; ++i)
+        {
+            if (m_periodeFilter[i])
+            {
+                periodeFilterCondition[i] = "> 0 ";
+            }
+            else
+            {
+                periodeFilterCondition[i] = "= 999 ";
+            }
+        }
+
+        periodeFilterString +=
+                "AND (`object_periode_january` " + periodeFilterCondition[0] +
+                "OR `object_periode_february` " + periodeFilterCondition[1] +
+                "OR `object_periode_march` " + periodeFilterCondition[2] +
+                "OR `object_periode_april` " + periodeFilterCondition[3] +
+                "OR `object_periode_may` " + periodeFilterCondition[4] +
+                "OR `object_periode_june` " + periodeFilterCondition[5] +
+                "OR `object_periode_july` " + periodeFilterCondition[6] +
+                "OR `object_periode_august` " + periodeFilterCondition[7] +
+                "OR `object_periode_september` " + periodeFilterCondition[8] +
+                "OR `object_periode_october` " + periodeFilterCondition[9] +
+                "OR `object_periode_november` " + periodeFilterCondition[10] +
+                "OR `object_periode_december` " + periodeFilterCondition[11] + ") ";
+    }
+
     // Format type filter
     QString typeFilterString = "";
     {
@@ -203,9 +234,10 @@ void MainWindow::updateObject()
         "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
         "WHERE constellations.`constellation_name` IN (" +
         constellationFilterString + ") "
-                                    "AND categories.`category_name` IN (" +
-        typeFilterString + ")"
-                           "ORDER BY objects.`object_name` ASC;");
+        "AND categories.`category_name` IN (" +
+        typeFilterString + ") " +
+        periodeFilterString +
+        "ORDER BY objects.`object_name` ASC;");
 
     if (query.exec() == false)
     {
@@ -524,9 +556,7 @@ void MainWindow::on_UpdatePeriodeButton_clicked()
             for (size_t m = 0; m < 12; ++m)
             {
                 QString elevationString = ":elevation" + QString::number(m);
-                query.bindValue(elevationString, QString::number(elevationBuffer[m]));
-
-                qDebug() << elevationString << QString::number(elevationBuffer[m]);
+                query.bindValue(elevationString, elevationBuffer[m]);
             }
             query.bindValue(":objectId", QString::number(objectId));
 
@@ -534,7 +564,6 @@ void MainWindow::on_UpdatePeriodeButton_clicked()
             {
                 throw SqlError(ErrorPriority::Warning, "Ipossible d'écrir les données", &query);
             }
-            qDebug() << query.lastQuery();
         }
         m_db->close();
     }
