@@ -9,21 +9,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2.3.4
-      - name: Add comments to /
+      - name: Add comments to /src
         uses: koj-co/header-comments@v1.0.5
         with:
-          directory: /
-      - name: Add comments to angleutilities
+          directory: /src
+      - name: Add comments to /src/angleutilities
         uses: koj-co/header-comments@v1.0.5
         with:
-          directory: angleutilities
-      - name: Add comments to dialogs
+          directory: /src/angleutilities
+      - name: Add comments to /src/dialogs
         uses: koj-co/header-comments@v1.0.5
         with:
-          directory: dialogs
-      - name: Add comments to tables
+          directory: /src/dialogs
+      - name: Add comments to /src/tables
         uses: koj-co/header-comments@v1.0.5
         with:
-          directory: tables
+          directory: /src/tables
       - name: Create pull request with changes
         uses: peter-evans/create-pull-request@v3
