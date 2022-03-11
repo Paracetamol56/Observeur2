@@ -12,6 +12,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QSettings>
+#include "mainwindow.h"
 #include "angleutilities/angle.h"
 #include "errorhandler.h"
 
@@ -26,6 +27,7 @@ class SettingDialog : public QDialog
 
 private:
     Ui::SettingDialog *m_ui;
+    QWidget *parentWidget;
 
 public:
     explicit SettingDialog(QWidget *parent = nullptr);
@@ -35,6 +37,9 @@ private slots:
     void on_SavePushButton_clicked();
     void on_CancelPushButton_clicked();
     void on_DBBrowsePushButton_clicked();
+
+signals:
+    void saveState();
 };
 
 #endif // SETTINGDIALOG_H

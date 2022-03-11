@@ -58,7 +58,7 @@ private:
     // Constellation filter
     QVector<QString> m_constellationFilter = {};
     // Periode filter
-    QVector<QString> m_periodeFilter = {};
+    bool m_periodeFilter[12] = { true, true, true, true, true, true, true, true, true, true, true };
     // Type filter
     QVector<QString> m_typeFilter = {};
 
@@ -66,6 +66,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void databaseInit(QString dbPath);
     void updateObject();
     void tableSelectionChanged();
 
@@ -98,6 +99,10 @@ private slots:
     void on_actionEditer_les_cartes_triggered();
     void on_actionCalculs_pour_instruments_triggered();
     void on_actionCalculs_solaires_triggered();
+    void on_UpdatePeriodeButton_clicked();
+    void on_AllConstallationCheckBox_clicked();
+    void on_AllPeriodesCheckBox_clicked();
+    void on_PeriodeListWidget_itemClicked(QListWidgetItem *item);
 };
 
 #endif // MAINWINDOW_H

@@ -48,8 +48,33 @@ MainWindow::MainWindow(QWidget *parent)
         settingDialog.exec();
     }
 
-    // Initiate database
+    // Fill in the periode
+    QString monthList[12] = { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre" };
 
+    for (int i = 0; i < 12; ++i) {
+        QListWidgetItem *item = new QListWidgetItem;
+        QString str = monthList[i];
+        item->setText(str);
+        item->setCheckState(Qt::Checked);
+        m_ui->PeriodeListWidget->addItem(item);
+    }
+
+    // Initialize the database
+    databaseInit(dbPath);
+
+    // Connections
+    connect(m_ui->objectTableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::tableSelectionChanged);
+}
+
+
+MainWindow::~MainWindow()
+{
+    delete m_ui;
+}
+
+
+void MainWindow::databaseInit(QString dbPath)
+{
     *m_db = QSqlDatabase::addDatabase("QSQLITE");
     // Check if file exists
     if (QFile::exists(dbPath))
@@ -118,15 +143,8 @@ MainWindow::MainWindow(QWidget *parent)
         MissingFileError errorMessage(ErrorPriority::Critical, "Aucun fichier \"data.sqlite\" trouvé", new QFile(dbPath));
         errorMessage.printMessage();
     }
-
-    // Connections
-    connect(m_ui->objectTableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::tableSelectionChanged);
 }
 
-MainWindow::~MainWindow()
-{
-    delete m_ui;
-}
 
 // Object list updater
 void MainWindow::updateObject()
@@ -141,6 +159,37 @@ void MainWindow::updateObject()
         }
         int lastIndex = constellationFilterString.lastIndexOf(QChar(','));
         constellationFilterString = constellationFilterString.left(lastIndex);
+    }
+
+    // Format periodes filter
+    QString periodeFilterString = "";
+    {
+        QString periodeFilterCondition[12];
+        for (size_t i = 0; i < 12; ++i)
+        {
+            if (m_periodeFilter[i])
+            {
+                periodeFilterCondition[i] = "> 0 ";
+            }
+            else
+            {
+                periodeFilterCondition[i] = "= 999 ";
+            }
+        }
+
+        periodeFilterString +=
+                "AND (`object_periode_january` " + periodeFilterCondition[0] +
+                "OR `object_periode_february` " + periodeFilterCondition[1] +
+                "OR `object_periode_march` " + periodeFilterCondition[2] +
+                "OR `object_periode_april` " + periodeFilterCondition[3] +
+                "OR `object_periode_may` " + periodeFilterCondition[4] +
+                "OR `object_periode_june` " + periodeFilterCondition[5] +
+                "OR `object_periode_july` " + periodeFilterCondition[6] +
+                "OR `object_periode_august` " + periodeFilterCondition[7] +
+                "OR `object_periode_september` " + periodeFilterCondition[8] +
+                "OR `object_periode_october` " + periodeFilterCondition[9] +
+                "OR `object_periode_november` " + periodeFilterCondition[10] +
+                "OR `object_periode_december` " + periodeFilterCondition[11] + ") ";
     }
 
     // Format type filter
@@ -185,9 +234,10 @@ void MainWindow::updateObject()
         "ON skymap3.`skymap3_id` = objects.`object_skymap3_id` "
         "WHERE constellations.`constellation_name` IN (" +
         constellationFilterString + ") "
-                                    "AND categories.`category_name` IN (" +
-        typeFilterString + ")"
-                           "ORDER BY objects.`object_name` ASC;");
+        "AND categories.`category_name` IN (" +
+        typeFilterString + ") " +
+        periodeFilterString +
+        "ORDER BY objects.`object_name` ASC;");
 
     if (query.exec() == false)
     {
@@ -304,6 +354,7 @@ void MainWindow::on_AllConsellationsButton_clicked()
     constellationTableDIalog.exec();
 }
 
+
 void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
 {
     // If the clicked item is checked
@@ -343,6 +394,7 @@ void MainWindow::on_ConstellationListWidget_itemClicked(QListWidgetItem *item)
     updateObject();
 }
 
+
 void MainWindow::on_AllConstellationCheckBox_clicked()
 {
     // If AllConstellationCheckBox is checked
@@ -370,6 +422,208 @@ void MainWindow::on_AllConstellationCheckBox_clicked()
             // Set the item unchecked
             QListWidgetItem *item = m_ui->ConstellationListWidget->item(i);
             item->setCheckState(Qt::Unchecked);
+        }
+    }
+
+    updateObject();
+}
+
+void MainWindow::on_AllConstallationCheckBox_clicked()
+{
+    // If AllConstellationCheckBox is checked
+    if (m_ui->AllConstellationCheckBox->checkState() == Qt::Checked)
+    {
+        m_constellationFilter.clear();
+
+        // Iterate through the list widget
+        for (int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
+        {
+            // Set the item checked
+            QListWidgetItem *item = m_ui->ConstellationListWidget->item(i);
+            item->setCheckState(Qt::Checked);
+            // Add the item to the table
+            m_constellationFilter.push_back(item->text());
+        }
+    }
+    else if (m_ui->AllConstellationCheckBox->checkState() == Qt::Unchecked)
+    {
+        m_constellationFilter.clear();
+
+        // Iterate through the list widget
+        for (int i = 0; i < m_ui->ConstellationListWidget->count(); ++i)
+        {
+            // Set the item unchecked
+            QListWidgetItem *item = m_ui->ConstellationListWidget->item(i);
+            item->setCheckState(Qt::Unchecked);
+        }
+    }
+
+    updateObject();
+}
+
+void MainWindow::on_AllPeriodesCheckBox_clicked()
+{
+    // If AllPeriodesCheckBox is checked
+    if (m_ui->AllPeriodesCheckBox->checkState() == Qt::Checked)
+    {
+        // Iterate through the list widget
+        for (int i = 0; i < m_ui->PeriodeListWidget->count(); ++i)
+        {
+            // Set the item checked
+            QListWidgetItem *item = m_ui->PeriodeListWidget->item(i);
+            item->setCheckState(Qt::Checked);
+            // Add the item to the table
+            m_periodeFilter[i] = true;
+        }
+    }
+    else if (m_ui->AllPeriodesCheckBox->checkState() == Qt::Unchecked)
+    {
+        // Iterate through the list widget
+        for (int i = 0; i < m_ui->PeriodeListWidget->count(); ++i)
+        {
+            // Set the item unchecked
+            QListWidgetItem *item = m_ui->PeriodeListWidget->item(i);
+            item->setCheckState(Qt::Unchecked);
+            // Remove the item from the table
+            m_periodeFilter[i] = false;
+        }
+    }
+
+    updateObject();
+}
+
+void MainWindow::on_UpdatePeriodeButton_clicked()
+{
+    // ToDo
+
+    try
+    {
+        m_db->open();
+        // Loop through all the objects
+        for (int i = 0; i < m_ui->objectTableView->model()->rowCount(); ++i)
+        {
+            // Get the id
+            QSqlQuery query;
+            query.prepare(QString("SELECT `object_id`, `object_right_ascension`, `object_declination` FROM `objects` WHERE `object_name` = :object_name"));
+            query.bindValue(":object_name", m_ui->objectTableView->model()->index(i, 0).data().toString());
+            if (query.exec() == false)
+            {
+                throw SqlError(ErrorPriority::Warning, "Ipossible de récupérer les coordonnées de l'objet", &query);
+            }
+            if (query.next() == false)
+            {
+                throw SqlError(ErrorPriority::Warning, "Ipossible de récupérer l'id de l'objet", &query);
+            }
+
+            int objectId = query.value(0).toInt();
+            Angle objectRightAscention = Angle(query.value(1).toString());
+            Angle objectDeclination = Angle(query.value(2).toString());
+            EquatorialPosition ObjectEquatorialPosition(objectRightAscention, objectDeclination);
+
+            // Elevation buffer
+            float elevationBuffer[12];
+
+            for (size_t m = 0; m < 12; ++m)
+            {
+                // Compute elevation at 0h00
+                // ToDo : compute the max elevation instead
+                Date date(15, m  + 1, 2000, 0, 0, 0);
+                HorizontalPosition ObjectHorizontalPosition = ObjectEquatorialPosition.toHorizontalPosition(date);
+                float elevation = ObjectHorizontalPosition.getAltitude().getTotalDegree();
+
+                // Store the value in a buffer
+                elevationBuffer[m] = elevation;
+            }
+
+            // Write the data in the database
+            query.clear();
+            query.prepare(
+                        QString("UPDATE objects SET "
+                                "`object_periode_january` = :elevation0, "
+                                "`object_periode_february` = :elevation1, "
+                                "`object_periode_march` = :elevation2, "
+                                "`object_periode_april` = :elevation3, "
+                                "`object_periode_may` = :elevation4, "
+                                "`object_periode_june` = :elevation5, "
+                                "`object_periode_july` = :elevation6, "
+                                "`object_periode_august` = :elevation7, "
+                                "`object_periode_september` = :elevation8, "
+                                "`object_periode_october` = :elevation9, "
+                                "`object_periode_november` = :elevation10, "
+                                "`object_periode_december` = :elevation11 "
+                                "WHERE `object_id` = :objectId"));
+
+            for (size_t m = 0; m < 12; ++m)
+            {
+                QString elevationString = ":elevation" + QString::number(m);
+                query.bindValue(elevationString, elevationBuffer[m]);
+            }
+            query.bindValue(":objectId", QString::number(objectId));
+
+            if (query.exec() == false)
+            {
+                throw SqlError(ErrorPriority::Warning, "Ipossible d'écrir les données", &query);
+            }
+        }
+        m_db->close();
+    }
+    catch (Error &e)
+    {
+        e.printMessage();
+    }
+}
+
+void MainWindow::on_PeriodeListWidget_itemClicked(QListWidgetItem *item)
+{
+    // If the clicked item is checked
+    if (item->checkState() == Qt::Checked)
+    {
+        if (m_typeFilter.count(item->text()) < 1)
+        {
+            m_periodeFilter[m_ui->PeriodeListWidget->row(item)] = true;
+
+            size_t count = 0;
+            for (size_t i = 0; i < sizeof(m_periodeFilter); ++i)
+            {
+                if (m_periodeFilter[i])
+                {
+                    ++count;
+                }
+            }
+
+            // If all items are checked (filter count == list count)
+            if (count == sizeof(m_periodeFilter))
+            {
+                // Checked the parent checkbox
+                m_ui->AllPeriodesCheckBox->setCheckState(Qt::Checked);
+            }
+            else
+            {
+                // Partialy check the parent checkbox
+                m_ui->AllPeriodesCheckBox->setCheckState(Qt::PartiallyChecked);
+            }
+        }
+    }
+    else if (item->checkState() == Qt::Unchecked)
+    {
+        m_periodeFilter[m_ui->PeriodeListWidget->row(item)] = false;
+
+        size_t count = 0;
+        for (size_t i = 0; i < sizeof(m_periodeFilter); ++i)
+        {
+            if (m_periodeFilter[i])
+            {
+                ++count;
+            }
+        }
+
+        if (count < 1)
+        {
+            m_ui->AllPeriodesCheckBox->setCheckState(Qt::Unchecked);
+        }
+        else
+        {
+            m_ui->AllPeriodesCheckBox->setCheckState(Qt::PartiallyChecked);
         }
     }
 
@@ -469,7 +723,7 @@ void MainWindow::on_actionQuitter_triggered()
 
 void MainWindow::on_actionParam_tre_triggered()
 {
-    SettingDialog settingDialog(nullptr);
+    SettingDialog settingDialog(this);
     settingDialog.exec();
 }
 

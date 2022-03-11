@@ -225,12 +225,16 @@ bool ObjectForm::CheckInput()
     }
     else
     {
-        // Select all object with the same name
+        // Select all objects with the same name
         m_db->open();
-        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_name` = :objectName AND `object_id` != :objectId");
+        QSqlQuery query;
+        query.prepare(QString("SELECT `object_id` FROM `objects` WHERE `object_name` = :objectName"));
         query.bindValue(":objectName", testName);
-        query.bindValue(":objectId", m_objectId);
-        query.exec();
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Warning, "Ipossible de verifier le nom", &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
@@ -245,10 +249,14 @@ bool ObjectForm::CheckInput()
     {
         // Select all object with the same name
         m_db->open();
-        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_messier` = :objectMessier AND `object_id` != :objectId");
+        QSqlQuery query;
+        query.prepare(QString("SELECT `object_id` FROM `objects` WHERE `object_messier` = :objectMessier"));
         query.bindValue(":objectMessier", QString::number(testMessier));
-        query.bindValue(":objectId", m_objectId);
-        query.exec();
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Warning, "Ipossible de verifier le numero Messier", &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
@@ -263,10 +271,14 @@ bool ObjectForm::CheckInput()
     {
         // Select all object with the same name
         m_db->open();
-        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE `object_ngc` = :objectNgc AND `object_id` != :objectId");
+        QSqlQuery query;
+        query.prepare(QString("SELECT `object_id` FROM `objects` WHERE `object_ngc` = :objectNgc"));
         query.bindValue(":objectNgc", QString::number(testNgc));
-        query.bindValue(":objectId", m_objectId);
-        query.exec();
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Warning, "Ipossible de verifier le numero NGC", &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
@@ -281,10 +293,14 @@ bool ObjectForm::CheckInput()
     {
         // Select all object with the same name
         m_db->open();
-        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE (`object_othername1` = :objectOthername1 OR `object_othername2` = :objectOthername1) AND `object_id` != :objectId");
+        QSqlQuery query;
+        query.prepare(QString("SELECT `object_id` FROM `objects` WHERE (`object_othername1` = :objectOthername1 OR `object_othername2` = :objectOthername1)"));
         query.bindValue(":objectOthername1", testOtherName1);
-        query.bindValue(":objectId", m_objectId);
-        query.exec();
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Warning, "Ipossible de verifier le nom alternatif 1", &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
@@ -299,18 +315,19 @@ bool ObjectForm::CheckInput()
     {
         // Select all object with the same name
         m_db->open();
-        QSqlQuery query("SELECT `objects_id` FROM `objects` WHERE (`object_othername1` = :objectOthername2 OR `object_othername2` = :objectOthername2) AND `object_id` != :objectId");
+        QSqlQuery query;
+        query.prepare(QString("SELECT `object_id` FROM `objects` WHERE (`object_othername1` = :objectOthername2 OR `object_othername2` = :objectOthername2)"));
         query.bindValue(":objectOthername2", testOtherName2);
-        query.bindValue(":objectId", m_objectId);
-        query.exec();
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Warning, "Ipossible de verifier le nom alternatif 2", &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
             throw InputError(ErrorPriority::BadInput, "Cet autre nom (2) existe déjà dans la base de donnée");
             return false;
-        }
-        else
-        {
         }
     }
 
@@ -319,11 +336,16 @@ bool ObjectForm::CheckInput()
     int testType = 0;
     {
         m_db->open();
-        QSqlQuery query("SELECT `category_id` "
-                        "FROM `categories` "
-                        "WHERE `category_name` = \"" +
-                        m_ui->TypeComboBox->currentText() + "\"");
-        query.exec();
+        QSqlQuery query;
+        query.prepare("SELECT `category_id` "
+                      "FROM `categories` "
+                      "WHERE `category_name` = \"" +
+                      m_ui->TypeComboBox->currentText() + "\"");
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Warning, "Ipossible de verifier le type", &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
@@ -341,11 +363,16 @@ bool ObjectForm::CheckInput()
     int testConstellation = 0;
     {
         m_db->open();
-        QSqlQuery query("SELECT `constellation_id` "
-                        "FROM `constellations` "
-                        "WHERE `constellation_name` = \"" +
-                        m_ui->ConstellationComboBox->currentText() + "\"");
-        query.exec();
+        QSqlQuery query;
+        query.prepare("SELECT `constellation_id` "
+                      "FROM `constellations` "
+                      "WHERE `constellation_name` = \"" +
+                      m_ui->ConstellationComboBox->currentText() + "\"");
+        if (query.exec() == false)
+        {
+            SqlError sqlError(ErrorPriority::Warning, "Ipossible de verifier la constellation", &query);
+            sqlError.printMessage();
+        }
         m_db->close();
         if (query.next())
         {
